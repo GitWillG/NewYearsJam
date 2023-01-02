@@ -1,39 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay
 {
-
     public class DiceManager : MonoBehaviour
     {
-        public PlayableCharacter CharacterStats;
-        public int DiceNo;
-        public List<int> Results = new List<int>();
-        // Start is called before the first frame update
-        private void Start()
-        {
-            //Results = new List<int>();
-            DiceNo = CharacterStats.Stat;
+        [SerializeField] private PlayableCharacter characterStats;
+        [SerializeField] private DiceRoller diceRoller;
 
-        }
-
-        public List<int> RollDice()
+        [ContextMenu("Test Roll Dice")]
+        public void RollDice()
         {
-            Results.Clear();
-            int tempNum;
-            for (int i = 0; i < DiceNo; i++)
+            for (int i = 0; i < characterStats.NumOfDice; i++)
             {
-                tempNum = Random.Range(1, 6);
-                Results.Add(tempNum);
+                diceRoller.RollDie(characterStats.DiePrefab);
             }
-
-            return Results;
-        }
-        public void TestDie()
-        {
-            RollDice();
-
         }
     }
 }

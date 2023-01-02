@@ -350,7 +350,7 @@ Transform:
   m_GameObject: {fileID: 639609254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -769,6 +769,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989472062}
   m_CullTransparentMesh: 1
+--- !u!1 &1158474564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1158474565}
+  - component: {fileID: 1158474566}
+  m_Layer: 0
+  m_Name: DiceRoller
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1158474565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158474564}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158474566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158474564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71a9592cc694df4bb5836d00de54ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultDicePrefab: {fileID: 2367960216642263466, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
+  diceForce: {x: 5, y: 5}
+  diceTorque: {x: 15, y: 30}
+  spawnRadius: 5
 --- !u!1 &1918290325
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,9 +917,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501d68d5eb88a2e448369c30724f3965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterStats: {fileID: 11400000, guid: 5739299818b4b3d46b872346d0cb3c5e, type: 2}
-  DiceNo: 0
-  Results: 
+  characterStats: {fileID: 11400000, guid: 5739299818b4b3d46b872346d0cb3c5e, type: 2}
+  diceRoller: {fileID: 1158474566}
 --- !u!136 &2116307351
 CapsuleCollider:
   m_ObjectHideFlags: 0
