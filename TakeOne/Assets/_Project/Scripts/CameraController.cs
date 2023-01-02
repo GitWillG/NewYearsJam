@@ -1,44 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
+using DiceGame.Dice;
 using UnityEngine;
 
-namespace Gameplay
+namespace DiceGame
 {
     public class CameraController : MonoBehaviour
     {
-        Camera mainCam;
+        private Camera _mainCam;
 
         private void Awake()
         {
-            mainCam = Camera.main;
+            _mainCam = Camera.main;
         }
         void Update()
         {
-            Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            var ray = _mainCam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit))
             {
-                if (hit.collider.gameObject.CompareTag("Dice"))
+                if (!hit.collider.gameObject.CompareTag("Dice")) return;
+                
+                //TODO: hover selector
+                if (Input.GetMouseButtonUp(0))
                 {
-                    //TODO: hover selector
-                    if (Input.GetMouseButtonUp(0))
-                    {
-                        DiceFace hoveredDie = hit.collider.gameObject.GetComponent<DiceFace>();
-                        int diceVal = hoveredDie.FaceValue;
-
-                        //TODO: Rahul - minor thing, but add a "Select" method in the CardGO, that way if ever the selection logic needs to do more you do it in the right place.
-                        Debug.Log(diceVal);
-                    }
+                    DiceFace hoveredDie = hit.collider.gameObject.GetComponent<DiceFace>();
+                    int diceVal = hoveredDie.FaceValue;
+                    Debug.Log(diceVal);
                 }
-            
             }
         }
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-      
     }
 }

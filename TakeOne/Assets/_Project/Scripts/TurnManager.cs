@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gameplay
+namespace DiceGame
 {
     public class TurnManager : MonoBehaviour
     {
-        [SerializeField] private bool playerTurn;
+        public bool IsPlayerTurn { get; set; }
 
-        public bool PlayerTurn { get => playerTurn; set => playerTurn = value; }
-
-        public void endTurn()
+        public void EndTurn()
         {
-            playerTurn = !playerTurn;
+            IsPlayerTurn = !IsPlayerTurn;
         }
     }
 }

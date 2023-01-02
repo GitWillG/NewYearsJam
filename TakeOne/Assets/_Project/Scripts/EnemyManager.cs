@@ -1,56 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
+using DiceGame.ScriptableObjects;
 using UnityEngine;
 
-namespace Gameplay
+namespace DiceGame
 {
+    //Spawn monsters, invoke effects on monster turns, manage monster pool, handle end encounter.
     public class EnemyManager : MonoBehaviour
     {
-
         [SerializeField] private string encounterName;
         [SerializeField] private TurnManager turnOrder;
         [SerializeField] private string monsterIntent;
         [SerializeField] private int attackDamage;
-        [SerializeField] private int lifePool;
-        private bool isAlive;
 
-        [SerializeField] private List<NPMonster> monsterPool = new List<NPMonster>();
-
-
+        [SerializeField] private List<MonsterSO> monsterPool = new List<MonsterSO>();
+        
         public string EncounterName => encounterName;
-        public int AttackDamage
-        {
-            get => attackDamage;
-            set => attackDamage = value;
-        }
-
-        public int LifePool => lifePool;
 
         public TurnManager TurnOrder => turnOrder;
 
-        // Start is called before the first frame update
-        void Start()
+
+        public void InitializeMonsters()
         {
-            foreach (NPMonster monster in monsterPool)
+            foreach (var monsterSO in monsterPool)
             {
-                lifePool += monster.LifeMod;
+                //Spawn a monster prefab
+                //Call some function in the script and pass along the MonsterSO.
+                //In the script, make this monster class look like the MonsterSO
             }
+        }
+        //Figure out how to deal damage to monster??
+        //When monster dies, check if all monsters are dead
+        //If so call EndEncounter.
+        
+        //maybe belongs in encounter manager?
+        public void EndEncounter()
+        {
             
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            if (!isAlive)
-            {
-                endEncounter();
-            }
-        
-        }
-        public void endEncounter()
-        {
-
         }
     }
 }

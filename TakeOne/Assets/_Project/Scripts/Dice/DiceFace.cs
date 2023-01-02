@@ -3,35 +3,25 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-namespace Gameplay
+namespace DiceGame.Dice
 {
     public class DiceFace : MonoBehaviour
     {
         // The possible face values of the dice
         [SerializeField] private int[] faceValues;
-
-        // The current face value of the dice
-        //This is the face not the face VALUE;
-        public int Face { get; private set; }
-        public int FaceValue { get; private set; }
-
-
-        // The rotations of the dice's faces, in local space
-        private Vector3[] _faceRotations = new Vector3[6];
-    
         // A threshold for determining if the dice is rolling or not
         [SerializeField] private float rollingThreshold = 0.2f;
-
-        // A timer for checking if the dice has stopped rolling
-        private float _rollingTimer;
-
+        
+        private int _sideRolled;
+        private Vector3[] _faceRotations = new Vector3[6];// The rotations of the dice's faces, in local space
+        private float _rollingTimer;// A timer for checking if the dice has stopped rolling
         private bool _isResultFound;
+        private Rigidbody _rigidbody;
+        private Vector2 _cachedDiceForce, _cachedDiceTorque;
 
         public UnityEvent<int> onDiceRollResult;
-
-        private Rigidbody _rigidbody;
-
-        private Vector2 _cachedDiceForce, _cachedDiceTorque;
+        public int FaceValue { get; private set; }
+        
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -45,19 +35,22 @@ namespace Gameplay
         private void InitDieFace()
         {
             var diceTransform = transform;
-
+            var up = diceTransform.up;
+            var forward = diceTransform.forward;
+            var right = diceTransform.right;
+            
             _faceRotations = new[]
             {
-                diceTransform.up,
-                diceTransform.forward,
-                diceTransform.right,
-                -diceTransform.up,
-                -diceTransform.forward,
-                -diceTransform.right,
+                up,
+                forward,
+                right,
+                -up,
+                -forward,
+                -right,
             };
         }
 
-        void Update()
+        private void Update()
         {
             if(_isResultFound) return;
         
@@ -72,10 +65,10 @@ namespace Gameplay
             // If the dice is not rolling, increment the rolling timer
             _rollingTimer += Time.deltaTime;
             
-            Face = CalculateFace();
-            FaceValue = faceValues[Face];
+            _sideRolled = CalculateFace();
+            FaceValue = faceValues[_sideRolled];
 
-            if (Face == -1)
+            if (_sideRolled == -1)
             {
                 _rigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
                 LaunchDice(_cachedDiceForce, _cachedDiceTorque);
