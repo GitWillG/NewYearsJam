@@ -1,5 +1,6 @@
 using DiceGame.Dice;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DiceGame
 {
@@ -22,8 +23,7 @@ namespace DiceGame
                 if (Input.GetMouseButtonUp(0))
                 {
                     DiceFace hoveredDie = hit.collider.gameObject.GetComponent<DiceFace>();
-                    int diceVal = hoveredDie.FaceValue;
-                    Debug.Log(diceVal);
+                    hoveredDie.HighlightDice();
                 }
             }
         }

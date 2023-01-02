@@ -7,6 +7,8 @@ namespace DiceGame.Dice
 {
     public class DiceFace : MonoBehaviour
     {
+        private Material diceMat;
+
         // The possible face values of the dice
         [SerializeField] private int[] faceValues;
         // A threshold for determining if the dice is rolling or not
@@ -36,14 +38,14 @@ namespace DiceGame.Dice
 
         private void InitDieFace()
         {
+            diceMat = gameObject.GetComponent<MeshRenderer>().material;
             //Iterates through the dice faces applying 
-            for (int i = 0; i < diceType.FaceNumbers.Length; i++)
+            for (int i = 0; i <= 5; i++)
             {
-                diceType.FaceNumbers[i] = diceType.DieSides[i % diceType.DieSides.Count];
+                faceValues[i] = diceType.DieSides[i % diceType.DieSides.Count];
                 //TODO: apply sprites to appropriate face
-                //DiceFaceImage[i] = diceType.FaceSprites[diceType.FaceNumbers[i]];
+                //DiceFaceImage[i] = diceType.FaceSprites[faceValues[i]];
             }
-            faceValues = DiceType.FaceNumbers;
             var diceTransform = transform;
             var up = diceTransform.up;
             var forward = diceTransform.forward;
@@ -145,6 +147,10 @@ namespace DiceGame.Dice
 
             // Apply a random torque to the dice
             _rigidbody.AddTorque(Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), ForceMode.Impulse);
+        }
+        public void HighlightDice()
+        {
+            diceMat.color = Color.green;
         }
     }
 }

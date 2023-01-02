@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cf4b4b3e14e307d44ab2cf2234b806f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -117,6 +117,21 @@ MonoBehaviour:
   onDiceRollResult:
     m_PersistentCalls:
       m_Calls: []
+  onDiceRollSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2367960216642263441}
+        m_TargetAssemblyTypeName: DiceGame.Dice.DiceFace, Assembly-CSharp
+        m_MethodName: HighlightDice
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &2367960216642263440
 Rigidbody:
   m_ObjectHideFlags: 0
