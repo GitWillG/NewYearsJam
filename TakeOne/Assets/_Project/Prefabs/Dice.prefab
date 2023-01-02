@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faceValues: 010000000200000003000000040000000500000006000000
   rollingThreshold: 0.2
-  diceType: {fileID: 11400000, guid: 314c4e4588a3fad478cfb1733f8ed142, type: 2}
+  diceType: {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
   onDiceRollResult:
     m_PersistentCalls:
       m_Calls: []
