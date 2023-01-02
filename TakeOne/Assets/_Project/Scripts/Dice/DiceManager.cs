@@ -8,7 +8,7 @@ namespace DiceGame.Dice
     {
         [FormerlySerializedAs("characterStats")] [SerializeField] private HeroSO characterSoStats;
         [SerializeField] private DiceRoller diceRoller;
-        public GameObject selectedDie;
+        //public GameObject selectedDie;
         public int SelectedVal { get; private set; }
 
 

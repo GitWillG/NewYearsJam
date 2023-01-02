@@ -10,7 +10,7 @@ namespace DiceGame.Dice
         private Material diceMat;
 
         // The possible face values of the dice
-        [SerializeField] private int[] faceValues;
+        private int[] faceValues = new int[6];
         // A threshold for determining if the dice is rolling or not
         [SerializeField] private float rollingThreshold = 0.2f;
         [SerializeField] private DiceSO diceType;
