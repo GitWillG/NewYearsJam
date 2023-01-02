@@ -630,7 +630,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.18898904, y: -0, z: -0, w: 0.98197925}
-  m_LocalPosition: {x: 0, y: 4.92, z: -9.47}
+  m_LocalPosition: {x: 0, y: 3.83, z: -9.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -649,7 +649,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764a6e6adb8fbc949a31ad0063f5f6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTurn: 0
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,8 +943,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501d68d5eb88a2e448369c30724f3965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterStats: {fileID: 11400000, guid: 5739299818b4b3d46b872346d0cb3c5e, type: 2}
+  characterSoStats: {fileID: 11400000, guid: 5739299818b4b3d46b872346d0cb3c5e, type: 2}
   diceRoller: {fileID: 1158474566}
+  selectedDie: {fileID: 2367960216642263466, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
 --- !u!136 &2116307351
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1140,6 +1140,5 @@ MonoBehaviour:
   turnOrder: {fileID: 963194229}
   monsterIntent: 
   attackDamage: 0
-  lifePool: 0
   monsterPool:
   - {fileID: 11400000, guid: 980814f8d82008345a692ee5663ccfa4, type: 2}

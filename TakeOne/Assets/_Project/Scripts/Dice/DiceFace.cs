@@ -11,7 +11,8 @@ namespace DiceGame.Dice
         [SerializeField] private int[] faceValues;
         // A threshold for determining if the dice is rolling or not
         [SerializeField] private float rollingThreshold = 0.2f;
-        
+        [SerializeField] private DiceSO diceType;
+
         private int _sideRolled;
         private Vector3[] _faceRotations = new Vector3[6];// The rotations of the dice's faces, in local space
         private float _rollingTimer;// A timer for checking if the dice has stopped rolling
@@ -21,7 +22,8 @@ namespace DiceGame.Dice
 
         public UnityEvent<int> onDiceRollResult;
         public int FaceValue { get; private set; }
-        
+        public DiceSO DiceType { get => diceType; set => diceType = value; }
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -34,6 +36,14 @@ namespace DiceGame.Dice
 
         private void InitDieFace()
         {
+            //Iterates through the dice faces applying 
+            for (int i = 0; i < diceType.FaceNumbers.Length; i++)
+            {
+                diceType.FaceNumbers[i] = diceType.DieSides[i % diceType.DieSides.Count];
+                //TODO: apply sprites to appropriate face
+                //DiceFaceImage[i] = diceType.FaceSprites[diceType.FaceNumbers[i]];
+            }
+            faceValues = DiceType.FaceNumbers;
             var diceTransform = transform;
             var up = diceTransform.up;
             var forward = diceTransform.forward;
