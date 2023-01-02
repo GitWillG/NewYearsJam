@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2367960216642263440}
   m_Layer: 0
   m_Name: Dice
-  m_TagString: Untagged
+  m_TagString: Dice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +113,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faceValues: 010000000200000003000000040000000500000006000000
   rollingThreshold: 0.2
+  onDiceRollResult:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &2367960216642263440
 Rigidbody:
   m_ObjectHideFlags: 0

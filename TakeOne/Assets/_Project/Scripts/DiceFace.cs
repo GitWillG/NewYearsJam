@@ -11,7 +11,10 @@ namespace Gameplay
         [SerializeField] private int[] faceValues;
 
         // The current face value of the dice
+        //This is the face not the face VALUE;
+        public int Face { get; private set; }
         public int FaceValue { get; private set; }
+
 
         // The rotations of the dice's faces, in local space
         private Vector3[] _faceRotations = new Vector3[6];
@@ -69,9 +72,10 @@ namespace Gameplay
             // If the dice is not rolling, increment the rolling timer
             _rollingTimer += Time.deltaTime;
             
-            FaceValue = CalculateFaceValue();
+            Face = CalculateFace();
+            FaceValue = faceValues[Face];
 
-            if (FaceValue == -1)
+            if (Face == -1)
             {
                 _rigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
                 LaunchDice(_cachedDiceForce, _cachedDiceTorque);
@@ -80,15 +84,15 @@ namespace Gameplay
             // If the rolling timer has reached the threshold, output the result
             if (_rollingTimer >= rollingThreshold)
             {
-                Debug.Log("The result is: " + faceValues[FaceValue]);
-                _isResultFound = true;
-                onDiceRollResult?.Invoke(faceValues[FaceValue]);
+                Debug.Log("The result is: " + FaceValue);
+                _isResultFound = true;  
+                onDiceRollResult?.Invoke(FaceValue);
             }
 
         }
 
         //TODO: Bring dice in central area after all die finished roll
-        private int CalculateFaceValue()
+        private int CalculateFace()
         {
             // Calculate the dice's current upward facing vector
             Vector3 upward = transform.up;
