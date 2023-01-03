@@ -8,7 +8,10 @@ namespace DiceGame
 {
     public class PartyManager : MonoBehaviour
     {
-        [SerializeField]private List<HeroSO> partyMembers;
+
+        //TODO: Fix publics, fix naming conventions, seperate get/set into multiple lines, grouping fields
+        //move functions to appripriate scripts, automation
+        [SerializeField] private List<HeroSO> partyMembers;
         [SerializeField] private int lifePool;
         public UIManager _UIManager;
         public DiceManager _diceMan;
