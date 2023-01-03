@@ -58,14 +58,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _HighlightIntensicy: 0.175
+    - _HighlightIntensicy: 0.5
+    - _ISFLASHING: 0
+    - _IsFlashing: 0
+    - _PulsingFrequency: 3
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _StartTime: 0
     m_Colors:
     - _BackVector: {r: 0, g: 0, b: -1, a: 0}
     - _DownVector: {r: 0, g: -1, b: 0, a: 0}
     - _ForwardVector: {r: 0, g: 0, b: 1, a: 0}
-    - _HighlightColor: {r: 0.5462278, g: 0.5462278, b: 0.5462278, a: 1}
+    - _HighlightColor: {r: 0.051754624, g: 0.40636963, b: 0.19572954, a: 1}
     - _LeftVector: {r: -1, g: 0, b: 0, a: 0}
     - _RightVector: {r: 1, g: 0, b: 0, a: 0}
     - _UpVector: {r: 0, g: 1, b: 0, a: 0}

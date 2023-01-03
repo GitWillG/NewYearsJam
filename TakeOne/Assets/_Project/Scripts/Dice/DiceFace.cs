@@ -27,8 +27,13 @@ namespace DiceGame.Dice
         public bool IsResultFound => _isResultFound;
 
         public UnityEvent<int> onDiceRollResult;
+
         public int FaceValue { get; private set; }
         public DiceSO DiceType { get => diceType; set => diceType = value; }
+        
+        private static readonly int Isflashing = Shader.PropertyToID("_IsFlashing");
+        private static readonly int StartTime = Shader.PropertyToID("_StartTime");
+        private static readonly int IsHovering = Shader.PropertyToID("_IsHover");
 
         private void Awake()
         {
@@ -147,13 +152,19 @@ namespace DiceGame.Dice
             // Apply a random torque to the dice
             _rigidbody.AddTorque(Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), ForceMode.Impulse);
         }
+
+        public void HoverOnDice(bool to)
+        {
+            _diceMat.SetInt(IsHovering, to? 1 : 0);
+        }
         public void HighlightDice()
         {
-            _diceMat.color = Color.green;
+            _diceMat.SetInt(Isflashing, 1);
+            _diceMat.SetFloat(StartTime, Time.time);
         }
         public void RemoveHighlight()
         {
-            _diceMat.color = Color.yellow;
+            _diceMat.SetInt(Isflashing, 0);
         }
 
     }

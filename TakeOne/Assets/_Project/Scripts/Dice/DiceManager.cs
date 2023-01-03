@@ -10,6 +10,7 @@ namespace DiceGame.Dice
     {
         private HeroSO characterSoStats;
         [SerializeField] private DiceRoller diceRoller;
+        [SerializeField] private float tweenDuration = 100f;
         public List<GameObject> rolledDice;
         //public List<GameObject> RolledDice { get => rolledDice; set => rolledDice = value; }
         //public GameObject selectedDie;
@@ -54,7 +55,7 @@ namespace DiceGame.Dice
             SelectedDice.Add(Dice);
             Dice.GetComponent<Rigidbody>().isKinematic = true;
 
-            StartCoroutine(LerpTowards(Dice, DiceHolder[SelectedDice.Count - 1].transform.position, Quaternion.Euler(new Vector3(Dice.transform.rotation.eulerAngles.x, 0, Dice.transform.rotation.eulerAngles.z)), 100f));
+            StartCoroutine(LerpTowards(Dice, DiceHolder[SelectedDice.Count - 1].transform.position, Quaternion.Euler(new Vector3(Dice.transform.rotation.eulerAngles.x, 0, Dice.transform.rotation.eulerAngles.z)), tweenDuration));
             //Dice.transform.rotation = Quaternion.Euler(new Vector3(Dice.transform.rotation.eulerAngles.x, 0, Dice.transform.rotation.eulerAngles.z));
            
             //Dice.transform.position = DiceHolder[SelectedDice.Count - 1].transform.position;
@@ -69,13 +70,14 @@ namespace DiceGame.Dice
         {
             float startTime = Time.time;
             float t=0;
-
-            while (Time.time < startTime + duration)
+            float tempDuration = duration * 60f;
+            
+            while (Time.time < startTime + tempDuration)
             {
-                t = (Time.time - startTime) / duration;
+                t = (Time.time - startTime) / tempDuration;
                 obToLerp.transform.position = Vector3.Lerp(obToLerp.transform.position, endPoint, t);
                 obToLerp.transform.rotation = Quaternion.Slerp(obToLerp.transform.rotation, endRotation, t);
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
 
             obToLerp.transform.position = endPoint;
@@ -86,28 +88,36 @@ namespace DiceGame.Dice
             var ray = _DiceCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
+                if (hoveredDie != null)
+                {
+                    hoveredDie.HoverOnDice(false);
+                }
+
                 if (!hit.collider.gameObject.CompareTag("Dice")) return;
 
                 hoveredDie = hit.collider.gameObject.GetComponent<DiceFace>();
-                //TODO: hover selector
-                if (Input.GetMouseButtonUp(0) && !hoveredDie.isInTray && hoveredDie.IsResultFound)
+                if (!hoveredDie.isInTray)
                 {
-                    if (SelectedDie != null)
-                    {
-                        SelectedDie.RemoveHighlight();
-                    }
-                    if (hoveredDie != SelectedDie)
-                    {
-                        SelectedDie = hit.collider.gameObject.GetComponent<DiceFace>();
-                        SelectedDie.HighlightDice();
-                        _uiMan.confirmDice.SetActive(true);
-                    }
-                    else
-                    {
-                        SelectedDie.RemoveHighlight();
-                        SelectedDie = null;
-                        _uiMan.confirmDice.SetActive(false);
-                    }
+                    hoveredDie.HoverOnDice(true);
+                }
+                //TODO: hover selector
+                if (!Input.GetMouseButtonUp(0) || hoveredDie.isInTray || !hoveredDie.IsResultFound) return;
+                
+                if (SelectedDie != null)
+                {
+                    SelectedDie.RemoveHighlight();
+                }
+                if (hoveredDie != SelectedDie)
+                {
+                    SelectedDie = hit.collider.gameObject.GetComponent<DiceFace>();
+                    SelectedDie.HighlightDice();
+                    _uiMan.confirmDice.SetActive(true);
+                }
+                else
+                {
+                    SelectedDie.RemoveHighlight();
+                    SelectedDie = null;
+                    _uiMan.confirmDice.SetActive(false);
                 }
             }
         }
