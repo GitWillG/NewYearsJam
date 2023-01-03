@@ -123,6 +123,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &310768460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 310768461}
+  - component: {fileID: 310768462}
+  m_Layer: 0
+  m_Name: TestMonster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &310768461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310768460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &310768462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310768460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb567ed271ab440da6568d3d80e6b774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterSo: {fileID: 11400000, guid: 980814f8d82008345a692ee5663ccfa4, type: 2}
+  dieResults: 020000000300000004000000
 --- !u!1 &514719522
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,9 +791,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2116307350}
-        m_TargetAssemblyTypeName: Gameplay.DiceManager, Assembly-CSharp
-        m_MethodName: RollDice
+      - m_Target: {fileID: 310768462}
+        m_TargetAssemblyTypeName: DiceGame.Monster, Assembly-CSharp
+        m_MethodName: TestMonsterDamage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -945,7 +991,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSoStats: {fileID: 11400000, guid: 5739299818b4b3d46b872346d0cb3c5e, type: 2}
   diceRoller: {fileID: 1158474566}
-  selectedDie: {fileID: 2367960216642263466, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
 --- !u!136 &2116307351
 CapsuleCollider:
   m_ObjectHideFlags: 0

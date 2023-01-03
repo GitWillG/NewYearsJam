@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3780a4ee64699494ea942aee561bf621, type: 3}
-  m_Name: Goblin
+  m_Script: {fileID: 11500000, guid: aabf88fffd2d4b3fa7d6c82e67cb2bb2, type: 3}
+  m_Name: NewCondition 2
   m_EditorClassIdentifier: 
-  monsterName: Goblin
-  monsterSkills: attack
-  attackDamage: 2
-  health: 5
-  damageCondition: {fileID: 11400000, guid: f9585133ae92f5c40b1ffb154c32680d, type: 2}
+  conditionDescription: Any die less than 3
+  allDieShouldMeetCondition: 1
+  anyDieShouldMeetCondition: 0
+  amount: 3
+  conditionType: 2

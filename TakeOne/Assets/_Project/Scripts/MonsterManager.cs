@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DiceGame
 {
     //Spawn monsters, invoke effects on monster turns, manage monster pool, handle end encounter.
-    public class EnemyManager : MonoBehaviour
+    public class MonsterManager : MonoBehaviour
     {
         [SerializeField] private string encounterName;
         [SerializeField] private TurnManager turnOrder;
@@ -17,8 +17,7 @@ namespace DiceGame
         public string EncounterName => encounterName;
 
         public TurnManager TurnOrder => turnOrder;
-
-
+        
         public void InitializeMonsters()
         {
             foreach (var monsterSO in monsterPool)

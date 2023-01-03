@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using DiceGame.ScriptableObjects.Conditions;
 using UnityEngine;
 
 namespace DiceGame.ScriptableObjects
@@ -7,8 +9,9 @@ namespace DiceGame.ScriptableObjects
     {
         [SerializeField] private string monsterName;
         [SerializeField] private string monsterSkills;
-        [SerializeField] private int attackDamage;
-        [SerializeField] private int lifeMod;
+        [SerializeField] private int damage;
+        [SerializeField] private int health;
+        [SerializeField] private Condition damageCondition;
         
         //TBD
         //[SerializeField] private Sprite visual;
@@ -19,12 +22,18 @@ namespace DiceGame.ScriptableObjects
         
         public int AttackDamage
         {
-            get => attackDamage;
-            set => attackDamage = value;
+            get => damage;
+            set => damage = value;
         }
 
-        public int LifeMod => lifeMod;
+        public int Health => health;
         
         public bool IsAlive { get; set; }
+
+        public int DamageFromCondition(List<int> dieResults)
+        {
+           damageCondition.EvaluateConditions(dieResults);
+           return damageCondition.GetDamage();
+        }
     }
 }
