@@ -12,10 +12,7 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private int damage;
         [SerializeField] private int health;
         [SerializeField] private Condition damageCondition;
-
-        //TBD
-        private Sprite visual;
-        //[SerializeField] private GameObject visual;
+        [SerializeField] private Sprite visual;
 
         public string MonsterName => monsterName;
         public string MonsterSkills => monsterSkills;

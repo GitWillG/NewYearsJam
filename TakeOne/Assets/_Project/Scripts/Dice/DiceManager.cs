@@ -9,24 +9,29 @@ namespace DiceGame.Dice
     public class DiceManager : MonoBehaviour
     {
         private HeroSO characterSoStats;
+        private List<GameObject> rolledDice = new List<GameObject>();
+        private List<GameObject> selectedDice = new List<GameObject>();
         [SerializeField] private DiceRoller diceRoller;
         [SerializeField] private float tweenDuration = 100f;
-        public List<GameObject> rolledDice;
+        [SerializeField] private Transform[] diceHolder = new Transform[5];
+        [SerializeField] private UIManager uiMan;
+        [SerializeField] private Camera diceCam;
+
         //public List<GameObject> RolledDice { get => rolledDice; set => rolledDice = value; }
         //public GameObject selectedDie;
 
-        public DiceFace hoveredDie;
+        private DiceFace hoveredDie;
         private DiceFace selectedDie;
-
-        public List<GameObject> SelectedDice;
-        public Transform[] DiceHolder = new Transform[5];
-        public int SelectedVal { get; private set; }
+        //public int SelectedVal { get; private set; } <- uniused
         public DiceFace SelectedDie { get => selectedDie; set => selectedDie = value; }
         public HeroSO CharacterSoStats { get => characterSoStats; set => characterSoStats = value; }
+        public DiceFace HoveredDie { get => hoveredDie; set => hoveredDie = value; }
+        public UIManager UiMan { get => uiMan; set => uiMan = value; }
+        public Camera DiceCam { get => diceCam; set => diceCam = value; }
+        public Transform[] DiceHolder { get => diceHolder; set => diceHolder = value; }
+        public List<GameObject> SelectedDice { get => selectedDice; set => selectedDice = value; }
+        public List<GameObject> RolledDice { get => rolledDice; set => rolledDice = value; }
 
-        public UIManager _uiMan;
-
-        public Camera _DiceCam;
         private void Awake()
         {
         }
@@ -51,7 +56,7 @@ namespace DiceGame.Dice
             SelectedDie.RemoveHighlight();
             SelectedDie.isInTray = true;
             SelectedDie = null;
-            rolledDice.Remove(Dice);
+            RolledDice.Remove(Dice);
             SelectedDice.Add(Dice);
             Dice.GetComponent<Rigidbody>().isKinematic = true;
 
@@ -59,7 +64,7 @@ namespace DiceGame.Dice
             //Dice.transform.rotation = Quaternion.Euler(new Vector3(Dice.transform.rotation.eulerAngles.x, 0, Dice.transform.rotation.eulerAngles.z));
            
             //Dice.transform.position = DiceHolder[SelectedDice.Count - 1].transform.position;
-            foreach(GameObject dice in rolledDice)
+            foreach(GameObject dice in RolledDice)
             {
                 Destroy(dice);
             }
@@ -85,39 +90,39 @@ namespace DiceGame.Dice
         }
         private void DiceSelection()
         {
-            var ray = _DiceCam.ScreenPointToRay(Input.mousePosition);
+            var ray = DiceCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
-                if (hoveredDie != null)
+                if (HoveredDie != null)
                 {
-                    hoveredDie.HoverOnDice(false);
+                    HoveredDie.HoverOnDice(false);
                 }
 
                 if (!hit.collider.gameObject.CompareTag("Dice")) return;
 
-                hoveredDie = hit.collider.gameObject.GetComponent<DiceFace>();
-                if (!hoveredDie.isInTray)
+                HoveredDie = hit.collider.gameObject.GetComponent<DiceFace>();
+                if (!HoveredDie.isInTray)
                 {
-                    hoveredDie.HoverOnDice(true);
+                    HoveredDie.HoverOnDice(true);
                 }
                 //TODO: hover selector
-                if (!Input.GetMouseButtonUp(0) || hoveredDie.isInTray || !hoveredDie.IsResultFound) return;
+                if (!Input.GetMouseButtonUp(0) || HoveredDie.isInTray || !HoveredDie.IsResultFound) return;
                 
                 if (SelectedDie != null)
                 {
                     SelectedDie.RemoveHighlight();
                 }
-                if (hoveredDie != SelectedDie)
+                if (HoveredDie != SelectedDie)
                 {
                     SelectedDie = hit.collider.gameObject.GetComponent<DiceFace>();
                     SelectedDie.HighlightDice();
-                    _uiMan.confirmDice.SetActive(true);
+                    UiMan.ConfirmDice.SetActive(true);
                 }
                 else
                 {
                     SelectedDie.RemoveHighlight();
                     SelectedDie = null;
-                    _uiMan.confirmDice.SetActive(false);
+                    UiMan.ConfirmDice.SetActive(false);
                 }
             }
         }

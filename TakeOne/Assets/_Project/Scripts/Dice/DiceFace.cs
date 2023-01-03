@@ -8,32 +8,32 @@ namespace DiceGame.Dice
 {
     public class DiceFace : MonoBehaviour
     {
-        private Material _diceMat;
 
         // The possible face values of the dice
         private int[] faceValues = new int[6];
+        private Material _diceMat;
+
         // A threshold for determining if the dice is rolling or not
         [SerializeField] private float rollingThreshold = 0.2f;
         [SerializeField] private DiceSO diceType;
 
-        private int _sideRolled;
-        private Vector3[] _faceRotations = new Vector3[6];// The rotations of the dice's faces, in local space
-        private float _rollingTimer;// A timer for checking if the dice has stopped rolling
-        private bool _isResultFound;
         private Rigidbody _rigidbody;
         private Vector2 _cachedDiceForce, _cachedDiceTorque;
+        private Vector3[] _faceRotations = new Vector3[6];// The rotations of the dice's faces, in local space
+        private int _sideRolled;
+        private float _rollingTimer;// A timer for checking if the dice has stopped rolling
+        private bool _isResultFound;
         public bool isInTray;
 
-        public bool IsResultFound => _isResultFound;
-
-        public UnityEvent<int> onDiceRollResult;
-
-        public int FaceValue { get; private set; }
-        public DiceSO DiceType { get => diceType; set => diceType = value; }
-        
         private static readonly int Isflashing = Shader.PropertyToID("_IsFlashing");
         private static readonly int StartTime = Shader.PropertyToID("_StartTime");
         private static readonly int IsHovering = Shader.PropertyToID("_IsHover");
+
+        public UnityEvent<int> onDiceRollResult;
+        public DiceSO DiceType { get => diceType; set => diceType = value; }
+        public int FaceValue { get; private set; }
+        public bool IsResultFound => _isResultFound;
+
 
         private void Awake()
         {

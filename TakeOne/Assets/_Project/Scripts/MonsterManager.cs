@@ -8,11 +8,13 @@ namespace DiceGame
     public class MonsterManager : MonoBehaviour
     {
         [SerializeField] private List<MonsterSO> encounterMembers;
-        public List<MonsterSO> EncounterMembers { get => encounterMembers; set => encounterMembers = value; }
-        [SerializeField] private string encounterName;
         [SerializeField] private TurnManager turnOrder;
+        [SerializeField] private string encounterName;
         [SerializeField] private string monsterIntent;
         [SerializeField] private int attackDamage;
+
+        public List<MonsterSO> EncounterMembers { get => encounterMembers; set => encounterMembers = value; }
+
         private int currentTurn = 0;
 
         private void Update()
@@ -38,7 +40,7 @@ namespace DiceGame
         //Figure out how to deal damage to monster??
         //When monster dies, check if all monsters are dead
         //If so call EndEncounter.
-        
+     
         //maybe belongs in encounter manager?
         public void EndEncounter()
         {

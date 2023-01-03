@@ -9,21 +9,26 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private int numOfDice;
         [SerializeField] private int lifeMod;
         [SerializeField] private GameObject diePrefab;
-        private Sprite visual;
-
+        [SerializeField] private Sprite visual;
+        public int LifeMod => lifeMod;
         public string CharacterName => characterName;
 
+
+
+
+
+        //TODO: Refactor this to work with multiple types of dice and new dice
+        public GameObject DiePrefab => diePrefab;
+
+        public Sprite Visual 
+        { 
+            get => visual; 
+            set => visual = value; 
+        }
         public int NumOfDice
         {
             get => numOfDice;
             set => numOfDice = value;
         }
-
-        public int LifeMod => lifeMod;
-
-        //TODO: Refactor this to work with multiple types of dice and new dice
-        public GameObject DiePrefab => diePrefab;
-
-        public Sprite Visual { get => visual; set => visual = value; }
     }
 }

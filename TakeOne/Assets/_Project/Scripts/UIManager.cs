@@ -6,20 +6,14 @@ namespace DiceGame
 {
     public class UIManager : MonoBehaviour
     {
-        public GameObject confirmDice;
-        public GameObject rollDice;
-        public GameObject confirmAll;
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        [SerializeField] private GameObject confirmDice;
+        [SerializeField] private GameObject rollDice;
+        [SerializeField] private GameObject confirmAll;
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        public GameObject ConfirmDice { get => confirmDice; set => confirmDice = value; }
+        public GameObject RollDice { get => rollDice; set => rollDice = value; }
+        public GameObject ConfirmAll { get => confirmAll; set => confirmAll = value; }
+
         public void enableUIElement(GameObject element)
         {
             element.SetActive(true);

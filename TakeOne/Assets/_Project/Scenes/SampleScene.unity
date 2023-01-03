@@ -1673,17 +1673,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceRoller: {fileID: 1158474566}
   tweenDuration: 0.4
-  rolledDice: []
-  hoveredDie: {fileID: 0}
-  SelectedDice: []
-  DiceHolder:
+  selectedDice: []
+  diceHolder:
   - {fileID: 967800015}
   - {fileID: 352075033}
   - {fileID: 1402684377}
   - {fileID: 101559771}
   - {fileID: 64345469}
-  _uiMan: {fileID: 1467721324}
-  _DiceCam: {fileID: 119609509}
+  uiMan: {fileID: 1467721324}
+  diceCam: {fileID: 119609509}
+  rolledDice: []
 --- !u!114 &1158474568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2006,9 +2005,9 @@ RectTransform:
   m_Father: {fileID: 961632588}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -30, y: 20}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 86, y: 20}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1386917910
@@ -2773,7 +2772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   encounterMembers: []
-  encounterName: 
   turnOrder: {fileID: 1158474568}
+  encounterName: 
   monsterIntent: 
   attackDamage: 0

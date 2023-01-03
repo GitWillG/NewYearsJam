@@ -45,14 +45,14 @@ namespace DiceGame
             {
                 if (currentTurn < partyMembers.Count-1)
                 {
-                    _UIManager.enableUIElement(_UIManager.rollDice);
+                    _UIManager.enableUIElement(_UIManager.RollDice);
                     currentTurn++;
                     _diceMan.CharacterSoStats = partyMembers[currentTurn];
                 }
                 else
                 {
                     //disableRolling();
-                    _UIManager.enableUIElement(_UIManager.confirmAll);
+                    _UIManager.enableUIElement(_UIManager.ConfirmAll);
                 }
             }
         }

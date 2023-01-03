@@ -7,17 +7,14 @@ namespace DiceGame.Dice
     {
         // The dice prefab that we will be instantiating
         [SerializeField] private GameObject defaultDicePrefab;
-
-        public DiceManager _diceMan;
-            
         // The force that will be applied to the dice when it is rolled
         [SerializeField] private Vector2 diceForce;
-
         // The torque that will be applied to the dice when it is rolled
         [SerializeField] private Vector2 diceTorque;
-
         [SerializeField] private float spawnRadius = 1f;
+        [SerializeField] private DiceManager diceMan;
 
+        public DiceManager DiceMan { get => diceMan; set => diceMan = value; }
 
         public void RollDie(GameObject dieType = null)
         {
@@ -25,7 +22,7 @@ namespace DiceGame.Dice
 
             // Instantiate a new dice at the position of the DiceRoller game object
             GameObject dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity);
-            _diceMan.rolledDice.Add(dice);
+            DiceMan.RolledDice.Add(dice);
             RandomizeRotation(dice);
             dice.GetComponent<DiceFace>().LaunchDice(diceForce, diceTorque);
         }

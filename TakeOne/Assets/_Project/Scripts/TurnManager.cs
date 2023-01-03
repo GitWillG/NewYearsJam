@@ -16,7 +16,7 @@ namespace DiceGame
             IsPlayerTurn = !IsPlayerTurn;
             if (IsPlayerTurn)
             {
-                _UIManager.enableUIElement(_UIManager.rollDice);
+                _UIManager.enableUIElement(_UIManager.RollDice);
             }
         }
     }
