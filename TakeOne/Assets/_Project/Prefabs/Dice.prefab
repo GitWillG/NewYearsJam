@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2367960216642263445}
   - component: {fileID: 2367960216642263441}
   - component: {fileID: 2367960216642263440}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dice
   m_TagString: Dice
   m_Icon: {fileID: 0}
