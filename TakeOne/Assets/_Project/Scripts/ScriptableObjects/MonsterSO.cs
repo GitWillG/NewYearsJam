@@ -12,9 +12,9 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private int damage;
         [SerializeField] private int health;
         [SerializeField] private Condition damageCondition;
-        
+
         //TBD
-        //[SerializeField] private Sprite visual;
+        private Sprite visual;
         //[SerializeField] private GameObject visual;
 
         public string MonsterName => monsterName;
@@ -29,6 +29,7 @@ namespace DiceGame.ScriptableObjects
         public int Health => health;
         
         public bool IsAlive { get; set; }
+        public Sprite Visual { get => visual; set => visual = value; }
 
         public int DamageFromCondition(List<int> dieResults)
         {

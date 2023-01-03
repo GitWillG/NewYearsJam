@@ -8,6 +8,7 @@ namespace DiceGame
     {
         public GameObject confirmDice;
         public GameObject rollDice;
+        public GameObject confirmAll;
         // Start is called before the first frame update
         void Start()
         {

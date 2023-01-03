@@ -733,7 +733,7 @@ GameObject:
   - component: {fileID: 773474526}
   - component: {fileID: 773474525}
   m_Layer: 5
-  m_Name: Confirm Selection (1)
+  m_Name: Confirm All
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -804,9 +804,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1158474567}
-        m_TargetAssemblyTypeName: DiceGame.Dice.DiceManager, Assembly-CSharp
-        m_MethodName: CollectDice
+      - m_Target: {fileID: 1158474569}
+        m_TargetAssemblyTypeName: DiceGame.PartyManager, Assembly-CSharp
+        m_MethodName: confirmAllDice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -818,10 +818,10 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1467721324}
         m_TargetAssemblyTypeName: DiceGame.UIManager, Assembly-CSharp
-        m_MethodName: enableUIElement
+        m_MethodName: disableUIElement
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 989472062}
+          m_ObjectArgument: {fileID: 773474523}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1348,12 +1348,13 @@ MonoBehaviour:
   hoveredDie: {fileID: 0}
   SelectedDice: []
   DiceHolder:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 967800015}
+  - {fileID: 352075033}
+  - {fileID: 1402684377}
+  - {fileID: 101559771}
+  - {fileID: 64345469}
   _uiMan: {fileID: 1467721324}
+  _DiceCam: {fileID: 119609509}
 --- !u!114 &1158474568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1600,11 +1601,23 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1467721324}
         m_TargetAssemblyTypeName: DiceGame.UIManager, Assembly-CSharp
-        m_MethodName: enableUIElement
+        m_MethodName: disableUIElement
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 989472062}
+          m_ObjectArgument: {fileID: 1382649242}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1158474569}
+        m_TargetAssemblyTypeName: DiceGame.PartyManager, Assembly-CSharp
+        m_MethodName: finishHeroActions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1731,6 +1744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   confirmDice: {fileID: 1382649242}
   rollDice: {fileID: 1158474564}
+  confirmAll: {fileID: 773474523}
 --- !u!4 &1467721325
 Transform:
   m_ObjectHideFlags: 0

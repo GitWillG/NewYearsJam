@@ -8,7 +8,7 @@ namespace DiceGame.Dice
 {
     public class DiceManager : MonoBehaviour
     {
-        [FormerlySerializedAs("characterStats")] [SerializeField] private HeroSO characterSoStats;
+        private HeroSO characterSoStats;
         [SerializeField] private DiceRoller diceRoller;
         public List<GameObject> rolledDice;
         //public List<GameObject> RolledDice { get => rolledDice; set => rolledDice = value; }
@@ -21,13 +21,13 @@ namespace DiceGame.Dice
         public Transform[] DiceHolder = new Transform[5];
         public int SelectedVal { get; private set; }
         public DiceFace SelectedDie { get => selectedDie; set => selectedDie = value; }
+        public HeroSO CharacterSoStats { get => characterSoStats; set => characterSoStats = value; }
 
         public UIManager _uiMan;
 
-        private Camera _mainCam;
+        public Camera _DiceCam;
         private void Awake()
         {
-            _mainCam = Camera.main;
         }
         private void Update()
         {
@@ -38,9 +38,9 @@ namespace DiceGame.Dice
         [ContextMenu("Test Roll Dice")]
         public void RollDice()
         {
-            for (int i = 0; i < characterSoStats.NumOfDice; i++)
+            for (int i = 0; i < CharacterSoStats.NumOfDice; i++)
             {
-                diceRoller.RollDie(characterSoStats.DiePrefab);
+                diceRoller.RollDie(CharacterSoStats.DiePrefab);
             }
         }
 
@@ -63,6 +63,7 @@ namespace DiceGame.Dice
                 Destroy(dice);
             }
 
+
         }
         public IEnumerator LerpTowards(GameObject obToLerp, Vector3 endPoint, Quaternion endRotation, float duration)
         {
@@ -82,7 +83,7 @@ namespace DiceGame.Dice
         }
         private void DiceSelection()
         {
-            var ray = _mainCam.ScreenPointToRay(Input.mousePosition);
+            var ray = _DiceCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
                 if (!hit.collider.gameObject.CompareTag("Dice")) return;

@@ -25,6 +25,7 @@ namespace DiceGame
         // Start is called before the first frame update
         void Start()
         {
+            _diceMan.CharacterSoStats = partyMembers[currentTurn];
             foreach (HeroSO Hero in partyMembers)
             {
                 lifePool += Hero.LifeMod;
@@ -42,21 +43,24 @@ namespace DiceGame
         {
             if (turnManager.IsPlayerTurn)
             {
-                if (currentTurn < partyMembers.Count)
+                if (currentTurn < partyMembers.Count-1)
                 {
+                    _UIManager.enableUIElement(_UIManager.rollDice);
                     currentTurn++;
+                    _diceMan.CharacterSoStats = partyMembers[currentTurn];
                 }
                 else
                 {
-                    disableRolling();
+                    //disableRolling();
+                    _UIManager.enableUIElement(_UIManager.confirmAll);
                 }
             }
         }
-        public void disableRolling()
-        {
-            _UIManager.disableUIElement(_UIManager.rollDice);
+        //public void disableRolling()
+        //{
+        //    _UIManager.disableUIElement(_UIManager.rollDice);
 
-        }
+        //}
         public void confirmAllDice()
         {
             currentTurn = 0;
@@ -67,6 +71,7 @@ namespace DiceGame
                 Destroy(heldDice);
             }
             _diceMan.SelectedDice.Clear();
+            _diceMan.CharacterSoStats = partyMembers[currentTurn];
             turnManager.EndTurn();
 
         }

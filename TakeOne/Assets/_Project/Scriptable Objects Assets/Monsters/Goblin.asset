@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: Goblin
   monsterSkills: attack
-  attackDamage: 2
+  damage: 0
   health: 5
-  damageCondition: {fileID: 11400000, guid: f9585133ae92f5c40b1ffb154c32680d, type: 2}
+  damageCondition: {fileID: 0}
