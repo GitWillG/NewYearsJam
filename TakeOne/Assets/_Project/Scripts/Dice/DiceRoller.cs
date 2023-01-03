@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DiceGame.Dice
@@ -7,6 +8,8 @@ namespace DiceGame.Dice
         // The dice prefab that we will be instantiating
         [SerializeField] private GameObject defaultDicePrefab;
 
+        public DiceManager _diceMan;
+            
         // The force that will be applied to the dice when it is rolled
         [SerializeField] private Vector2 diceForce;
 
@@ -14,13 +17,15 @@ namespace DiceGame.Dice
         [SerializeField] private Vector2 diceTorque;
 
         [SerializeField] private float spawnRadius = 1f;
-        
+
+
         public void RollDie(GameObject dieType = null)
         {
             if (dieType == null) dieType = defaultDicePrefab;
 
             // Instantiate a new dice at the position of the DiceRoller game object
             GameObject dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity);
+            _diceMan.rolledDice.Add(dice);
             RandomizeRotation(dice);
             dice.GetComponent<DiceFace>().LaunchDice(diceForce, diceTorque);
         }

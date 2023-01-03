@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aabf88fffd2d4b3fa7d6c82e67cb2bb2, type: 3}
-  m_Name: NewCondition
+  m_Name: AnyGreater3
   m_EditorClassIdentifier: 
-  conditionDescription: Any die is even?
-  allDieShouldMeetCondition: 1
-  anyDieShouldMeetCondition: 0
+  conditionDescription: Any dice Greater than 3
+  allDieShouldMeetCondition: 0
+  anyDieShouldMeetCondition: 1
   amount: 3
-  conditionType: 0
+  conditionType: 3

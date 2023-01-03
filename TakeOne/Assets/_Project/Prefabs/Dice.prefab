@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2367960216642263466}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -111,27 +111,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9969eaea8aa7294bad3fb002d578453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faceValues: 010000000200000003000000040000000500000006000000
   rollingThreshold: 0.2
   diceType: {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
+  isInTray: 0
   onDiceRollResult:
     m_PersistentCalls:
       m_Calls: []
-  onDiceRollSelected:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2367960216642263441}
-        m_TargetAssemblyTypeName: DiceGame.Dice.DiceFace, Assembly-CSharp
-        m_MethodName: HighlightDice
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!54 &2367960216642263440
 Rigidbody:
   m_ObjectHideFlags: 0

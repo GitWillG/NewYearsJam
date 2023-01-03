@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 316878edaf5d50443abfc30525194365, type: 3}
-  m_Name: Wizard
+  m_Script: {fileID: 11500000, guid: aabf88fffd2d4b3fa7d6c82e67cb2bb2, type: 3}
+  m_Name: DiceLess3
   m_EditorClassIdentifier: 
-  characterName: Wizard
-  numOfDice: 1
-  lifeMod: 10
-  diePrefab: {fileID: 2367960216642263466, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
+  conditionDescription: Dice less than 3
+  allDieShouldMeetCondition: 0
+  anyDieShouldMeetCondition: 0
+  amount: 3
+  conditionType: 2

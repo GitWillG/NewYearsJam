@@ -21,6 +21,9 @@ namespace DiceGame.Dice
         private bool _isResultFound;
         private Rigidbody _rigidbody;
         private Vector2 _cachedDiceForce, _cachedDiceTorque;
+        public bool isInTray;
+
+        public bool IsResultFound => _isResultFound;
 
         public UnityEvent<int> onDiceRollResult;
         public int FaceValue { get; private set; }
@@ -152,5 +155,10 @@ namespace DiceGame.Dice
         {
             diceMat.color = Color.green;
         }
+        public void RemoveHighlight()
+        {
+            diceMat.color = Color.yellow;
+        }
+
     }
 }
