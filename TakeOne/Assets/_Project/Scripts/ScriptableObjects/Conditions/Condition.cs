@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,6 +28,12 @@ namespace DiceGame.ScriptableObjects.Conditions
         private ConditionDelegate _myDelegate;
 
         private readonly List<DieValeResult> _dieValeResults = new();
+
+        private void Awake()
+        {
+            throw new NotImplementedException();
+        }
+
         public void EvaluateConditions(List<int> results)
         {
             _dieValeResults.Clear();

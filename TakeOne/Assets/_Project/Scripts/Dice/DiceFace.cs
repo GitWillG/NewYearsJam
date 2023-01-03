@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -7,7 +8,7 @@ namespace DiceGame.Dice
 {
     public class DiceFace : MonoBehaviour
     {
-        private Material diceMat;
+        private Material _diceMat;
 
         // The possible face values of the dice
         private int[] faceValues = new int[6];
@@ -41,7 +42,7 @@ namespace DiceGame.Dice
 
         private void InitDieFace()
         {
-            diceMat = gameObject.GetComponent<MeshRenderer>().material;
+            _diceMat = gameObject.GetComponent<MeshRenderer>().material;
             //Iterates through the dice faces applying 
             for (int i = 0; i <= 5; i++)
             {
@@ -49,19 +50,23 @@ namespace DiceGame.Dice
                 //TODO: apply sprites to appropriate face
                 //DiceFaceImage[i] = diceType.FaceSprites[faceValues[i]];
             }
+        }
+
+        private void UpdateFaceRotations()
+        {
             var diceTransform = transform;
-            var up = diceTransform.up;
-            var forward = diceTransform.forward;
-            var right = diceTransform.right;
-            
+            var up = transform.InverseTransformDirection(diceTransform.up);
+            var forward = transform.InverseTransformDirection(diceTransform.forward);
+            var right = transform.InverseTransformDirection(diceTransform.right);
+
             _faceRotations = new[]
             {
                 up,
-                forward,
                 right,
-                -up,
                 -forward,
+                forward,
                 -right,
+                -up,
             };
         }
 
@@ -79,9 +84,6 @@ namespace DiceGame.Dice
 
             // If the dice is not rolling, increment the rolling timer
             _rollingTimer += Time.deltaTime;
-            
-            _sideRolled = CalculateFace();
-            FaceValue = faceValues[_sideRolled];
 
             if (_sideRolled == -1)
             {
@@ -92,25 +94,14 @@ namespace DiceGame.Dice
             // If the rolling timer has reached the threshold, output the result
             if (_rollingTimer >= rollingThreshold)
             {
-                Debug.Log("The result is: " + FaceValue);
+                FaceValue = GetDieFace();
+                Debug.Log("The result is: " + FaceValue, this);
                 _isResultFound = true;  
                 onDiceRollResult?.Invoke(FaceValue);
             }
 
         }
-
-        //TODO: Bring dice in central area after all die finished roll
-        private int CalculateFace()
-        {
-            // Calculate the dice's current upward facing vector
-            Vector3 upward = transform.up;
-
-            // Find the face rotation that is closest to the upward vector
-            Vector3 closestRotation = GetClosestRotation(upward);
-            
-            return Array.IndexOf(_faceRotations, closestRotation);
-        }
-
+        
         private bool IsRolling()
         {
             // Get the dice's angular velocity
@@ -122,24 +113,29 @@ namespace DiceGame.Dice
             // Check if the rolling speed is above the threshold
             return rollingSpeed > rollingThreshold;
         }
-    
-        // Find the face rotation that is closest to a given vector
-        private Vector3 GetClosestRotation(Vector3 v)
+        
+        private int GetDieFace()
         {
-            Vector3 closestRotation = _faceRotations[0];
-            float closestAngle = Vector3.Angle(v, closestRotation);
-            foreach (Vector3 rotation in _faceRotations)
+            // Get the dice's up direction
+            // Vector3 up = transform.up;
+            Vector3 up = transform.InverseTransformDirection(Vector3.up);
+            UpdateFaceRotations();
+            // Find the die face that is closest to the up direction
+            float closestDot = float.MinValue;
+            int closestDieFace = faceValues[0];
+            foreach (var kvp in _faceRotations)
             {
-                float angle = Vector3.Angle(v, rotation);
-                if (angle < closestAngle)
+                float dot = Vector3.Dot(up, kvp);
+                if (dot > closestDot)
                 {
-                    closestRotation = rotation;
-                    closestAngle = angle;
+                    closestDot = dot;
+                    closestDieFace = faceValues[Array.IndexOf(_faceRotations, kvp)];
                 }
             }
-            return closestRotation;
-        }
 
+            return closestDieFace;
+        }
+        
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
         {
             _cachedDiceForce = diceForce;
@@ -153,11 +149,11 @@ namespace DiceGame.Dice
         }
         public void HighlightDice()
         {
-            diceMat.color = Color.green;
+            _diceMat.color = Color.green;
         }
         public void RemoveHighlight()
         {
-            diceMat.color = Color.yellow;
+            _diceMat.color = Color.yellow;
         }
 
     }

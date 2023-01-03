@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cf4b4b3e14e307d44ab2cf2234b806f7, type: 2}
+  - {fileID: 2100000, guid: 0661202eb782caa43ad45ca7a13267a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9969eaea8aa7294bad3fb002d578453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollingThreshold: 0.2
+  rollingThreshold: 3
   diceType: {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
   isInTray: 0
   onDiceRollResult:
