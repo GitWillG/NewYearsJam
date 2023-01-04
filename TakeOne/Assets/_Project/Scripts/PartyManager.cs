@@ -13,6 +13,7 @@ namespace DiceGame
         //move functions to appripriate scripts, automation
         [SerializeField] private List<HeroSO> partyMembers;
         [SerializeField] private int lifePool;
+        private MonsterManager monsterManager;
         private UIManager uIManager;
         private DiceManager diceMan;
         private TurnManager turnManager;
@@ -49,6 +50,7 @@ namespace DiceGame
         void Start()
         {
             uIManager = GameObject.FindObjectOfType<UIManager>();
+            monsterManager = GameObject.FindObjectOfType<MonsterManager>();
             diceMan = GameObject.FindObjectOfType<DiceManager>();
             turnManager = GameObject.FindObjectOfType<TurnManager>();
             DiceMan.CharacterSoStats = partyMembers[currentTurn];
@@ -98,6 +100,7 @@ namespace DiceGame
             }
             DiceMan.SelectedDice.Clear();
             DiceMan.CharacterSoStats = partyMembers[currentTurn];
+
             turnManager.EndTurn();
 
         }

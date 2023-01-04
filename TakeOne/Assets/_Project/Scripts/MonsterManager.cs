@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DiceGame.ScriptableObjects;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace DiceGame
         [SerializeField] private string encounterName;
         [SerializeField] private string monsterIntent;
         [SerializeField] private int attackDamage;
+        private PartyManager _partyManager;
 
         private int currentTurn = 0;
         public List<MonsterSO> EncounterMembers 
@@ -22,6 +24,7 @@ namespace DiceGame
 
         private void Start()
         {
+            _partyManager = GameObject.FindObjectOfType<PartyManager>();
             turnOrder = GameObject.FindObjectOfType<TurnManager>();
         }
         private void Update()
@@ -57,20 +60,32 @@ namespace DiceGame
         {
             if (!turnOrder.IsPlayerTurn)
             {
-                //TODO: do attack
-                Debug.Log("deal" + attackDamage + "damage");
-                if (currentTurn < EncounterMembers.Count)
-                {
-                    currentTurn++;
-                }
-                else
-                {
-                    currentTurn = 0;
-                    turnOrder.EndTurn();
-                }
-                currentTurn++;
+                StartCoroutine(PlayAnimations(0));
             }
 
+        }
+        public void progressTurn()
+        {                
+            if (currentTurn < EncounterMembers.Count)
+            {
+                currentTurn++;
+            }
+            else
+            {
+                currentTurn = 0;
+                turnOrder.EndTurn();
+            }
+            currentTurn++;
+        }
+
+        
+        public IEnumerator PlayAnimations(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            //TODO: do attack
+            Debug.Log("deal" + attackDamage + "damage");
+            _partyManager.LifePool -= attackDamage;
+            progressTurn();
         }
 
     }
