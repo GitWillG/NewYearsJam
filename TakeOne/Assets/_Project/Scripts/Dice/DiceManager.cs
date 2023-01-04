@@ -8,10 +8,10 @@ namespace DiceGame.Dice
 {
     public class DiceManager : MonoBehaviour
     {
-        [SerializeField] private DiceRoller diceRoller;
+        private DiceRoller diceRoller;
+        private UIManager uiManager;
         [SerializeField] private float tweenDuration = 100f;
-        [FormerlySerializedAs("diceHolder")] [SerializeField] private Transform[] diceTray = new Transform[5];
-        [SerializeField] private UIManager uiManager;
+        [SerializeField] private Transform[] diceTray = new Transform[5];
         [SerializeField] private Camera diceCam;
 
         private List<GameObject> _rolledDice = new List<GameObject>();
@@ -72,7 +72,12 @@ namespace DiceGame.Dice
                 Destroy(dice);
             }
         }
-        
+
+        private void Start()
+        {
+            uiManager = GameObject.FindObjectOfType<UIManager>();
+            diceRoller = GameObject.FindObjectOfType<DiceRoller>();
+        }
         public IEnumerator LerpTowards(GameObject obToLerp, Vector3 endPoint, Quaternion endRotation, float duration)
         {
             float startTime = Time.time;

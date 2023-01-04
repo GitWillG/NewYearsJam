@@ -4,7 +4,7 @@ namespace DiceGame
 {
     public class TurnManager : MonoBehaviour
     {
-        [SerializeField] private UIManager uIManager;
+        private UIManager uIManager;
         public bool IsPlayerTurn { get; set; }
         public UIManager UIManager 
         { 
@@ -14,6 +14,7 @@ namespace DiceGame
 
         private void Start()
         {
+            uIManager = GameObject.FindObjectOfType<UIManager>();
             IsPlayerTurn = true;
         }
 

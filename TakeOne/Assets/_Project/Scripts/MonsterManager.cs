@@ -8,7 +8,7 @@ namespace DiceGame
     public class MonsterManager : MonoBehaviour
     {
         [SerializeField] private List<MonsterSO> encounterMembers;
-        [SerializeField] private TurnManager turnOrder;
+        private TurnManager turnOrder;
         [SerializeField] private string encounterName;
         [SerializeField] private string monsterIntent;
         [SerializeField] private int attackDamage;
@@ -20,7 +20,10 @@ namespace DiceGame
             set => encounterMembers = value; 
         }
 
-
+        private void Start()
+        {
+            turnOrder = GameObject.FindObjectOfType<TurnManager>();
+        }
         private void Update()
         {
             TakeMonsterAction();
