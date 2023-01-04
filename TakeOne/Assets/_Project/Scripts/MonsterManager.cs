@@ -52,7 +52,7 @@ namespace DiceGame
             
         }
 
-        public void progressTurn()
+        public void ProgressTurn()
         {                
             if (currentTurn < EncounterMembers.Count-1)
             {
@@ -71,7 +71,7 @@ namespace DiceGame
         {
             yield return new WaitForSeconds(duration);
             _partyManager.LifePool -= encounterMembers[0].Damage;// make a forloop
-            progressTurn();
+            ProgressTurn();
         }
 
     }
