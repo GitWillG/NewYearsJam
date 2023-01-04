@@ -102,6 +102,7 @@ namespace DiceGame
             DiceMan.CharacterSoStats = partyMembers[currentTurn];
 
             turnManager.EndTurn();
+            StartCoroutine(monsterManager.PlayAnimations(0));
 
         }
     }

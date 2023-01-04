@@ -15,6 +15,7 @@ namespace DiceGame
         [SerializeField] private int attackDamage;
         private PartyManager _partyManager;
 
+
         private int currentTurn = 0;
         public List<MonsterSO> EncounterMembers 
         { 
@@ -27,12 +28,6 @@ namespace DiceGame
             _partyManager = GameObject.FindObjectOfType<PartyManager>();
             turnOrder = GameObject.FindObjectOfType<TurnManager>();
         }
-        private void Update()
-        {
-            TakeMonsterAction();
-        }
-
-        //[SerializeField] private List<MonsterSO> monsterPool = new List<MonsterSO>();
 
         public string EncounterName => encounterName;
 
@@ -56,17 +51,10 @@ namespace DiceGame
         {
             
         }
-        public void TakeMonsterAction()
-        {
-            if (!turnOrder.IsPlayerTurn)
-            {
-                StartCoroutine(PlayAnimations(0));
-            }
 
-        }
         public void progressTurn()
         {                
-            if (currentTurn < EncounterMembers.Count)
+            if (currentTurn < EncounterMembers.Count-1)
             {
                 currentTurn++;
             }
@@ -82,9 +70,7 @@ namespace DiceGame
         public IEnumerator PlayAnimations(float duration)
         {
             yield return new WaitForSeconds(duration);
-            //TODO: do attack
-            Debug.Log("deal" + attackDamage + "damage");
-            _partyManager.LifePool -= attackDamage;
+            _partyManager.LifePool -= encounterMembers[0].Damage;// make a forloop
             progressTurn();
         }
 
