@@ -93,13 +93,13 @@ namespace DiceGame
             ProgressTurn();
         }
 
+        [ContextMenu("create encounter")]
         public void CreateEncounter()
         {
             if (encounterMembers != null){
                 encounterMembers.Clear();
             }
-            int PartySize = Random.Range(1, 3);
-            Debug.Log(PartySize);
+            int PartySize = Random.Range(1, 4);
             for (int i = 0; i< PartySize; i++)
             {
                 int PickMonster = Random.Range(0, allMonsters.Length);

@@ -3103,8 +3103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046c6e548b546a44cbde1bc984c794f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  encounterMembers:
-  - {fileID: 11400000, guid: 980814f8d82008345a692ee5663ccfa4, type: 2}
   spawnLocations: []
   encounterName: 
   monsterIntent: 
