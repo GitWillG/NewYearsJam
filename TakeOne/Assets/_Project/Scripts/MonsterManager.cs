@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DiceGame.ScriptableObjects;
+using UnityEditor;
 using UnityEngine;
 
 namespace DiceGame
@@ -8,8 +9,9 @@ namespace DiceGame
     //Spawn monsters, invoke effects on monster turns, manage monster pool, handle end encounter.
     public class MonsterManager : MonoBehaviour
     {
-        [SerializeField] private List<MonsterSO> encounterMembers;
+        private List<MonsterSO> encounterMembers = new List<MonsterSO>();
         [SerializeField] private List<Transform> spawnLocations;
+        private Object[] allMonsters;
         private TurnManager turnOrder;
         [SerializeField] private string encounterName;
         [SerializeField] private string monsterIntent;
@@ -24,6 +26,11 @@ namespace DiceGame
             get => encounterMembers; 
             set => encounterMembers = value; 
         }
+        private void Awake()
+        {
+            //allMonsters.Add((MonsterSO)AssetDatabase.LoadAssetAtPath("Assets/_Project/Scriptable Objects Assets/Monsters", typeof(MonsterSO)));
+            allMonsters = Resources.LoadAll("Monsters", typeof(MonsterSO));
+        }
 
         private void Start()
         {
@@ -35,6 +42,7 @@ namespace DiceGame
             {
                 spawnLocations.Add(spawns.transform);
             }
+            CreateEncounter();
 
         }
 
@@ -87,12 +95,15 @@ namespace DiceGame
 
         public void CreateEncounter()
         {
-            encounterMembers.Clear();
-            Object[] monsters = Resources.LoadAll("Assets/_Project/Scriptable Objects Assets/Monsters");
+            if (encounterMembers != null){
+                encounterMembers.Clear();
+            }
             int PartySize = Random.Range(1, 3);
+            Debug.Log(PartySize);
             for (int i = 0; i< PartySize; i++)
             {
-                int PickMonster = Random.Range(0, monsters.Length);
+                int PickMonster = Random.Range(0, allMonsters.Length);
+                encounterMembers.Add((MonsterSO)allMonsters[PickMonster]);
             }
 
 
