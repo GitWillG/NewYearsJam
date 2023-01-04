@@ -8,10 +8,10 @@ namespace DiceGame
 {
     public class PartyManager : MonoBehaviour
     {
-
+        private Object[] allHeroes;
         //TODO: Fix publics, fix naming conventions, seperate get/set into multiple lines, grouping fields
         //move functions to appripriate scripts, automation
-        [SerializeField] private List<HeroSO> partyMembers;
+        private List<HeroSO> partyMembers = new List<HeroSO>();
         [SerializeField] private int lifePool;
         private MonsterManager monsterManager;
         private UIManager uIManager;
@@ -45,19 +45,20 @@ namespace DiceGame
             get => diceMan; 
             set => diceMan = value; 
         }
-
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             uIManager = GameObject.FindObjectOfType<UIManager>();
             monsterManager = GameObject.FindObjectOfType<MonsterManager>();
             diceMan = GameObject.FindObjectOfType<DiceManager>();
             turnManager = GameObject.FindObjectOfType<TurnManager>();
+            allHeroes = Resources.LoadAll("Heros", typeof(HeroSO));
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            CreateParty();
             DiceMan.CharacterSoStats = partyMembers[currentTurn];
-            foreach (HeroSO Hero in partyMembers)
-            {
-                lifePool += Hero.LifeMod;
-            }
             currentTurn = 0;
         }
 
@@ -102,7 +103,27 @@ namespace DiceGame
             DiceMan.CharacterSoStats = partyMembers[currentTurn];
 
             turnManager.EndTurn();
-            StartCoroutine(monsterManager.PlayAnimations(0));
+            StartCoroutine(monsterManager.PlayAnimations(1));
+
+        }
+        [ContextMenu("create Party")]
+        public void CreateParty()
+        {
+            if (allHeroes != null)
+            {
+                partyMembers.Clear();
+            }
+            int PartySize = Random.Range(2, 5);
+            for (int i = 0; i < PartySize; i++)
+            {
+                int pickHero = Random.Range(0, allHeroes.Length);
+                partyMembers.Add((HeroSO)allHeroes[pickHero]);
+            }
+            foreach (HeroSO Hero in partyMembers)
+            {
+                lifePool += Hero.LifeMod;
+            }
+
 
         }
     }

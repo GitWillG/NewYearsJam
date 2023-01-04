@@ -10,8 +10,8 @@ namespace DiceGame
     public class MonsterManager : MonoBehaviour
     {
         private List<MonsterSO> encounterMembers = new List<MonsterSO>();
-        [SerializeField] private List<Transform> spawnLocations;
         private Object[] allMonsters;
+        [SerializeField] private List<Transform> spawnLocations;
         private TurnManager turnOrder;
         [SerializeField] private string encounterName;
         [SerializeField] private string monsterIntent;
@@ -77,19 +77,21 @@ namespace DiceGame
             if (currentTurn < EncounterMembers.Count-1)
             {
                 currentTurn++;
+                StartCoroutine(PlayAnimations(1));
             }
             else
             {
                 currentTurn = 0;
                 turnOrder.EndTurn();
             }
-            currentTurn++;
+            //currentTurn++;
         }
 
         public IEnumerator PlayAnimations(float duration)
         {
             yield return new WaitForSeconds(duration);
-            _partyManager.LifePool -= encounterMembers[0].Damage;// make a forloop
+            Debug.Log(encounterMembers[currentTurn] + "dealt " + encounterMembers[currentTurn].Damage);
+            _partyManager.LifePool -= encounterMembers[currentTurn].Damage;// make a forloop
             ProgressTurn();
         }
 
