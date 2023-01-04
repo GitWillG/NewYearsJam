@@ -90,8 +90,9 @@ namespace DiceGame
         public IEnumerator PlayAnimations(float duration)
         {
             yield return new WaitForSeconds(duration);
-            Debug.Log(encounterMembers[currentTurn] + "dealt " + encounterMembers[currentTurn].Damage);
-            _partyManager.LifePool -= encounterMembers[currentTurn].Damage;// make a forloop
+            int DamageToDeal = encounterMembers[currentTurn].Damage;
+            Debug.Log(encounterMembers[currentTurn] + "dealt " + DamageToDeal);
+            _partyManager.LifePool -= DamageToDeal;// make a forloop
             ProgressTurn();
         }
 

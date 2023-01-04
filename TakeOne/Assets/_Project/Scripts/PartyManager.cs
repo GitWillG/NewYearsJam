@@ -112,6 +112,7 @@ namespace DiceGame
             if (allHeroes != null)
             {
                 partyMembers.Clear();
+                lifePool = 0;
             }
             int PartySize = Random.Range(2, 5);
             for (int i = 0; i < PartySize; i++)
