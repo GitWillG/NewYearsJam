@@ -13,9 +13,9 @@ namespace DiceGame
         //move functions to appripriate scripts, automation
         [SerializeField] private List<HeroSO> partyMembers;
         [SerializeField] private int lifePool;
-        [SerializeField] private UIManager uIManager;
-        [SerializeField] private DiceManager diceMan;
-        [SerializeField] private TurnManager turnManager;
+        private UIManager uIManager;
+        private DiceManager diceMan;
+        private TurnManager turnManager;
 
         private int currentTurn;
 
@@ -48,6 +48,9 @@ namespace DiceGame
         // Start is called before the first frame update
         void Start()
         {
+            uIManager = GameObject.FindObjectOfType<UIManager>();
+            diceMan = GameObject.FindObjectOfType<DiceManager>();
+            turnManager = GameObject.FindObjectOfType<TurnManager>();
             DiceMan.CharacterSoStats = partyMembers[currentTurn];
             foreach (HeroSO Hero in partyMembers)
             {

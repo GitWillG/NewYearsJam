@@ -8,68 +8,40 @@ namespace DiceGame.Dice
 {
     public class DiceManager : MonoBehaviour
     {
-        private HeroSO characterSoStats;
-        private List<GameObject> rolledDice = new List<GameObject>();
-        private List<GameObject> selectedDice = new List<GameObject>();
-        [SerializeField] private DiceRoller diceRoller;
+        private DiceRoller diceRoller;
+        private UIManager uiManager;
         [SerializeField] private float tweenDuration = 100f;
-        [SerializeField] private Transform[] diceHolder = new Transform[5];
-        [SerializeField] private UIManager uiMan;
+        [SerializeField] private Transform[] diceTray = new Transform[5];
         [SerializeField] private Camera diceCam;
 
-        private DiceFace hoveredDie;
-        private DiceFace selectedDie;
+        private List<GameObject> _rolledDice = new List<GameObject>();
+        private List<GameObject> _selectedDice = new List<GameObject>();
+
         //public int SelectedVal { get; private set; } <- uniused
-        public DiceFace SelectedDie 
-        { 
-            get => selectedDie; 
-            set => selectedDie = value; 
-        }
-        public HeroSO CharacterSoStats 
-        { 
-            get => characterSoStats; 
-            set => characterSoStats = value; 
-        }
-        public DiceFace HoveredDie 
-        { 
-            get => hoveredDie; 
-            set => hoveredDie = value; 
-        }
-        public UIManager UiMan 
-        { 
-            get => uiMan; 
-            set => uiMan = value;
-        }
-        public Camera DiceCam 
-        { 
-            get => diceCam; 
-            set => diceCam = value; 
-        }
-        public Transform[] DiceHolder 
-        { 
-            get => diceHolder; 
-            set => diceHolder = value; 
-        }
+        public DiceFace SelectedDie { get; set; }
+
+        public HeroSO CharacterSoStats { get; set; }
+
+        public DiceFace HoveredDie { get; set; }
+        
+        public Transform[] DiceTray => diceTray;
+
         public List<GameObject> SelectedDice 
         { 
-            get => selectedDice; 
-            set => selectedDice = value; 
+            get => _selectedDice; 
+            set => _selectedDice = value; 
         }
         public List<GameObject> RolledDice 
         { 
-            get => rolledDice; 
-            set => rolledDice = value; 
+            get => _rolledDice; 
+            set => _rolledDice = value; 
         }
-
-        private void Awake()
-        {
-        }
+        
         private void Update()
         {
             DiceSelection();
         }
-
-
+        
         [ContextMenu("Test Roll Dice")]
         public void RollDice()
         {
@@ -89,16 +61,22 @@ namespace DiceGame.Dice
             SelectedDice.Add(Dice);
             Dice.GetComponent<Rigidbody>().isKinematic = true;
 
-            StartCoroutine(LerpTowards(Dice, DiceHolder[SelectedDice.Count - 1].transform.position, Quaternion.Euler(new Vector3(Dice.transform.rotation.eulerAngles.x, 0, Dice.transform.rotation.eulerAngles.z)), tweenDuration));
-            //Dice.transform.rotation = Quaternion.Euler(new Vector3(Dice.transform.rotation.eulerAngles.x, 0, Dice.transform.rotation.eulerAngles.z));
-           
-            //Dice.transform.position = DiceHolder[SelectedDice.Count - 1].transform.position;
+            var lerpEndPoint = DiceTray[SelectedDice.Count - 1].transform.position;
+            var rotation = Dice.transform.rotation;
+            var lerpEndRotation = Quaternion.Euler(new Vector3(rotation.eulerAngles.x, 0, rotation.eulerAngles.z));
+            
+            StartCoroutine(LerpTowards(Dice, lerpEndPoint, lerpEndRotation, tweenDuration));
+
             foreach(GameObject dice in RolledDice)
             {
                 Destroy(dice);
             }
+        }
 
-
+        private void Start()
+        {
+            uiManager = GameObject.FindObjectOfType<UIManager>();
+            diceRoller = GameObject.FindObjectOfType<DiceRoller>();
         }
         public IEnumerator LerpTowards(GameObject obToLerp, Vector3 endPoint, Quaternion endRotation, float duration)
         {
@@ -113,13 +91,12 @@ namespace DiceGame.Dice
                 obToLerp.transform.rotation = Quaternion.Slerp(obToLerp.transform.rotation, endRotation, t);
                 yield return null;
             }
-
             obToLerp.transform.position = endPoint;
-
         }
+        
         private void DiceSelection()
         {
-            var ray = DiceCam.ScreenPointToRay(Input.mousePosition);
+            var ray = diceCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
                 if (HoveredDie != null)
@@ -145,13 +122,13 @@ namespace DiceGame.Dice
                 {
                     SelectedDie = hit.collider.gameObject.GetComponent<DiceFace>();
                     SelectedDie.HighlightDice();
-                    UiMan.ConfirmDice.SetActive(true);
+                    uiManager.ConfirmDice.SetActive(true);
                 }
                 else
                 {
                     SelectedDie.RemoveHighlight();
                     SelectedDie = null;
-                    UiMan.ConfirmDice.SetActive(false);
+                    uiManager.ConfirmDice.SetActive(false);
                 }
             }
         }
