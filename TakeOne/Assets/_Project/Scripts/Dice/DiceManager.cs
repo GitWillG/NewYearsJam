@@ -72,11 +72,13 @@ namespace DiceGame.Dice
             SelectedDice.Add(diceFace);
             dice.GetComponent<Rigidbody>().isKinematic = true;
 
-            var lerpEndPoint = DiceTray[SelectedDice.Count - 1].transform.position;
+            var lerpEndPoint = DiceTray[SelectedDice.Count - 1].transform;
+            diceFace.SetAnchor(lerpEndPoint);
+            
             var rotation = dice.transform.rotation;
             var lerpEndRotation = Quaternion.Euler(new Vector3(rotation.eulerAngles.x, 0, rotation.eulerAngles.z));
             
-            StartCoroutine(LerpTowards(dice, lerpEndPoint, lerpEndRotation, tweenDuration));
+            StartCoroutine(LerpTowards(dice, lerpEndPoint.position, lerpEndRotation, tweenDuration));
 
             DestroyAllDiceAndCleanList(ref _rolledDice);
         }

@@ -22,6 +22,7 @@ namespace DiceGame.Dice
         private float _rollingTimer;// A timer for checking if the dice has stopped rolling
         private bool _isResultFound;
         public bool isInTray;
+        public Transform _anchorTransform;
 
         private static readonly int Isflashing = Shader.PropertyToID("_IsFlashing");
         private static readonly int StartTime = Shader.PropertyToID("_StartTime");
@@ -158,6 +159,19 @@ namespace DiceGame.Dice
             _rigidbody.AddTorque(Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), ForceMode.Impulse);
         }
 
+        public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false)
+        {
+            _anchorTransform = anchorTransform;
+
+            if (snapToAnchor)
+            {
+                transform.position = anchorTransform.position;
+                return;
+            }
+            
+            //TODO: Constantly lerp to it?
+        }
+
         public void DestroyDice()
         {
             //Logic for cleaning up here and spawning shit as needed.
@@ -177,6 +191,5 @@ namespace DiceGame.Dice
         {
             _diceMat.SetInt(Isflashing, 0);
         }
-
     }
 }

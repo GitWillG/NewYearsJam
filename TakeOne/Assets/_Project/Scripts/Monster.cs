@@ -22,7 +22,7 @@ namespace DiceGame
             var visuals = Instantiate(monsterSo.MonsterVisualPrefab, transform);
             visuals.transform.position = Vector3.zero;
             
-            //Spawn Health Bar
+            //Scale Health Bar based on monster stats
             
         }
         
