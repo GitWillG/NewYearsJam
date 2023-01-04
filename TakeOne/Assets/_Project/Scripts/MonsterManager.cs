@@ -88,12 +88,11 @@ namespace DiceGame
         public void CreateEncounter()
         {
             encounterMembers.Clear();
-            MonsterSO[] monsters = Resources.LoadAll("Assets/_Project/Scriptable Objects Assets/Monsters");
+            Object[] monsters = Resources.LoadAll("Assets/_Project/Scriptable Objects Assets/Monsters");
             int PartySize = Random.Range(1, 3);
             for (int i = 0; i< PartySize; i++)
             {
                 int PickMonster = Random.Range(0, monsters.Length);
-                encounterMembers.Add(monsters[PickMonster]);
             }
 
 
