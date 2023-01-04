@@ -8,23 +8,22 @@ namespace DiceGame
     {
         [SerializeField] private MonsterSO monsterSo;
         [SerializeField] private List<int> dieResults;
+
+        private DiceSlot _diceSlot;
         public void InitializeMonster(MonsterSO so, Transform spawnLocation)
         {
             monsterSo = so;
+            transform.position = spawnLocation.position;
+
+            _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab).GetComponent<DiceSlot>(); //Spawn Die slots
+
             //Spawn Health Bar
-            //Spawn Die slots
             //Spawn Visuals
         }
-
-        public void TestMonsterDamage()
+        
+        public void TryDealDamage()
         {
-            var something = monsterSo.DamageFromCondition(dieResults);
-
-            Debug.Log("Damage dealt = "+ something);
-        }
-
-        public void TryDealDamage(List<int> dieRolls)
-        {
+            var dieRolls = _diceSlot.GetDieResults();
             var damage = monsterSo.DamageFromCondition(dieRolls);
             //Take damage from health
         }

@@ -14,6 +14,7 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private Vector2Int damageMinMax;
         [SerializeField] private int health;
         [SerializeField] private Condition damageCondition;
+        [SerializeField] private DiceSlotSO diceSlotSo;
         [FormerlySerializedAs("visual")] [SerializeField] private Sprite monsterSprite;
 
         public string MonsterName => monsterName;
@@ -29,6 +30,8 @@ namespace DiceGame.ScriptableObjects
             get => monsterSprite;
             set => monsterSprite = value;
         }
+        
+        public DiceSlotSO DiceSlotSo => diceSlotSo;
 
         public int DamageFromCondition(List<int> dieResults)
         {

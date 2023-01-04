@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -159,6 +158,12 @@ namespace DiceGame.Dice
             _rigidbody.AddTorque(Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), ForceMode.Impulse);
         }
 
+        public void DestroyDice()
+        {
+            //Logic for cleaning up here and spawning shit as needed.
+            Destroy(gameObject);
+        }
+        
         public void HoverOnDice(bool to)
         {
             _diceMat.SetInt(IsHovering, to? 1 : 0);

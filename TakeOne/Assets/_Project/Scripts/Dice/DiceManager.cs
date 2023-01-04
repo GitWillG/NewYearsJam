@@ -2,20 +2,20 @@ using DiceGame.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DiceGame.Dice
 {
     public class DiceManager : MonoBehaviour
     {
-        private DiceRoller diceRoller;
-        private UIManager uiManager;
+        private DiceRoller _diceRoller;
+        private UIManager _uiManager;
+        
         [SerializeField] private float tweenDuration = 100f;
         [SerializeField] private Transform[] diceTray = new Transform[5];
         [SerializeField] private Camera diceCam;
 
-        private List<GameObject> _rolledDice = new List<GameObject>();
-        private List<GameObject> _selectedDice = new List<GameObject>();
+        private List<DiceFace> _rolledDice = new List<DiceFace>();
+        private List<DiceFace> _selectedDice = new List<DiceFace>();
 
         //public int SelectedVal { get; private set; } <- uniused
         public DiceFace SelectedDie { get; set; }
@@ -26,17 +26,18 @@ namespace DiceGame.Dice
         
         public Transform[] DiceTray => diceTray;
 
-        public List<GameObject> SelectedDice 
+        public List<DiceFace> SelectedDice 
         { 
             get => _selectedDice; 
             set => _selectedDice = value; 
         }
-        public List<GameObject> RolledDice 
+        public List<DiceFace> RolledDice 
         { 
             get => _rolledDice; 
             set => _rolledDice = value; 
         }
         
+
         private void Update()
         {
             DiceSelection();
@@ -47,36 +48,49 @@ namespace DiceGame.Dice
         {
             for (int i = 0; i < CharacterSoStats.NumOfDice; i++)
             {
-                diceRoller.RollDie(CharacterSoStats.DiePrefab);
+                _diceRoller.RollDie(CharacterSoStats.DiePrefab);
             }
         }
 
         public void CollectDice()
         {
-            GameObject Dice = SelectedDie.gameObject;
+            GameObject dice = SelectedDie.gameObject;
+            DiceFace diceFace = dice.GetComponent<DiceFace>();
             SelectedDie.RemoveHighlight();
             SelectedDie.isInTray = true;
             SelectedDie = null;
-            RolledDice.Remove(Dice);
-            SelectedDice.Add(Dice);
-            Dice.GetComponent<Rigidbody>().isKinematic = true;
+            RolledDice.Remove(diceFace);
+            SelectedDice.Add(diceFace);
+            dice.GetComponent<Rigidbody>().isKinematic = true;
 
             var lerpEndPoint = DiceTray[SelectedDice.Count - 1].transform.position;
-            var rotation = Dice.transform.rotation;
+            var rotation = dice.transform.rotation;
             var lerpEndRotation = Quaternion.Euler(new Vector3(rotation.eulerAngles.x, 0, rotation.eulerAngles.z));
             
-            StartCoroutine(LerpTowards(Dice, lerpEndPoint, lerpEndRotation, tweenDuration));
+            StartCoroutine(LerpTowards(dice, lerpEndPoint, lerpEndRotation, tweenDuration));
 
-            foreach(GameObject dice in RolledDice)
-            {
-                Destroy(dice);
-            }
+            DestroyAllDiceAndCleanList(ref _rolledDice);
+        }
+        public void ConfirmAllDice()
+        {
+            //TODO: Use Dice
+            StopAllCoroutines();
+            DestroyAllDiceAndCleanList(ref _selectedDice);
         }
 
+        public void DestroyAllDiceAndCleanList(ref List<DiceFace> diceFaces)
+        {
+            foreach (DiceFace dice in diceFaces)
+            {
+                dice.DestroyDice();
+            }
+            diceFaces.Clear();
+        }
+        
         private void Start()
         {
-            uiManager = GameObject.FindObjectOfType<UIManager>();
-            diceRoller = GameObject.FindObjectOfType<DiceRoller>();
+            _uiManager = GameObject.FindObjectOfType<UIManager>();
+            _diceRoller = GameObject.FindObjectOfType<DiceRoller>();
         }
         public IEnumerator LerpTowards(GameObject obToLerp, Vector3 endPoint, Quaternion endRotation, float duration)
         {
@@ -122,13 +136,13 @@ namespace DiceGame.Dice
                 {
                     SelectedDie = hit.collider.gameObject.GetComponent<DiceFace>();
                     SelectedDie.HighlightDice();
-                    uiManager.ConfirmDice.SetActive(true);
+                    _uiManager.ConfirmDice.SetActive(true);
                 }
                 else
                 {
                     SelectedDie.RemoveHighlight();
                     SelectedDie = null;
-                    uiManager.ConfirmDice.SetActive(false);
+                    _uiManager.ConfirmDice.SetActive(false);
                 }
             }
         }

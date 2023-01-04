@@ -25,9 +25,9 @@ namespace DiceGame.Dice
             if (dieType == null) dieType = defaultDicePrefab;
 
             // Instantiate a new dice at the position of the DiceRoller game object
-            GameObject dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity);
+            DiceFace dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity).GetComponent<DiceFace>();
             DiceMan.RolledDice.Add(dice);
-            RandomizeRotation(dice);
+            RandomizeRotation(dice.gameObject);
             dice.GetComponent<DiceFace>().LaunchDice(diceForce, diceTorque);
         }
         // Randomize the rotation of an object
