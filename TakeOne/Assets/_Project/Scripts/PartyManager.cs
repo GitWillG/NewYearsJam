@@ -39,10 +39,10 @@ namespace DiceGame
 
         private void Awake()
         {
-            _uIManager = GameObject.FindObjectOfType<UIManager>();
-            _monsterManager = GameObject.FindObjectOfType<MonsterManager>();
-            _diceMan = GameObject.FindObjectOfType<DiceManager>();
-            _turnManager = GameObject.FindObjectOfType<TurnManager>();
+            _uIManager = FindObjectOfType<UIManager>();
+            _monsterManager = FindObjectOfType<MonsterManager>();
+            _diceMan = FindObjectOfType<DiceManager>();
+            _turnManager = FindObjectOfType<TurnManager>();
             _allHeroes = Resources.LoadAll("Heros", typeof(HeroSO));
         }
 
@@ -69,21 +69,16 @@ namespace DiceGame
                 if (_currentTurn < _partyMembers.Count-1)
                 {
                     _uIManager.EnableUIElement(_uIManager.RollDice);
-                    _currentTurn++;
-                    _diceMan.CharacterSoStats = _partyMembers[_currentTurn];
+                    _diceMan.CharacterSoStats = _partyMembers[_currentTurn++];
                 }
                 else
                 {
                     //disableRolling();
                     _uIManager.EnableUIElement(_uIManager.ConfirmAll);
+                    // _diceMan.ShouldRaycast = false;
                 }
             }
         }
-        //public void disableRolling()
-        //{
-        //    _UIManager.disableUIElement(_UIManager.rollDice);
-
-        //}
 
         [ContextMenu("create Party")]
         public void CreateParty()
@@ -93,18 +88,16 @@ namespace DiceGame
                 _partyMembers.Clear();
                 lifePool = 0;
             }
-            int PartySize = Random.Range(2, 5);
-            for (int i = 0; i < PartySize; i++)
+            int partySize = Random.Range(2, 5);
+            for (int i = 0; i < partySize; i++)
             {
                 int pickHero = Random.Range(0, _allHeroes.Length);
                 _partyMembers.Add((HeroSO)_allHeroes[pickHero]);
             }
-            foreach (HeroSO Hero in _partyMembers)
+            foreach (HeroSO hero in _partyMembers)
             {
-                lifePool += Hero.LifeMod;
+                lifePool += hero.LifeMod;
             }
-
-
         }
     }
 }

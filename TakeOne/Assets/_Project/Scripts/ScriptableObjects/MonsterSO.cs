@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DiceGame.ScriptableObjects.Conditions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DiceGame.ScriptableObjects
 {
@@ -15,7 +14,7 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private int health;
         [SerializeField] private Condition damageCondition;
         [SerializeField] private DiceSlotSO diceSlotSo;
-        [FormerlySerializedAs("visual")] [SerializeField] private Sprite monsterSprite;
+        [SerializeField] private GameObject monsterVisualPrefab;
 
         public string MonsterName => monsterName;
         public string MonsterSkills => monsterSkills;
@@ -25,12 +24,8 @@ namespace DiceGame.ScriptableObjects
 
         public bool IsAlive { get; set; }
 
-        public Sprite MonsterSprite
-        {
-            get => monsterSprite;
-            set => monsterSprite = value;
-        }
-        
+        public GameObject MonsterVisualPrefab => monsterVisualPrefab;
+
         public DiceSlotSO DiceSlotSo => diceSlotSo;
 
         public int DamageFromCondition(List<int> dieResults)

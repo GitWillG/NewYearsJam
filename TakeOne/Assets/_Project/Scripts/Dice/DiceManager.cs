@@ -17,6 +17,8 @@ namespace DiceGame.Dice
         private List<DiceFace> _rolledDice = new List<DiceFace>();
         private List<DiceFace> _selectedDice = new List<DiceFace>();
 
+        private bool _shouldRaycast;
+
         //public int SelectedVal { get; private set; } <- uniused
         public DiceFace SelectedDie { get; set; }
 
@@ -36,10 +38,17 @@ namespace DiceGame.Dice
             get => _rolledDice; 
             set => _rolledDice = value; 
         }
-        
 
+        public bool ShouldRaycast
+        {
+            get => _shouldRaycast;
+            set => _shouldRaycast = value;
+        }
+        
         private void Update()
         {
+            if(!_shouldRaycast) return;
+            
             DiceSelection();
         }
         
@@ -89,8 +98,8 @@ namespace DiceGame.Dice
         
         private void Start()
         {
-            _uiManager = GameObject.FindObjectOfType<UIManager>();
-            _diceRoller = GameObject.FindObjectOfType<DiceRoller>();
+            _uiManager = FindObjectOfType<UIManager>();
+            _diceRoller = FindObjectOfType<DiceRoller>();
         }
         public IEnumerator LerpTowards(GameObject obToLerp, Vector3 endPoint, Quaternion endRotation, float duration)
         {
@@ -110,6 +119,7 @@ namespace DiceGame.Dice
         
         private void DiceSelection()
         {
+            Debug.Log("Raycasting for dice in Dice Manager");
             var ray = diceCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {

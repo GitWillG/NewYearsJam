@@ -15,15 +15,20 @@ namespace DiceGame
             monsterSo = so;
             transform.position = spawnLocation.position;
 
-            _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab).GetComponent<DiceSlot>(); //Spawn Die slots
+            //Spawn Die slots
+            _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab).GetComponent<DiceSlot>(); 
 
-            //Spawn Health Bar
             //Spawn Visuals
+            var visuals = Instantiate(monsterSo.MonsterVisualPrefab, transform);
+            visuals.transform.position = Vector3.zero;
+            
+            //Spawn Health Bar
+            
         }
         
         public void TryDealDamage()
         {
-            var dieRolls = _diceSlot.GetDieResults();
+            var dieRolls = _diceSlot.GetDiceResults();
             var damage = monsterSo.DamageFromCondition(dieRolls);
             //Take damage from health
         }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DiceGame
@@ -10,7 +8,8 @@ namespace DiceGame
         [SerializeField] private GameObject rollDice;
         [SerializeField] private GameObject confirmAll;
 
-        public GameObject ConfirmDice { 
+        public GameObject ConfirmDice 
+        { 
             get => confirmDice; 
             set => confirmDice = value; 
         }
@@ -19,7 +18,8 @@ namespace DiceGame
             get => rollDice; 
             set => rollDice = value; 
         }
-        public GameObject ConfirmAll { 
+        public GameObject ConfirmAll 
+        { 
             get => confirmAll; 
             set => confirmAll = value; 
         }
