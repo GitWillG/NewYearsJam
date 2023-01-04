@@ -1882,9 +1882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f1236fc462439469b0a21fd5bf16b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partyMembers:
-  - {fileID: 11400000, guid: 5739299818b4b3d46b872346d0cb3c5e, type: 2}
-  - {fileID: 11400000, guid: 29256061a3285eb40a52533340bf2ae3, type: 2}
   lifePool: 0
 --- !u!1 &1167241615
 GameObject:

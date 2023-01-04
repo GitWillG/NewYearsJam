@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: Orc
   monsterSkills: attack
-  damageMinMax: {x: 2, y: 3}
+  damageMinMax: {x: 2, y: 20}
   health: 5
   damageCondition: {fileID: 0}
   monsterSprite: {fileID: 21300000, guid: a08714ab4544d224aa1ef501179403f0, type: 3}
