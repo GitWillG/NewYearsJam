@@ -8,7 +8,7 @@ namespace DiceGame
     {
         [SerializeField] private MonsterSO monsterSo;
         [SerializeField] private List<int> dieResults;
-        public void InitializeMonster(MonsterSO so)
+        public void InitializeMonster(MonsterSO so, Transform spawnLocation)
         {
             monsterSo = so;
             //Spawn Health Bar

@@ -1539,7 +1539,7 @@ GameObject:
   - component: {fileID: 1045518000}
   m_Layer: 0
   m_Name: enemySpawn3
-  m_TagString: Untagged
+  m_TagString: MonsterSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1765,8 +1765,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1133754140}
   m_Layer: 0
-  m_Name: enemySpawn
-  m_TagString: Untagged
+  m_Name: enemySpawn1
+  m_TagString: MonsterSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2767,7 +2767,7 @@ GameObject:
   - component: {fileID: 1698916772}
   m_Layer: 0
   m_Name: enemySpawn2
-  m_TagString: Untagged
+  m_TagString: MonsterSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3105,6 +3105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   encounterMembers:
   - {fileID: 11400000, guid: 980814f8d82008345a692ee5663ccfa4, type: 2}
+  spawnLocations: []
   encounterName: 
   monsterIntent: 
   attackDamage: 0
