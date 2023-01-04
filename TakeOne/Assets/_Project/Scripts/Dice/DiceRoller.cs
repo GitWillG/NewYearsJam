@@ -14,7 +14,11 @@ namespace DiceGame.Dice
         [SerializeField] private float spawnRadius = 1f;
         [SerializeField] private DiceManager diceMan;
 
-        public DiceManager DiceMan { get => diceMan; set => diceMan = value; }
+        public DiceManager DiceMan 
+        { 
+            get => diceMan; 
+            set => diceMan = value; 
+        }
 
         public void RollDie(GameObject dieType = null)
         {
@@ -26,7 +30,6 @@ namespace DiceGame.Dice
             RandomizeRotation(dice);
             dice.GetComponent<DiceFace>().LaunchDice(diceForce, diceTorque);
         }
-        
         // Randomize the rotation of an object
         private void RandomizeRotation(GameObject obj)
         {

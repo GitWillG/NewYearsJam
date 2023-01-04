@@ -13,19 +13,42 @@ namespace DiceGame
         //move functions to appripriate scripts, automation
         [SerializeField] private List<HeroSO> partyMembers;
         [SerializeField] private int lifePool;
-        public UIManager _UIManager;
-        public DiceManager _diceMan;
-        private int currentTurn;
+        [SerializeField] private UIManager uIManager;
+        [SerializeField] private DiceManager diceMan;
         [SerializeField] private TurnManager turnManager;
 
-        public List<HeroSO> PartyMembers { get => partyMembers; set => partyMembers = value; }
-        public int LifePool { get => lifePool; set => lifePool = value; }
-        public TurnManager TurnManager { get => turnManager; set => turnManager = value; }
+        private int currentTurn;
+
+        public List<HeroSO> PartyMembers 
+        { 
+            get => partyMembers; 
+            set => partyMembers = value; 
+        }
+        public int LifePool 
+        { 
+            get => lifePool; 
+            set => lifePool = value; 
+        }
+        public TurnManager TurnManager 
+        { 
+            get => turnManager; 
+            set => turnManager = value; 
+        }
+        public UIManager UIManager 
+        {
+            get => uIManager; 
+            set => uIManager = value; 
+        }
+        public DiceManager DiceMan 
+        { 
+            get => diceMan; 
+            set => diceMan = value; 
+        }
 
         // Start is called before the first frame update
         void Start()
         {
-            _diceMan.CharacterSoStats = partyMembers[currentTurn];
+            DiceMan.CharacterSoStats = partyMembers[currentTurn];
             foreach (HeroSO Hero in partyMembers)
             {
                 lifePool += Hero.LifeMod;
@@ -39,20 +62,20 @@ namespace DiceGame
         
         }
 
-        public void finishHeroActions()
+        public void FinishHeroActions()
         {
             if (turnManager.IsPlayerTurn)
             {
                 if (currentTurn < partyMembers.Count-1)
                 {
-                    _UIManager.enableUIElement(_UIManager.RollDice);
+                    UIManager.EnableUIElement(UIManager.RollDice);
                     currentTurn++;
-                    _diceMan.CharacterSoStats = partyMembers[currentTurn];
+                    DiceMan.CharacterSoStats = partyMembers[currentTurn];
                 }
                 else
                 {
                     //disableRolling();
-                    _UIManager.enableUIElement(_UIManager.ConfirmAll);
+                    UIManager.EnableUIElement(UIManager.ConfirmAll);
                 }
             }
         }
@@ -61,17 +84,17 @@ namespace DiceGame
         //    _UIManager.disableUIElement(_UIManager.rollDice);
 
         //}
-        public void confirmAllDice()
+        public void ConfirmAllDice()
         {
             currentTurn = 0;
             //TODO: Use Dice
-            _diceMan.StopAllCoroutines();
-            foreach (GameObject heldDice in _diceMan.SelectedDice) 
+            DiceMan.StopAllCoroutines();
+            foreach (GameObject heldDice in DiceMan.SelectedDice) 
             {
                 Destroy(heldDice);
             }
-            _diceMan.SelectedDice.Clear();
-            _diceMan.CharacterSoStats = partyMembers[currentTurn];
+            DiceMan.SelectedDice.Clear();
+            DiceMan.CharacterSoStats = partyMembers[currentTurn];
             turnManager.EndTurn();
 
         }

@@ -8,7 +8,6 @@ namespace DiceGame.Dice
 {
     public class DiceFace : MonoBehaviour
     {
-
         // The possible face values of the dice
         private int[] faceValues = new int[6];
         private Material _diceMat;
@@ -29,11 +28,18 @@ namespace DiceGame.Dice
         private static readonly int StartTime = Shader.PropertyToID("_StartTime");
         private static readonly int IsHovering = Shader.PropertyToID("_IsHover");
 
+        public DiceSO DiceType 
+        { 
+            get => diceType; 
+            set => diceType = value; 
+        }
+        public int FaceValue 
+        { 
+            get; 
+            private set; 
+        }
+        public bool IsResultFound => _isResultFound; 
         public UnityEvent<int> onDiceRollResult;
-        public DiceSO DiceType { get => diceType; set => diceType = value; }
-        public int FaceValue { get; private set; }
-        public bool IsResultFound => _isResultFound;
-
 
         private void Awake()
         {

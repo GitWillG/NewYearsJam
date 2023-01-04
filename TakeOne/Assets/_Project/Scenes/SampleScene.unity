@@ -966,7 +966,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1158474569}
         m_TargetAssemblyTypeName: DiceGame.PartyManager, Assembly-CSharp
-        m_MethodName: confirmAllDice
+        m_MethodName: ConfirmAllDice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -978,7 +978,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1467721324}
         m_TargetAssemblyTypeName: DiceGame.UIManager, Assembly-CSharp
-        m_MethodName: disableUIElement
+        m_MethodName: DisableUIElement
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 773474523}
@@ -1523,7 +1523,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1467721324}
         m_TargetAssemblyTypeName: DiceGame.UIManager, Assembly-CSharp
-        m_MethodName: disableUIElement
+        m_MethodName: DisableUIElement
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 989472062}
@@ -1720,7 +1720,7 @@ MonoBehaviour:
   diceForce: {x: 5, y: 15}
   diceTorque: {x: 15, y: 30}
   spawnRadius: 2
-  diceMan: {fileID: 0}
+  diceMan: {fileID: 1158474567}
 --- !u!114 &1158474567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1755,7 +1755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764a6e6adb8fbc949a31ad0063f5f6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _UIManager: {fileID: 1467721324}
+  uIManager: {fileID: 1467721324}
 --- !u!114 &1158474569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1772,8 +1772,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5739299818b4b3d46b872346d0cb3c5e, type: 2}
   - {fileID: 11400000, guid: 29256061a3285eb40a52533340bf2ae3, type: 2}
   lifePool: 0
-  _UIManager: {fileID: 1467721324}
-  _diceMan: {fileID: 1158474567}
+  uIManager: {fileID: 1467721324}
+  diceMan: {fileID: 1158474567}
   turnManager: {fileID: 1158474568}
 --- !u!1 &1167241615
 GameObject:
@@ -2020,7 +2020,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1467721324}
         m_TargetAssemblyTypeName: DiceGame.UIManager, Assembly-CSharp
-        m_MethodName: disableUIElement
+        m_MethodName: DisableUIElement
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1382649242}
@@ -2032,7 +2032,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1158474569}
         m_TargetAssemblyTypeName: DiceGame.PartyManager, Assembly-CSharp
-        m_MethodName: finishHeroActions
+        m_MethodName: FinishHeroActions
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

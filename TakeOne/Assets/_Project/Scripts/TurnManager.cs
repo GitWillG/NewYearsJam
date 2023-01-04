@@ -4,8 +4,14 @@ namespace DiceGame
 {
     public class TurnManager : MonoBehaviour
     {
+        [SerializeField] private UIManager uIManager;
         public bool IsPlayerTurn { get; set; }
-        public UIManager _UIManager;
+        public UIManager UIManager 
+        { 
+            get => uIManager; 
+            set => uIManager = value; 
+        }
+
         private void Start()
         {
             IsPlayerTurn = true;
@@ -16,7 +22,7 @@ namespace DiceGame
             IsPlayerTurn = !IsPlayerTurn;
             if (IsPlayerTurn)
             {
-                _UIManager.enableUIElement(_UIManager.RollDice);
+                UIManager.EnableUIElement(UIManager.RollDice);
             }
         }
     }

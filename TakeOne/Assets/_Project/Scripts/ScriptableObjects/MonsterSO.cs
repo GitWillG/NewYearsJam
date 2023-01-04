@@ -16,17 +16,20 @@ namespace DiceGame.ScriptableObjects
 
         public string MonsterName => monsterName;
         public string MonsterSkills => monsterSkills;
-        
+        public int Health => health;
+
         public int AttackDamage
         {
             get => damage;
             set => damage = value;
         }
-
-        public int Health => health;
         
         public bool IsAlive { get; set; }
-        public Sprite Visual { get => visual; set => visual = value; }
+        public Sprite Visual 
+        { 
+            get => visual; 
+            set => visual = value; 
+        }
 
         public int DamageFromCondition(List<int> dieResults)
         {

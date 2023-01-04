@@ -17,20 +17,49 @@ namespace DiceGame.Dice
         [SerializeField] private UIManager uiMan;
         [SerializeField] private Camera diceCam;
 
-        //public List<GameObject> RolledDice { get => rolledDice; set => rolledDice = value; }
-        //public GameObject selectedDie;
-
         private DiceFace hoveredDie;
         private DiceFace selectedDie;
         //public int SelectedVal { get; private set; } <- uniused
-        public DiceFace SelectedDie { get => selectedDie; set => selectedDie = value; }
-        public HeroSO CharacterSoStats { get => characterSoStats; set => characterSoStats = value; }
-        public DiceFace HoveredDie { get => hoveredDie; set => hoveredDie = value; }
-        public UIManager UiMan { get => uiMan; set => uiMan = value; }
-        public Camera DiceCam { get => diceCam; set => diceCam = value; }
-        public Transform[] DiceHolder { get => diceHolder; set => diceHolder = value; }
-        public List<GameObject> SelectedDice { get => selectedDice; set => selectedDice = value; }
-        public List<GameObject> RolledDice { get => rolledDice; set => rolledDice = value; }
+        public DiceFace SelectedDie 
+        { 
+            get => selectedDie; 
+            set => selectedDie = value; 
+        }
+        public HeroSO CharacterSoStats 
+        { 
+            get => characterSoStats; 
+            set => characterSoStats = value; 
+        }
+        public DiceFace HoveredDie 
+        { 
+            get => hoveredDie; 
+            set => hoveredDie = value; 
+        }
+        public UIManager UiMan 
+        { 
+            get => uiMan; 
+            set => uiMan = value;
+        }
+        public Camera DiceCam 
+        { 
+            get => diceCam; 
+            set => diceCam = value; 
+        }
+        public Transform[] DiceHolder 
+        { 
+            get => diceHolder; 
+            set => diceHolder = value; 
+        }
+        public List<GameObject> SelectedDice 
+        { 
+            get => selectedDice; 
+            set => selectedDice = value; 
+        }
+        public List<GameObject> RolledDice 
+        { 
+            get => rolledDice; 
+            set => rolledDice = value; 
+        }
 
         private void Awake()
         {

@@ -10,15 +10,25 @@ namespace DiceGame
         [SerializeField] private GameObject rollDice;
         [SerializeField] private GameObject confirmAll;
 
-        public GameObject ConfirmDice { get => confirmDice; set => confirmDice = value; }
-        public GameObject RollDice { get => rollDice; set => rollDice = value; }
-        public GameObject ConfirmAll { get => confirmAll; set => confirmAll = value; }
+        public GameObject ConfirmDice { 
+            get => confirmDice; 
+            set => confirmDice = value; 
+        }
+        public GameObject RollDice 
+        { 
+            get => rollDice; 
+            set => rollDice = value; 
+        }
+        public GameObject ConfirmAll { 
+            get => confirmAll; 
+            set => confirmAll = value; 
+        }
 
-        public void enableUIElement(GameObject element)
+        public void EnableUIElement(GameObject element)
         {
             element.SetActive(true);
         }
-        public void disableUIElement(GameObject element)
+        public void DisableUIElement(GameObject element)
         {
             element.SetActive(false);
         }

@@ -13,13 +13,17 @@ namespace DiceGame
         [SerializeField] private string monsterIntent;
         [SerializeField] private int attackDamage;
 
-        public List<MonsterSO> EncounterMembers { get => encounterMembers; set => encounterMembers = value; }
-
         private int currentTurn = 0;
+        public List<MonsterSO> EncounterMembers 
+        { 
+            get => encounterMembers; 
+            set => encounterMembers = value; 
+        }
+
 
         private void Update()
         {
-            takeMonsterAction();
+            TakeMonsterAction();
         }
 
         //[SerializeField] private List<MonsterSO> monsterPool = new List<MonsterSO>();
@@ -46,7 +50,7 @@ namespace DiceGame
         {
             
         }
-        public void takeMonsterAction()
+        public void TakeMonsterAction()
         {
             if (!turnOrder.IsPlayerTurn)
             {
