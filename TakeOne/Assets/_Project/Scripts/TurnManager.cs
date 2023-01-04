@@ -6,11 +6,6 @@ namespace DiceGame
     {
         private UIManager uIManager;
         public bool IsPlayerTurn { get; set; }
-        public UIManager UIManager 
-        { 
-            get => uIManager; 
-            set => uIManager = value; 
-        }
 
         private void Start()
         {
@@ -23,7 +18,7 @@ namespace DiceGame
             IsPlayerTurn = !IsPlayerTurn;
             if (IsPlayerTurn)
             {
-                UIManager.EnableUIElement(UIManager.RollDice);
+                uIManager.EnableUIElement(uIManager.RollDice);
             }
         }
     }
