@@ -751,52 +751,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231565529}
   m_CullTransparentMesh: 1
---- !u!1 &313146578
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 313146580}
-  - component: {fileID: 313146579}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &313146579
+--- !u!114 &313146579 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3001057765242638588, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+  m_PrefabInstance: {fileID: 3001057764930563119}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313146578}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d4244a457692734a87b791a93e98906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPaused: 0
-  pausePanel: {fileID: 1007393840}
---- !u!4 &313146580
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313146578}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 200.1792, y: 85.78784, z: 10.262812}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &352075032
 GameObject:
   m_ObjectHideFlags: 0
@@ -4346,3 +4311,64 @@ MonoBehaviour:
   encounterName: 
   monsterIntent: 
   attackDamage: 0
+--- !u!1001 &3001057764930563119
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 200.1792
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 85.78784
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.262812
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638587, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001057765242638588, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: pausePanel
+      value: 
+      objectReference: {fileID: 1007393840}
+    - target: {fileID: 3001057765242638589, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0a8b721f1b6a48141b7116e542061a3b, type: 3}
