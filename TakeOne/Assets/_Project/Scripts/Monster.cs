@@ -17,13 +17,13 @@ namespace DiceGame
             transform.parent = spawnLocation;
             //Spawn Visuals
             var visuals = Instantiate(monsterSo.MonsterVisualPrefab, transform);
-            Debug.Log("visuals");
 
             transform.localPosition = Vector3.zero;
 
+            Debug.Log(monsterSo.DiceSlotSo.SlotPrefab);
             //Spawn Die slots
-            _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab).GetComponent<DiceSlot>();
-            _diceSlot.transform.localPosition = diceSlotLocation.position;
+            _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlot>();
+            _diceSlot.transform.position = diceSlotLocation.position;
 
 
             
