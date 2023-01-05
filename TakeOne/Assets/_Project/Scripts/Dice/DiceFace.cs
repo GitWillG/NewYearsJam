@@ -158,7 +158,7 @@ namespace DiceGame.Dice
                     closestDieFace = faceValues[Array.IndexOf(_faceRotations, direction)];
                 }
             }
-            //Rotate object such that the closest direction is pointing up and Y = 0;
+            //TODO: Rotate object such that the closest direction is pointing up and Y = 0;
             return closestDieFace;
         }
         
@@ -186,34 +186,44 @@ namespace DiceGame.Dice
         {
             _anchorTransform = anchorTransform;
 
-            Debug.Log("Here!");
             if (snapToAnchor)
             {
                 transform.position = anchorTransform.position;
                 return;
             }
-            
-            //TODO: Constantly lerp to it?
             LerpAsync(anchorTransform);
         }
         
         async Task LerpAsync(Transform target)
         {
-            // Calculate the remaining distance to the target
             float distance = Vector3.Distance(transform.position, target.position);
 
-            // Continue lerping as long as the distance to the target is greater than the threshold
             while (distance > _distanceCheckThreshold)
             {
-                // Lerp to the target's position
                 transform.position = Vector3.Lerp(transform.position, target.position, lerpSpeed * Time.deltaTime);
 
-                // Update the distance to the target
                 distance = Vector3.Distance(transform.position, target.position);
 
                 await Task.Yield();
             }
-            Debug.Log("Lerp Finished :)");
+        }
+        
+        async Task RotateAsync(Vector3 endRotation)
+        {
+            // Calculate the remaining angle to the end rotation
+            float angle = Quaternion.Angle(transform.rotation, Quaternion.Euler(endRotation));
+
+            // Continue rotating as long as the angle to the end rotation is greater than the threshold
+            while (angle > _distanceCheckThreshold)
+            {
+                // Rotate towards the end rotation
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(endRotation), lerpSpeed * Time.deltaTime);
+
+                // Update the angle to the end rotation
+                angle = Quaternion.Angle(transform.rotation, Quaternion.Euler(endRotation));
+
+                await Task.Yield();
+            }
         }
 
         public void DestroyDice()
