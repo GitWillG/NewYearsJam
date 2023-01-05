@@ -49,9 +49,9 @@ namespace DiceGame
             diceFace.transform.position = emptyDiceSlot.position;
             _diceFaces.Add(diceFace);
             diceFace.CurrentSlot = this;
+            diceFace.SetAnchor(emptyDiceSlot, true);
         }
         
-        //TODO: Remove dice from slot
         public void RemoveFromDiceSlot(DiceFace diceFace)
         {
             if (!_diceFaces.Contains(diceFace)) return;

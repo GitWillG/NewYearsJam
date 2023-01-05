@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,6 +33,9 @@ namespace DiceGame.Dice
         private static readonly int Isflashing = Shader.PropertyToID("_IsFlashing");
         private static readonly int StartTime = Shader.PropertyToID("_StartTime");
         private static readonly int IsHovering = Shader.PropertyToID("_IsHover");
+        
+        private CancellationTokenSource _cancelSource = new CancellationTokenSource();
+
 
         public DiceSO DiceType 
         { 
@@ -184,6 +188,7 @@ namespace DiceGame.Dice
 
         public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false)
         {
+            _cancelSource.Cancel();
             _anchorTransform = anchorTransform;
 
             if (snapToAnchor)
@@ -191,15 +196,19 @@ namespace DiceGame.Dice
                 transform.position = anchorTransform.position;
                 return;
             }
-            LerpAsync(anchorTransform);
+
+            _cancelSource = new CancellationTokenSource();
+            LerpAsync(anchorTransform, _cancelSource.Token);
         }
         
-        async Task LerpAsync(Transform target)
+        async Task LerpAsync(Transform target , CancellationToken cancelToken)
         {
             float distance = Vector3.Distance(transform.position, target.position);
 
             while (distance > _distanceCheckThreshold)
             {
+                cancelToken.ThrowIfCancellationRequested();
+
                 transform.position = Vector3.Lerp(transform.position, target.position, lerpSpeed * Time.deltaTime);
 
                 distance = Vector3.Distance(transform.position, target.position);

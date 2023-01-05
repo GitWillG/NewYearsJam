@@ -31,6 +31,7 @@ namespace DiceGame.Dice
         
         public Transform[] DiceTray => diceTray;
         public Transform FirstAvailableDiceTrayTransform => _diceTraySlotToFaceDictionary.First(x => x.Value == null).Key;
+        public bool HasAvailableTrySlot => _diceTraySlotToFaceDictionary.Any(x => x.Value == null);
 
         public List<DiceFace> SelectedDice 
         { 
@@ -126,6 +127,8 @@ namespace DiceGame.Dice
         public Transform AddDiceToTraySlot(DiceFace diceFace)
         {
             Debug.Log("AddDiceToTraySlot");
+            if (!HasAvailableTrySlot) return null;
+            
             var emptyDiceTransform = FirstAvailableDiceTrayTransform;
             _diceTraySlotToFaceDictionary[emptyDiceTransform] = diceFace;
             diceFace.SetAnchor(emptyDiceTransform);
