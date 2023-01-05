@@ -112,8 +112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rollingThreshold: 0.2
+  lerpSpeed: 2.5
   diceType: {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
   isInTray: 0
+  _anchorTransform: {fileID: 0}
   onDiceRollResult:
     m_PersistentCalls:
       m_Calls: []

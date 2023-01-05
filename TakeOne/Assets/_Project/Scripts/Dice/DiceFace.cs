@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -13,6 +14,7 @@ namespace DiceGame.Dice
 
         // A threshold for determining if the dice is rolling or not
         [SerializeField] private float rollingThreshold = 0.2f;
+        [SerializeField] private float lerpSpeed = 10;
         [SerializeField] private DiceSO diceType;
 
         private Rigidbody _rigidbody;
@@ -21,6 +23,9 @@ namespace DiceGame.Dice
         private int _sideRolled;
         private float _rollingTimer;// A timer for checking if the dice has stopped rolling
         private bool _isResultFound;
+        private float _distanceCheckThreshold = 0.1f;
+        private DiceSlot _currentSlot;
+        
         public bool isInTray;
         public Transform _anchorTransform;
 
@@ -38,7 +43,15 @@ namespace DiceGame.Dice
             get; 
             private set; 
         }
-        public bool IsResultFound => _isResultFound; 
+        public bool IsResultFound => _isResultFound;
+        public bool IsInSlot => _currentSlot != null;
+
+        public DiceSlot CurrentSlot
+        {
+            get => _currentSlot;
+            set => _currentSlot = value;
+        }
+
         public UnityEvent<int> onDiceRollResult;
 
         private void Awake()
@@ -134,16 +147,18 @@ namespace DiceGame.Dice
             // Find the die face that is closest to the up direction
             float closestDot = float.MinValue;
             int closestDieFace = faceValues[0];
-            foreach (var kvp in _faceRotations)
+            Vector3 closestDirection = Vector3.zero;
+            foreach (var direction in _faceRotations)
             {
-                float dot = Vector3.Dot(up, kvp);
+                float dot = Vector3.Dot(up, direction);
                 if (dot > closestDot)
                 {
+                    closestDirection = direction;
                     closestDot = dot;
-                    closestDieFace = faceValues[Array.IndexOf(_faceRotations, kvp)];
+                    closestDieFace = faceValues[Array.IndexOf(_faceRotations, direction)];
                 }
             }
-
+            //Rotate object such that the closest direction is pointing up and Y = 0;
             return closestDieFace;
         }
         
@@ -159,10 +174,19 @@ namespace DiceGame.Dice
             _rigidbody.AddTorque(Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), ForceMode.Impulse);
         }
 
+        public void DetachFromSlot()
+        {
+            if(!IsInSlot) return;
+            
+            _currentSlot.RemoveFromDiceSlot(this);
+            _currentSlot = null;
+        }
+
         public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false)
         {
             _anchorTransform = anchorTransform;
 
+            Debug.Log("Here!");
             if (snapToAnchor)
             {
                 transform.position = anchorTransform.position;
@@ -170,6 +194,26 @@ namespace DiceGame.Dice
             }
             
             //TODO: Constantly lerp to it?
+            LerpAsync(anchorTransform);
+        }
+        
+        async Task LerpAsync(Transform target)
+        {
+            // Calculate the remaining distance to the target
+            float distance = Vector3.Distance(transform.position, target.position);
+
+            // Continue lerping as long as the distance to the target is greater than the threshold
+            while (distance > _distanceCheckThreshold)
+            {
+                // Lerp to the target's position
+                transform.position = Vector3.Lerp(transform.position, target.position, lerpSpeed * Time.deltaTime);
+
+                // Update the distance to the target
+                distance = Vector3.Distance(transform.position, target.position);
+
+                await Task.Yield();
+            }
+            Debug.Log("Lerp Finished :)");
         }
 
         public void DestroyDice()

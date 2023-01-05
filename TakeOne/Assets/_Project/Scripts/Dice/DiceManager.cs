@@ -1,6 +1,7 @@
 using DiceGame.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DiceGame.Dice
@@ -16,7 +17,8 @@ namespace DiceGame.Dice
 
         private List<DiceFace> _rolledDice = new List<DiceFace>();
         private List<DiceFace> _selectedDice = new List<DiceFace>();
-
+        private Dictionary<Transform, DiceFace> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceFace>();
+        
         private bool _shouldRaycast;
 
         //public int SelectedVal { get; private set; } <- uniused
@@ -27,6 +29,7 @@ namespace DiceGame.Dice
         public DiceFace HoveredDie { get; set; }
         
         public Transform[] DiceTray => diceTray;
+        public Transform FirstAvailableDiceTrayTransform => _diceSlotToFaceDictionary.First(x => x.Value == null).Key;
 
         public List<DiceFace> SelectedDice 
         { 
@@ -44,6 +47,26 @@ namespace DiceGame.Dice
             get => _shouldRaycast;
             set => _shouldRaycast = value;
         }
+
+        public Dictionary<Transform, DiceFace> DiceSlotToFaceDictionary
+        {
+            get => _diceSlotToFaceDictionary;
+            set => _diceSlotToFaceDictionary = value;
+        }
+
+        private void Start()
+        {
+            _uiManager = FindObjectOfType<UIManager>();
+            _diceRoller = FindObjectOfType<DiceRoller>();
+
+            foreach (var diceTrayTransform in diceTray)
+            {
+                if (!_diceSlotToFaceDictionary.ContainsKey(diceTrayTransform))
+                {
+                    _diceSlotToFaceDictionary.Add(diceTrayTransform, null);
+                }
+            }
+        }
         
         private void Update()
         {
@@ -52,7 +75,6 @@ namespace DiceGame.Dice
             DiceSelection();
         }
         
-        [ContextMenu("Test Roll Dice")]
         public void RollDice()
         {
             for (int i = 0; i < CharacterSoStats.NumOfDice; i++)
@@ -61,32 +83,49 @@ namespace DiceGame.Dice
             }
         }
 
-        public void CollectDice()
+        public void AddCurrentDiceToTray()
         {
-            GameObject dice = SelectedDie.gameObject;
-            DiceFace diceFace = dice.GetComponent<DiceFace>();
+            if(SelectedDie == null) return;
+            
             SelectedDie.RemoveHighlight();
             SelectedDie.isInTray = true;
-            SelectedDie = null;
-            RolledDice.Remove(diceFace);
-            SelectedDice.Add(diceFace);
-            dice.GetComponent<Rigidbody>().isKinematic = true;
-
-            var lerpEndPoint = DiceTray[SelectedDice.Count - 1].transform;
-            diceFace.SetAnchor(lerpEndPoint);
+            RolledDice.Remove(SelectedDie);
+            SelectedDice.Add(SelectedDie);
             
-            var rotation = dice.transform.rotation;
-            var lerpEndRotation = Quaternion.Euler(new Vector3(rotation.eulerAngles.x, 0, rotation.eulerAngles.z));
-            
-            StartCoroutine(LerpTowards(dice, lerpEndPoint.position, lerpEndRotation, tweenDuration));
+            SelectedDie.GetComponent<Rigidbody>().isKinematic = true;
 
+            AddDiceToTraySlot(SelectedDie);
+            
             DestroyAllDiceAndCleanList(ref _rolledDice);
         }
+        
         public void ConfirmAllDice()
         {
-            //TODO: Use Dice
             StopAllCoroutines();
             DestroyAllDiceAndCleanList(ref _selectedDice);
+            foreach (var key in _diceSlotToFaceDictionary.Keys.ToList())
+            {
+                _diceSlotToFaceDictionary[key] = null;
+            }
+        }
+
+        public void RemoveFromDiceTray(DiceFace diceFace)
+        {
+            var diceSlot =  _diceSlotToFaceDictionary.First(x => x.Value == diceFace).Key;
+            
+            if(diceSlot == null) return; 
+            
+            _diceSlotToFaceDictionary[diceSlot] = null;
+        }
+
+        public Transform AddDiceToTraySlot(DiceFace diceFace)
+        {
+            Debug.Log("AddDiceToSlot");
+            var emptyDiceTransform = FirstAvailableDiceTrayTransform;
+            _diceSlotToFaceDictionary[emptyDiceTransform] = diceFace;
+            diceFace.SetAnchor(emptyDiceTransform);
+
+            return emptyDiceTransform;
         }
 
         public void DestroyAllDiceAndCleanList(ref List<DiceFace> diceFaces)
@@ -96,27 +135,6 @@ namespace DiceGame.Dice
                 dice.DestroyDice();
             }
             diceFaces.Clear();
-        }
-        
-        private void Start()
-        {
-            _uiManager = FindObjectOfType<UIManager>();
-            _diceRoller = FindObjectOfType<DiceRoller>();
-        }
-        public IEnumerator LerpTowards(GameObject obToLerp, Vector3 endPoint, Quaternion endRotation, float duration)
-        {
-            float startTime = Time.time;
-            float t=0;
-            float tempDuration = duration * 60f;
-            
-            while (Time.time < startTime + tempDuration)
-            {
-                t = (Time.time - startTime) / tempDuration;
-                obToLerp.transform.position = Vector3.Lerp(obToLerp.transform.position, endPoint, t);
-                obToLerp.transform.rotation = Quaternion.Slerp(obToLerp.transform.rotation, endRotation, t);
-                yield return null;
-            }
-            obToLerp.transform.position = endPoint;
         }
         
         private void DiceSelection()

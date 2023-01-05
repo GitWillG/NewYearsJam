@@ -42,6 +42,7 @@ namespace DiceGame
             _diceSlotToFaceDictionary[emptyDiceSlot] = diceFace;
             diceFace.transform.position = emptyDiceSlot.position;
             _diceFaces.Add(diceFace);
+            diceFace.CurrentSlot = this;
         }
         
         //TODO: Remove dice from slot
@@ -69,9 +70,9 @@ namespace DiceGame
                 diceFace.DestroyDice();
             }
             _diceFaces.Clear();
-            foreach (var kvp in _diceSlotToFaceDictionary)
+            foreach (var key in _diceSlotToFaceDictionary.Keys)
             {
-                _diceSlotToFaceDictionary[kvp.Key] = null;
+                _diceSlotToFaceDictionary[key] = null;
             }
             return returnList;
         }
