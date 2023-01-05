@@ -112,6 +112,10 @@ namespace DiceGame.Dice
 
         public void RemoveFromDiceTray(DiceFace diceFace)
         {
+            bool any = _diceSlotToFaceDictionary.Any(x => x.Value == diceFace);
+
+            if (!any) return;
+            
             var diceSlot =  _diceSlotToFaceDictionary.First(x => x.Value == diceFace).Key;
             
             if(diceSlot == null) return; 

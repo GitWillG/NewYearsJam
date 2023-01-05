@@ -269,6 +269,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14246301}
   m_CullTransparentMesh: 1
+--- !u!4 &33988201 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3008139170610766916, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
+  m_PrefabInstance: {fileID: 1812348176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &64345468
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3235ab7de35444c3acb5a4b5aa77ae57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceSlotTransforms: []
+  diceSlotTransforms:
+  - {fileID: 85336633}
   diceSlotContainerSo: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
 --- !u!65 &85336635
 BoxCollider:
@@ -565,10 +571,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748b30a33fbac4a42b2dee9cb8ee8809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDice: {fileID: 0}
-  releaseThreshold: 0.5
+  releaseThreshold: 1.5
   diceCam: {fileID: 119609509}
-  diceSlotCSO: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
+  diceSlotCollectionSO: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
 --- !u!1 &157304905
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,6 +1683,7 @@ Transform:
   - {fileID: 1158474565}
   - {fileID: 1386917911}
   - {fileID: 1521852414}
+  - {fileID: 33988201}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3369,7 +3375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3235ab7de35444c3acb5a4b5aa77ae57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceSlotTransforms: []
+  diceSlotTransforms:
+  - {fileID: 1501011189}
   diceSlotContainerSo: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
 --- !u!65 &1501011191
 BoxCollider:
@@ -3932,7 +3939,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671009065}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.06}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4014,7 +4021,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3235ab7de35444c3acb5a4b5aa77ae57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceSlotTransforms: []
+  diceSlotTransforms:
+  - {fileID: 1671009066}
   diceSlotContainerSo: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
 --- !u!1 &1682317244
 GameObject:
@@ -4254,15 +4262,19 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 795984892}
     m_Modifications:
+    - target: {fileID: 3008139169552059589, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3008139170610766916, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3008139170610766916, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 3008139170610766916, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4278,15 +4290,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008139170610766916, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3008139170610766916, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3008139170610766916, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3008139170610766916, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4303,6 +4315,14 @@ PrefabInstance:
     - target: {fileID: 3008139170610766917, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
       propertyPath: m_Name
       value: EnemyDiceSlotTransformHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008139170865109646, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008139171135132264, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f442fd71c0808ac44ab0d2455332c7d8, type: 3}

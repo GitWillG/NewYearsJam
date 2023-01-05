@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DiceGame
 {
@@ -16,6 +14,8 @@ namespace DiceGame
         private HashSet<DiceFace> _diceFaces = new HashSet<DiceFace>();
 
         private Dictionary<Transform, DiceFace> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceFace>();
+        
+        public bool HasSlotAvailable => _diceSlotToFaceDictionary.Any(x => x.Value == null);
 
         private void Awake()
         {

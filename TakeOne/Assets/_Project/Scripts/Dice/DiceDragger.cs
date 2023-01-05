@@ -4,20 +4,21 @@ using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DiceGame
 { 
     public class DiceDragger : MonoBehaviour
     {
-        [SerializeField] private DiceFace currentDice;
         [SerializeField] private float releaseThreshold;
         [SerializeField] private Camera diceCam;
-        [SerializeField] private DiceSlotContainerSO diceSlotCSO;
-
-
-        private List<DiceSlot> _diceSlots => diceSlotCSO.DiceSlots.ToList();
+        [FormerlySerializedAs("diceSlotCSO")] [SerializeField] private DiceSlotContainerSO diceSlotCollectionSO;
+        
+        private List<DiceSlot> DiceSlots => diceSlotCollectionSO.DiceSlots.ToList();
 
         private DiceManager _diceManager;
+        private DiceFace _currentDice;
+
 
         private void Awake()
         {
@@ -26,29 +27,33 @@ namespace DiceGame
 
         public void OnPickUp()
         {
-            if(currentDice == null) return;
-            _diceManager.RemoveFromDiceTray(currentDice);
+            if(_currentDice == null) return;
+            _diceManager.RemoveFromDiceTray(_currentDice);
 
-            if (currentDice.IsInSlot)
+            if (_currentDice.IsInSlot)
             {
                 //remove from that slot
-                currentDice.DetachFromSlot();
+                _currentDice.DetachFromSlot();
             }
 
         }
 
         private void Update()
         {
-          
-            if (Input.GetKey(KeyCode.Mouse0))
+            
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                mouseTracking();
+                SetCurrentDice();
             }
-            if (Input.GetKeyUp(KeyCode.Mouse0))
+            else if (Input.GetKey(KeyCode.Mouse0))
+            {
+                MouseTracking();
+            }
+            else if (Input.GetKeyUp(KeyCode.Mouse0))
             {
                 OnDrop();
+                _currentDice = null;
             }
-           
             
             //Cast ray from cam
 
@@ -65,30 +70,53 @@ namespace DiceGame
 
         public void OnDrop()
         {
-            if(currentDice == null) return;
+            if(_currentDice == null) return;
 
-            var closestDiceSlot = _diceSlots.First(x =>
-                Vector3.Distance(currentDice.transform.position, x.transform.position) < releaseThreshold);
-            
-            if (closestDiceSlot != null)
+            var any = DiceSlots.Any(x =>
+                Vector3.Distance(_currentDice.transform.position, x.transform.position) < releaseThreshold);
+
+            if (any)
             {
-                currentDice.SetAnchor(closestDiceSlot.transform, true);
-                closestDiceSlot.AddDiceToSlot(currentDice);
-                return;
+                var closestDiceSlot = DiceSlots.First(x =>
+                    Vector3.Distance(_currentDice.transform.position, x.transform.position) < releaseThreshold);
+                if (closestDiceSlot != null && closestDiceSlot.HasSlotAvailable)
+                {
+                    _currentDice.SetAnchor(closestDiceSlot.transform, true);
+                    closestDiceSlot.AddDiceToSlot(_currentDice);
+                    return;
+                }
             }
             
-            _diceManager.AddDiceToTraySlot(currentDice);
+            _diceManager.AddDiceToTraySlot(_currentDice);
         }
-        public void mouseTracking()
+        
+        public void MouseTracking()
         {
-            Debug.Log("Raycasting for dice in Dice dragger");
+            if(_currentDice == null) return;
+            
+            var ray = diceCam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit))
+            {
+                var currentDiceTransform = _currentDice.transform;
+                
+                var trackPoint = new Vector3(hit.point.x, currentDiceTransform.position.y, hit.point.z);
+                
+                currentDiceTransform.position = trackPoint;
+            }
+        }
+
+        public void SetCurrentDice()
+        {
             var ray = diceCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
                 if (!hit.collider.gameObject.CompareTag("Dice")) return;
-                currentDice = hit.collider.gameObject.GetComponent<DiceFace>();
+                _currentDice = hit.collider.gameObject.GetComponent<DiceFace>();
                 OnPickUp();
-                currentDice.transform.position = new Vector3(hit.transform.position.x, currentDice.transform.position.y, hit.transform.position.z);
+            }
+            else
+            {
+                _currentDice = null;
             }
         }
     }

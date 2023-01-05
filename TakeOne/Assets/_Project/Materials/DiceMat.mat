@@ -28,6 +28,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 53df80eb7006c4749847153d837b8938, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DisolveSub_2d972096fc2a4cea816e22763222b10e_Texture_2128308812:
+        m_Texture: {fileID: 2800000, guid: ec47fa0b416bbba4bb46aed14de9b35a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ForwardTexture:
         m_Texture: {fileID: 2800000, guid: ed75999f4b7508749bd2f34a42d4818e, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -58,16 +62,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _DesolveTValue: 1
+    - _EdgeSize: 5.12
     - _HighlightIntensicy: 0.5
     - _ISFLASHING: 0
     - _IsFlashing: 0
+    - _IsHover: 0
+    - _NoiseScale: 75
+    - _PixelDensity: 25
     - _PulsingFrequency: 3
     - _QueueControl: 0
     - _QueueOffset: 0
     - _StartTime: 0
+    - _UseGradient: 0
     m_Colors:
     - _BackVector: {r: 0, g: 0, b: -1, a: 0}
     - _DownVector: {r: 0, g: -1, b: 0, a: 0}
+    - _EdgeCol: {r: 0, g: 1, b: 0.01486158, a: 0}
     - _ForwardVector: {r: 0, g: 0, b: 1, a: 0}
     - _HighlightColor: {r: 0.051754624, g: 0.40636963, b: 0.19572954, a: 1}
     - _LeftVector: {r: -1, g: 0, b: 0, a: 0}
