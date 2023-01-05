@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 134808791686348006}
   - component: {fileID: 5747944329045621695}
   - component: {fileID: 2858492285012854985}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3002600968293546214}
   m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.7071079}
-  m_LocalPosition: {x: 59.2, y: 0.5000001, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3858486774269624981}
   - component: {fileID: 5520030051954334029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 3DiceSlots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,8 +107,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4452927630579983838}
-  m_LocalRotation: {x: -0.70710576, y: -0, z: -0, w: 0.7071079}
-  m_LocalPosition: {x: -58, y: -1, z: 0.49999714}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 4382803600019647348}
   - component: {fileID: 324854213109627734}
   - component: {fileID: 2453860464364822761}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8081987193448009969}
   m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.7071079}
-  m_LocalPosition: {x: 60.4, y: 0.5000001, z: 1}
+  m_LocalPosition: {x: 1.25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 9100802720916041460}
   - component: {fileID: 9100802720916041456}
   - component: {fileID: 9100802720916041457}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9100802720916041461}
   m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.7071079}
-  m_LocalPosition: {x: 58, y: 0.5000001, z: 1}
+  m_LocalPosition: {x: -1.25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

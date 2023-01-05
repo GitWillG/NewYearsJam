@@ -23,7 +23,7 @@ namespace DiceGame
             Debug.Log(monsterSo.DiceSlotSo.SlotPrefab);
             //Spawn Die slots
             _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlot>();
-            _diceSlot.transform.position = diceSlotLocation.position;
+            _diceSlot.transform.position = diceSlotLocation.localPosition;
 
 
             

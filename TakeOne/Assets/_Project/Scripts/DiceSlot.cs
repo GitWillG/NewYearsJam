@@ -11,7 +11,7 @@ namespace DiceGame
         [SerializeField] private List<Transform> diceSlotTransforms = new List<Transform>();
         [SerializeField] private DiceSlotContainerSO diceSlotContainerSo;
 
-        private HashSet<DiceFace> _diceFaces = new HashSet<DiceFace>();
+        private List<DiceFace> _diceFaces = new List<DiceFace>();
 
         private Dictionary<Transform, DiceFace> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceFace>();
         
@@ -54,10 +54,9 @@ namespace DiceGame
         //TODO: Remove dice from slot
         public void RemoveFromDiceSlot(DiceFace diceFace)
         {
-            if (_diceFaces.Contains(diceFace))
-            {
-                _diceFaces.Remove(diceFace);
-            }
+            if (!_diceFaces.Contains(diceFace)) return;
+            
+            _diceFaces.Remove(diceFace);
 
             var slotForDice = _diceSlotToFaceDictionary.First(x => x.Value == diceFace).Key;
             _diceSlotToFaceDictionary[slotForDice] = null;
@@ -71,10 +70,13 @@ namespace DiceGame
                 returnList.Add(diceFace.FaceValue);
             }
 
-            foreach (var diceFace in _diceFaces.Reverse())
+
+            for (var i = 0; i < _diceFaces.Count; i++)
             {
+                var diceFace = _diceFaces[i];
                 diceFace.DestroyDice();
             }
+
             _diceFaces.Clear();
             foreach (var key in _diceSlotToFaceDictionary.Keys)
             {

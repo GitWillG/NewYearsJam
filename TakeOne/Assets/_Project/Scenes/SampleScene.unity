@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   releaseThreshold: 1.5
   diceCam: {fileID: 119609509}
-  diceSlotCollectionSO: {fileID: 0}
+  diceSlotCollectionSO: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
 --- !u!1 &157304905
 GameObject:
   m_ObjectHideFlags: 0

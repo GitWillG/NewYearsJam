@@ -17,7 +17,7 @@ namespace DiceGame.Dice
 
         private List<DiceFace> _rolledDice = new List<DiceFace>();
         private List<DiceFace> _selectedDice = new List<DiceFace>();
-        private Dictionary<Transform, DiceFace> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceFace>();
+        private Dictionary<Transform, DiceFace> _diceTraySlotToFaceDictionary = new Dictionary<Transform, DiceFace>();
 
 
         private bool _shouldRaycast;
@@ -30,7 +30,7 @@ namespace DiceGame.Dice
         public DiceFace HoveredDie { get; set; }
         
         public Transform[] DiceTray => diceTray;
-        public Transform FirstAvailableDiceTrayTransform => _diceSlotToFaceDictionary.First(x => x.Value == null).Key;
+        public Transform FirstAvailableDiceTrayTransform => _diceTraySlotToFaceDictionary.First(x => x.Value == null).Key;
 
         public List<DiceFace> SelectedDice 
         { 
@@ -51,8 +51,8 @@ namespace DiceGame.Dice
 
         public Dictionary<Transform, DiceFace> DiceSlotToFaceDictionary
         {
-            get => _diceSlotToFaceDictionary;
-            set => _diceSlotToFaceDictionary = value;
+            get => _diceTraySlotToFaceDictionary;
+            set => _diceTraySlotToFaceDictionary = value;
         }
 
         private void Start()
@@ -62,9 +62,9 @@ namespace DiceGame.Dice
 
             foreach (var diceTrayTransform in diceTray)
             {
-                if (!_diceSlotToFaceDictionary.ContainsKey(diceTrayTransform))
+                if (!_diceTraySlotToFaceDictionary.ContainsKey(diceTrayTransform))
                 {
-                    _diceSlotToFaceDictionary.Add(diceTrayTransform, null);
+                    _diceTraySlotToFaceDictionary.Add(diceTrayTransform, null);
                 }
             }
         }
@@ -104,30 +104,30 @@ namespace DiceGame.Dice
         {
             StopAllCoroutines();
             DestroyAllDiceAndCleanList(ref _selectedDice);
-            foreach (var key in _diceSlotToFaceDictionary.Keys.ToList())
+            foreach (var key in _diceTraySlotToFaceDictionary.Keys.ToList())
             {
-                _diceSlotToFaceDictionary[key] = null;
+                _diceTraySlotToFaceDictionary[key] = null;
             }
         }
 
         public void RemoveFromDiceTray(DiceFace diceFace)
         {
-            bool any = _diceSlotToFaceDictionary.Any(x => x.Value == diceFace);
+            bool exists = _diceTraySlotToFaceDictionary.Any(x => x.Value == diceFace);
 
-            if (!any) return;
+            if (!exists) return;
             
-            var diceSlot =  _diceSlotToFaceDictionary.First(x => x.Value == diceFace).Key;
+            var diceSlot =  _diceTraySlotToFaceDictionary.First(x => x.Value == diceFace).Key;
             
             if(diceSlot == null) return; 
             
-            _diceSlotToFaceDictionary[diceSlot] = null;
+            _diceTraySlotToFaceDictionary[diceSlot] = null;
         }
 
         public Transform AddDiceToTraySlot(DiceFace diceFace)
         {
-            Debug.Log("AddDiceToSlot");
+            Debug.Log("AddDiceToTraySlot");
             var emptyDiceTransform = FirstAvailableDiceTrayTransform;
-            _diceSlotToFaceDictionary[emptyDiceTransform] = diceFace;
+            _diceTraySlotToFaceDictionary[emptyDiceTransform] = diceFace;
             diceFace.SetAnchor(emptyDiceTransform);
 
             return emptyDiceTransform;
