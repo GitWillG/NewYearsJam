@@ -1,13 +1,17 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DiceGame.Dice;
+using DiceGame.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DiceGame
 {
     public class DiceSlot : MonoBehaviour
     {
         [SerializeField] private List<Transform> diceSlotTransforms = new List<Transform>();
+        [SerializeField] private DiceSlotContainerSO diceSlotContainerSo;
 
         private HashSet<DiceFace> _diceFaces = new HashSet<DiceFace>();
 
@@ -22,6 +26,8 @@ namespace DiceGame
                     _diceSlotToFaceDictionary.Add(slotTransform, null);
                 }
             }
+            
+            diceSlotContainerSo.AddToDiceList(this);
         }
 
         public void AddDiceToSlot(DiceFace diceFace)
@@ -75,6 +81,11 @@ namespace DiceGame
                 _diceSlotToFaceDictionary[key] = null;
             }
             return returnList;
+        }
+
+        private void OnDestroy()
+        {
+            diceSlotContainerSo.RemoveFromDiceList(this);
         }
     }
 }
