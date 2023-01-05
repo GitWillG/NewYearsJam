@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DiceGame.ScriptableObjects;
 using UnityEngine;
 using DiceGame.Dice;
+using UnityEngine.Events;
 
 namespace DiceGame
 {
@@ -19,6 +20,7 @@ namespace DiceGame
         private DiceManager _diceMan;
         private TurnManager _turnManager;
 
+        public UnityEvent onRollingFinished;
         private int _currentTurn;
 
         public HeroSO CurrentPartyMember => PartyMembers[CurrentTurn];
@@ -74,6 +76,7 @@ namespace DiceGame
                 else
                 {
                     //disableRolling();
+                    onRollingFinished?.Invoke();
                     _uIManager.EnableUIElement(_uIManager.ConfirmAll);
                     // _diceMan.ShouldRaycast = false;
                 }

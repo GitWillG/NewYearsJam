@@ -10,7 +10,7 @@ namespace DiceGame.Dice
     {
         private DiceRoller _diceRoller;
         private UIManager _uiManager;
-        
+       
         [SerializeField] private float tweenDuration = 100f;
         [SerializeField] private Transform[] diceTray = new Transform[5];
         [SerializeField] private Camera diceCam;
@@ -18,7 +18,8 @@ namespace DiceGame.Dice
         private List<DiceFace> _rolledDice = new List<DiceFace>();
         private List<DiceFace> _selectedDice = new List<DiceFace>();
         private Dictionary<Transform, DiceFace> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceFace>();
-        
+
+
         private bool _shouldRaycast;
 
         //public int SelectedVal { get; private set; } <- uniused
