@@ -27,7 +27,7 @@ namespace DiceGame.ScriptableObjects.Conditions
 
         private ConditionDelegate _myDelegate;
 
-        private readonly List<DieValeResult> _dieValeResults = new();
+        private readonly List<DieValeResult> _dieValeResults = new List<DieValeResult>();
 
         private void Awake()
         {

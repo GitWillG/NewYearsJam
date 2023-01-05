@@ -11,13 +11,14 @@ namespace DiceGame
     {
         private List<MonsterSO> encounterMembers = new List<MonsterSO>();
         private Object[] allMonsters;
-        [SerializeField] private List<Transform> spawnLocations;
+        [SerializeField] private List<Transform> spawnLocations = new List<Transform>();
+        [SerializeField] private List<Transform> diceHolderSpawn = new List<Transform>();
         private TurnManager turnOrder;
         [SerializeField] private string encounterName;
         [SerializeField] private string monsterIntent;
         [SerializeField] private int attackDamage;
         private PartyManager _partyManager;
-        private Monster _monster;
+        [SerializeField] private Monster monster;
 
 
         private int currentTurn = 0;
@@ -26,6 +27,12 @@ namespace DiceGame
             get => encounterMembers; 
             set => encounterMembers = value; 
         }
+        public string EncounterName => encounterName;
+
+        public TurnManager TurnOrder => turnOrder;
+
+        public List<Transform> SpawnLocations { get => spawnLocations; set => spawnLocations = value; }
+
         private void Awake()
         {
             //allMonsters.Add((MonsterSO)AssetDatabase.LoadAssetAtPath("Assets/_Project/Scriptable Objects Assets/Monsters", typeof(MonsterSO)));
@@ -34,7 +41,7 @@ namespace DiceGame
 
         private void Start()
         {
-            _monster = GameObject.FindObjectOfType<Monster>();
+            //monster = GameObject.FindObjectOfType<Monster>();
             _partyManager = GameObject.FindObjectOfType<PartyManager>();
             turnOrder = GameObject.FindObjectOfType<TurnManager>();
             spawnLocations = new List<Transform>();
@@ -42,21 +49,23 @@ namespace DiceGame
             {
                 spawnLocations.Add(spawns.transform);
             }
+            foreach (GameObject holder in GameObject.FindGameObjectsWithTag("HolderSpawn"))
+            {
+                diceHolderSpawn.Add(holder.transform);
+            }
+
             CreateEncounter();
 
         }
 
-        public string EncounterName => encounterName;
-
-        public TurnManager TurnOrder => turnOrder;
-
-        public List<Transform> SpawnLocations { get => spawnLocations; set => spawnLocations = value; }
+       
 
         public void InitializeMonsters()
         {
-            for (int i=0; i<EncounterMembers.Count -1; i++)
+            for (int i=0; i<EncounterMembers.Count; i++)
             {
-                _monster.InitializeMonster(encounterMembers[i], spawnLocations[i]);
+                var newMonster = Instantiate(monster).GetComponent<Monster>();
+                newMonster.InitializeMonster(encounterMembers[i], spawnLocations[i], diceHolderSpawn[i]);
                 //Spawn a monster prefab
                 //Call some function in the script and pass along the MonsterSO.
                 //In the script, make this monster class look like the MonsterSO
@@ -108,6 +117,7 @@ namespace DiceGame
                 int PickMonster = Random.Range(0, allMonsters.Length);
                 encounterMembers.Add((MonsterSO)allMonsters[PickMonster]);
             }
+            InitializeMonsters();
 
 
         }

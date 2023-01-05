@@ -4,12 +4,15 @@ using UnityEngine;
 
 namespace DiceGame.ScriptableObjects
 {
+
+    [CreateAssetMenu(fileName = "CreateDiceSlotSO", menuName = "Assets/Create/CreateDiceSlotSO", order = 1)]
     public class DiceSlotSO : ScriptableObject
     {
         [SerializeField] private int numberOfSlots;
-        [SerializeField] private List<SlotObjectRelation> allSlotSprites;
+        //[SerializeField] private List<SlotObjectRelation> allSlotSprites;
+        [SerializeField] private GameObject slotPrefab;
 
-        public GameObject SlotPrefab => allSlotSprites.First(x => x.numberOfSlots == numberOfSlots).slotPrefab;
+        public GameObject SlotPrefab => slotPrefab;
     }
 }
 

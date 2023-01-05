@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3780a4ee64699494ea942aee561bf621, type: 3}
-  m_Name: Goblin
+  m_Script: {fileID: 11500000, guid: ac5a2d2acde645aa8a2d7484dec72884, type: 3}
+  m_Name: 3Slot
   m_EditorClassIdentifier: 
-  monsterName: Orc
-  monsterSkills: attack
-  damageMinMax: {x: 2, y: 20}
-  health: 5
-  damageCondition: {fileID: 0}
-  monsterSprite: {fileID: 21300000, guid: a08714ab4544d224aa1ef501179403f0, type: 3}
+  numberOfSlots: 3
+  slotPrefab: {fileID: 4452927630579983838, guid: 16a7593ee8c7bc84c96ef94bc848b8ef, type: 3}

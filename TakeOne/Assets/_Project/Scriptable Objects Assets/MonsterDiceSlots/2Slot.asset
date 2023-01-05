@@ -9,6 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a782d37f2f145d6902e2d8ade13acc3, type: 3}
-  m_Name: New DiceSlot Container
+  m_Script: {fileID: 11500000, guid: ac5a2d2acde645aa8a2d7484dec72884, type: 3}
+  m_Name: 2Slot
   m_EditorClassIdentifier: 
+  numberOfSlots: 2
+  slotPrefab: {fileID: 5344899381185314067, guid: f53ade0cf614e2542b9c7025e497ee90, type: 3}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DiceGame
 {
-    [CreateAssetMenu(fileName = "CreateDice", menuName = "Assets/Create/CreateDice", order = 1)]
+    [CreateAssetMenu(fileName = "CreateDiceSO", menuName = "Assets/Create/CreateDiceSO", order = 1)]
     public class DiceSO : ScriptableObject
     {
         [SerializeField] private Sprite[] faceSprites = new Sprite[6];

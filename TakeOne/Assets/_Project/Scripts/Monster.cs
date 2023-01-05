@@ -10,17 +10,22 @@ namespace DiceGame
         [SerializeField] private List<int> dieResults;
 
         private DiceSlot _diceSlot;
-        public void InitializeMonster(MonsterSO so, Transform spawnLocation)
+
+        public void InitializeMonster(MonsterSO so, Transform spawnLocation, Transform diceSlotLocation)
         {
             monsterSo = so;
-            transform.position = spawnLocation.position;
-
-            //Spawn Die slots
-            _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab).GetComponent<DiceSlot>(); 
-
+            transform.parent = spawnLocation;
             //Spawn Visuals
             var visuals = Instantiate(monsterSo.MonsterVisualPrefab, transform);
-            visuals.transform.position = Vector3.zero;
+            Debug.Log("visuals");
+
+            transform.localPosition = Vector3.zero;
+
+            //Spawn Die slots
+            _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab).GetComponent<DiceSlot>();
+            _diceSlot.transform.localPosition = diceSlotLocation.position;
+
+
             
             //Scale Health Bar based on monster stats
             
