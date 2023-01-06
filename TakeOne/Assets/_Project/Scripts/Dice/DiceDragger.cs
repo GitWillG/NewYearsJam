@@ -65,6 +65,7 @@ namespace DiceGame.Dice
                 if (closestDiceSlot != null && closestDiceSlot.HasSlotAvailable)
                 {
                     closestDiceSlot.AddDiceToSlot(_currentDice);
+                    _currentDice = null;
                     return;
                 }
             }

@@ -46,10 +46,10 @@ namespace DiceGame
             if (emptyDiceSlot == null) return;
 
             _diceSlotToFaceDictionary[emptyDiceSlot] = diceFace;
-            diceFace.transform.position = emptyDiceSlot.position;
+            //diceFace.transform.position = emptyDiceSlot.position;
             _diceFaces.Add(diceFace);
             diceFace.CurrentSlot = this;
-            diceFace.SetAnchor(emptyDiceSlot, true);
+            diceFace.SetAnchor(emptyDiceSlot);
         }
         
         public void RemoveFromDiceSlot(DiceFace diceFace)
