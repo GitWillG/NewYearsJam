@@ -103,5 +103,9 @@ namespace DiceGame
                 lifePool += hero.LifeMod;
             }
         }
+        public void TPK()
+        {
+            CreateParty();
+        }
     }
 }

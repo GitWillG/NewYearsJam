@@ -33,6 +33,7 @@ namespace DiceGame
         public TurnManager TurnOrder => turnOrder;
 
         public List<Transform> SpawnLocations { get => spawnLocations; set => spawnLocations = value; }
+        public List<Monster> SpawnedMonsters { get => spawnedMonsters; set => spawnedMonsters = value; }
 
         private void Awake()
         {
@@ -67,7 +68,7 @@ namespace DiceGame
             {
                 var newMonster = Instantiate(monster).GetComponent<Monster>();
                 newMonster.InitializeMonster(encounterMembers[i], spawnLocations[i], diceHolderSpawn[i], this);
-                spawnedMonsters.Add(newMonster);
+                SpawnedMonsters.Add(newMonster);
                 //Spawn a monster prefab
                 //Call some function in the script and pass along the MonsterSO.
                 //In the script, make this monster class look like the MonsterSO
@@ -107,6 +108,10 @@ namespace DiceGame
             int DamageToDeal = encounterMembers[currentTurn].Damage;
             Debug.Log(encounterMembers[currentTurn] + "dealt " + DamageToDeal);
             _partyManager.LifePool -= DamageToDeal;// make a forloop
+            if (_partyManager.LifePool <= 0) /// <- refactor rahul
+            {
+                _partyManager.TPK();
+            }
             ProgressTurn();
         }
 
@@ -128,18 +133,18 @@ namespace DiceGame
         }
         public void MonsterTakeDamage()
         {
-            for (int i = 0; i < spawnedMonsters.Count; i++)
+            for (int i = 0; i < SpawnedMonsters.Count; i++)
             {
-                    Monster aliveMonster = spawnedMonsters[i];
+                    Monster aliveMonster = SpawnedMonsters[i];
                     aliveMonster.TryDealDamage();
             }
 
         }
         public void removeDead(Monster monster)
         {
-            spawnedMonsters.Remove(monster);
+            SpawnedMonsters.Remove(monster);
             encounterMembers.Remove(monster.MonsterSo);
-            if (spawnedMonsters.Count == 0)
+            if (SpawnedMonsters.Count == 0)
             {
                 EndEncounter();
             }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: Orc
   monsterSkills: attack
-  damageMinMax: {x: 1, y: 3}
+  damageMinMax: {x: 10, y: 30}
   health: 5
   damageCondition: {fileID: 0}
   diceSlotSo: {fileID: 11400000, guid: aa632003f04eb6a418acc566b8833f6d, type: 2}

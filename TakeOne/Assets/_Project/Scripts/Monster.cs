@@ -41,7 +41,7 @@ namespace DiceGame
         public void TryDealDamage()
         {
             var dieRolls = _diceSlot.GetDiceResults();
-            Debug.Log(dieRolls[0]);
+            if (dieRolls == null || dieRolls.Count < 1) return;
             var damage = MonsterSo.DamageFromCondition(dieRolls);
             if (monsterLife - damage <= 0)
             {
