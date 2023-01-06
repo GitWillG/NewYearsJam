@@ -62,6 +62,7 @@ namespace DiceGame
             _diceMan.CharacterSoStats = CurrentPartyMember;
             _turnManager.EndTurn();
             StartCoroutine(_monsterManager.PlayAnimations(1));
+            _monsterManager.MonsterTakeDamage();
         }
         
         public void FinishHeroActions()

@@ -19,6 +19,7 @@ namespace DiceGame
         [SerializeField] private int attackDamage;
         private PartyManager _partyManager;
         [SerializeField] private Monster monster;
+        [SerializeField] private List<Monster> spawnedMonsters = new List<Monster>();
 
 
         private int currentTurn = 0;
@@ -65,7 +66,8 @@ namespace DiceGame
             for (int i=0; i<EncounterMembers.Count; i++)
             {
                 var newMonster = Instantiate(monster).GetComponent<Monster>();
-                newMonster.InitializeMonster(encounterMembers[i], spawnLocations[i], diceHolderSpawn[i]);
+                newMonster.InitializeMonster(encounterMembers[i], spawnLocations[i], diceHolderSpawn[i], this);
+                spawnedMonsters.Add(newMonster);
                 //Spawn a monster prefab
                 //Call some function in the script and pass along the MonsterSO.
                 //In the script, make this monster class look like the MonsterSO
@@ -78,6 +80,9 @@ namespace DiceGame
         //maybe belongs in encounter manager?
         public void EndEncounter()
         {
+            StopAllCoroutines();
+            ProgressTurn();
+            CreateEncounter();
             
         }
 
@@ -121,6 +126,26 @@ namespace DiceGame
 
 
         }
+        public void MonsterTakeDamage()
+        {
+            for (int i = 0; i < spawnedMonsters.Count; i++)
+            {
+                    Monster aliveMonster = spawnedMonsters[i];
+                    aliveMonster.TryDealDamage();
+            }
+
+        }
+        public void removeDead(Monster monster)
+        {
+            spawnedMonsters.Remove(monster);
+            encounterMembers.Remove(monster.MonsterSo);
+            if (spawnedMonsters.Count == 0)
+            {
+                EndEncounter();
+            }
+
+        }
+
 
     }
 }

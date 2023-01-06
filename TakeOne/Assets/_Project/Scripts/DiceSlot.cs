@@ -77,8 +77,8 @@ namespace DiceGame
                 diceFace.DestroyDice();
             }
 
-            _diceFaces.Clear();
-            foreach (var key in _diceSlotToFaceDictionary.Keys)
+            _diceFaces = new List<DiceFace>();
+            foreach (var key in _diceSlotToFaceDictionary.Keys.ToList())
             {
                 _diceSlotToFaceDictionary[key] = null;
             }

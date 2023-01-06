@@ -6,24 +6,31 @@ namespace DiceGame
 {
     public class Monster : MonoBehaviour
     {
-        [SerializeField] private MonsterSO monsterSo;
-        [SerializeField] private List<int> dieResults;
+        private MonsterSO monsterSo;
+        private List<int> dieResults;
+        public int monsterLife;
+        private MonsterManager _monsterManager;
 
         private DiceSlot _diceSlot;
 
-        public void InitializeMonster(MonsterSO so, Transform spawnLocation, Transform diceSlotLocation)
+        public MonsterSO MonsterSo => monsterSo;
+
+
+        public void InitializeMonster(MonsterSO so, Transform spawnLocation, Transform diceSlotLocation, MonsterManager MManager)
         {
             monsterSo = so;
             transform.parent = spawnLocation;
             //Spawn Visuals
-            var visuals = Instantiate(monsterSo.MonsterVisualPrefab, transform);
+            var visuals = Instantiate(MonsterSo.MonsterVisualPrefab, transform);
 
             transform.localPosition = Vector3.zero;
 
-            Debug.Log(monsterSo.DiceSlotSo.SlotPrefab);
+            Debug.Log(MonsterSo.DiceSlotSo.SlotPrefab);
             //Spawn Die slots
-            _diceSlot = Instantiate(monsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlot>();
+            _diceSlot = Instantiate(MonsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlot>();
             _diceSlot.transform.position = diceSlotLocation.localPosition;
+            monsterLife = MonsterSo.Health;
+            _monsterManager = MManager;
 
 
             
@@ -34,8 +41,26 @@ namespace DiceGame
         public void TryDealDamage()
         {
             var dieRolls = _diceSlot.GetDiceResults();
-            var damage = monsterSo.DamageFromCondition(dieRolls);
+            Debug.Log(dieRolls[0]);
+            var damage = MonsterSo.DamageFromCondition(dieRolls);
+            if (monsterLife - damage <= 0)
+            {
+                Debug.Log("dead");
+                monsterLife = 0;
+                Invoke(nameof(killSelf), 0.2f);
+            }
+            else
+            {
+                Debug.Log(damage);
+                monsterLife -= damage;
+            }
+
             //Take damage from health
+        }
+        public void killSelf()
+        {
+            _monsterManager.removeDead(this);
+            GameObject.Destroy(this.gameObject);   
         }
     }
 }
