@@ -24,11 +24,14 @@ namespace DiceGame.Dice
         private int _sideRolled;
         private float _rollingTimer;// A timer for checking if the dice has stopped rolling
         private bool _isResultFound;
-        private float _distanceCheckThreshold = 0.1f;
+        private float _distanceCheckThreshold = 0.01f;
         private DiceSlot _currentSlot;
         
         public bool isInTray;
+        private bool _hasRotated;
         public Transform _anchorTransform;
+
+        private Vector3 _dieUp;
 
         private static readonly int Isflashing = Shader.PropertyToID("_IsFlashing");
         private static readonly int StartTime = Shader.PropertyToID("_StartTime");
@@ -163,6 +166,7 @@ namespace DiceGame.Dice
                 }
             }
             //TODO: Rotate object such that the closest direction is pointing up and Y = 0;
+            _dieUp = closestDirection;
             return closestDieFace;
         }
         
@@ -199,6 +203,11 @@ namespace DiceGame.Dice
 
             _cancelSource = new CancellationTokenSource();
             LerpAsync(anchorTransform, _cancelSource.Token);
+
+            if (!_hasRotated)
+            {
+                //
+            }
         }
         
         async Task LerpAsync(Transform target , CancellationToken cancelToken)
@@ -218,26 +227,10 @@ namespace DiceGame.Dice
 
                 await Task.Yield();
             }
+
+            transform.position = modifiedYPos;
         }
         
-        async Task RotateAsync(Vector3 endRotation)
-        {
-            // Calculate the remaining angle to the end rotation
-            float angle = Quaternion.Angle(transform.rotation, Quaternion.Euler(endRotation));
-
-            // Continue rotating as long as the angle to the end rotation is greater than the threshold
-            while (angle > _distanceCheckThreshold)
-            {
-                // Rotate towards the end rotation
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(endRotation), lerpSpeed * Time.deltaTime);
-
-                // Update the angle to the end rotation
-                angle = Quaternion.Angle(transform.rotation, Quaternion.Euler(endRotation));
-
-                await Task.Yield();
-            }
-        }
-
         public void DestroyDice()
         {
             //Logic for cleaning up here and spawning shit as needed.
