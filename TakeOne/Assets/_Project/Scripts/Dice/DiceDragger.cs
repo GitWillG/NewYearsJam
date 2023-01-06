@@ -55,12 +55,14 @@ namespace DiceGame.Dice
             {
                 _currentDice.DetachFromSlot();
             }
-            
-            var any = DiceSlots.Any(x => Vector3.Distance(_currentDice.transform.position, x.transform.position) < releaseThreshold);
+
+            var position = _currentDice.transform.position;
+            Vector2 currentDiceVector2Pos = new Vector2(position.x, position.z);
+            var any = DiceSlots.Any(x => Vector2.Distance(currentDiceVector2Pos, new Vector2(x.transform.position.x, x.transform.position.z)) < releaseThreshold);
 
             if (any)
             {
-                var closestDiceSlot = DiceSlots.First(x => Vector3.Distance(_currentDice.transform.position, x.transform.position) < releaseThreshold);
+                var closestDiceSlot = DiceSlots.First(x => Vector2.Distance(currentDiceVector2Pos, new Vector2(x.transform.position.x, x.transform.position.z)) < releaseThreshold);
                 
                 if (closestDiceSlot != null && closestDiceSlot.HasSlotAvailable)
                 {

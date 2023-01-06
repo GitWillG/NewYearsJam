@@ -203,15 +203,18 @@ namespace DiceGame.Dice
         
         async Task LerpAsync(Transform target , CancellationToken cancelToken)
         {
-            float distance = Vector3.Distance(transform.position, target.position);
+            var targetPosition = target.position;
+            float distance = Vector3.Distance(transform.position, targetPosition);
+
+            Vector3 modifiedYPos = new(targetPosition.x, transform.position.y, targetPosition.z);
 
             while (distance > _distanceCheckThreshold)
             {
                 cancelToken.ThrowIfCancellationRequested();
 
-                transform.position = Vector3.Lerp(transform.position, target.position, lerpSpeed * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, modifiedYPos, lerpSpeed * Time.deltaTime);
 
-                distance = Vector3.Distance(transform.position, target.position);
+                distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(modifiedYPos.x, modifiedYPos.z));
 
                 await Task.Yield();
             }
