@@ -108,7 +108,7 @@ namespace DiceGame
             int DamageToDeal = encounterMembers[currentTurn].Damage;
             Debug.Log(encounterMembers[currentTurn] + "dealt " + DamageToDeal);
             _partyManager.LifePool -= DamageToDeal;// make a forloop
-            if (_partyManager.LifePool <= 0) /// <- refactor rahul
+            if (_partyManager.LifePool <= 0) ///TODO: <- refactor rahul
             {
                 _partyManager.TPK();
             }
