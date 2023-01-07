@@ -14,7 +14,7 @@ namespace DiceGame.Dice
         private List<DiceSlot> DiceSlots => diceSlotCollectionSO.DiceSlots.ToList();
 
         private DiceManager _diceManager;
-        private DiceFace _currentDice;
+        private DiceController _currentDice;
         
         private void Awake()
         {
@@ -97,7 +97,7 @@ namespace DiceGame.Dice
             if (Physics.Raycast(ray, out var hit))
             {
                 if (!hit.collider.gameObject.CompareTag("Dice")) return;
-                _currentDice = hit.collider.gameObject.GetComponent<DiceFace>();
+                _currentDice = hit.collider.gameObject.GetComponent<DiceController>();
                 OnPickUp();
             }
             else

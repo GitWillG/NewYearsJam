@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DiceGame.Dice
@@ -25,10 +24,10 @@ namespace DiceGame.Dice
             if (dieType == null) dieType = defaultDicePrefab;
 
             // Instantiate a new dice at the position of the DiceRoller game object
-            DiceFace dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity).GetComponent<DiceFace>();
+            DiceController dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity).GetComponent<DiceController>();
             DiceMan.RolledDice.Add(dice);
             RandomizeRotation(dice.gameObject);
-            dice.GetComponent<DiceFace>().LaunchDice(diceForce, diceTorque);
+            dice.GetComponent<DiceController>().LaunchDice(diceForce, diceTorque);
         }
         // Randomize the rotation of an object
         private void RandomizeRotation(GameObject obj)

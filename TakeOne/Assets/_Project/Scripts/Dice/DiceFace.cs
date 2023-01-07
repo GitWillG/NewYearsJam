@@ -1,9 +1,6 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 namespace DiceGame.Dice
 {
@@ -11,35 +8,20 @@ namespace DiceGame.Dice
     {
         // The possible face values of the dice
         private int[] faceValues = new int[6];
-        private Material _diceMat;
 
         // A threshold for determining if the dice is rolling or not
         [SerializeField] private float rollingThreshold = 0.2f;
-        [SerializeField] private float lerpSpeed = 10;
         [SerializeField] private DiceSO diceType;
 
         private Rigidbody _rigidbody;
-        private Vector2 _cachedDiceForce, _cachedDiceTorque;
         private Vector3[] _faceRotations = new Vector3[6];// The rotations of the dice's faces, in local space
         private int _sideRolled;
         private float _rollingTimer;// A timer for checking if the dice has stopped rolling
         private bool _isResultFound;
-        private float _distanceCheckThreshold = 0.01f;
-        private DiceSlot _currentSlot;
+        private DiceController _diceController;
         
-        public bool isInTray;
-        private bool _hasRotated;
-        public Transform _anchorTransform;
-
         private Vector3 _dieUp;
-
-        private static readonly int Isflashing = Shader.PropertyToID("_IsFlashing");
-        private static readonly int StartTime = Shader.PropertyToID("_StartTime");
-        private static readonly int IsHovering = Shader.PropertyToID("_IsHover");
         
-        private CancellationTokenSource _cancelSource = new CancellationTokenSource();
-
-
         public DiceSO DiceType 
         { 
             get => diceType; 
@@ -51,19 +33,13 @@ namespace DiceGame.Dice
             private set; 
         }
         public bool IsResultFound => _isResultFound;
-        public bool IsInSlot => _currentSlot != null;
-
-        public DiceSlot CurrentSlot
-        {
-            get => _currentSlot;
-            set => _currentSlot = value;
-        }
-
+        
         public UnityEvent<int> onDiceRollResult;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            _diceController = GetComponent<DiceController>();
         }
 
         private void Start()
@@ -73,7 +49,6 @@ namespace DiceGame.Dice
 
         private void InitDieFace()
         {
-            _diceMat = gameObject.GetComponent<MeshRenderer>().material;
             //Iterates through the dice faces applying 
             for (int i = 0; i <= 5; i++)
             {
@@ -119,7 +94,7 @@ namespace DiceGame.Dice
             if (_sideRolled == -1)
             {
                 _rigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
-                LaunchDice(_cachedDiceForce, _cachedDiceTorque);
+                _diceController.LaunchDice();
             }
 
             // If the rolling timer has reached the threshold, output the result
@@ -168,87 +143,6 @@ namespace DiceGame.Dice
             //TODO: Rotate object such that the closest direction is pointing up and Y = 0;
             _dieUp = closestDirection;
             return closestDieFace;
-        }
-        
-        public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
-        {
-            _cachedDiceForce = diceForce;
-            _cachedDiceTorque = diceTorque;
-            
-            // Apply a random force to the dice
-            _rigidbody.AddForce(Random.insideUnitSphere * Random.Range(diceForce.x, diceForce.y), ForceMode.Impulse);
-
-            // Apply a random torque to the dice
-            _rigidbody.AddTorque(Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), Random.Range(diceTorque.x, diceTorque.y), ForceMode.Impulse);
-        }
-
-        public void DetachFromSlot()
-        {
-            if(!IsInSlot) return;
-            
-            _currentSlot.RemoveFromDiceSlot(this);
-            _currentSlot = null;
-        }
-
-        public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false)
-        {
-            _cancelSource.Cancel();
-            _anchorTransform = anchorTransform;
-
-            if (snapToAnchor)
-            {
-                transform.position = anchorTransform.position;
-                return;
-            }
-
-            _cancelSource = new CancellationTokenSource();
-            LerpAsync(anchorTransform, _cancelSource.Token);
-
-            if (!_hasRotated)
-            {
-                //
-            }
-        }
-        
-        async Task LerpAsync(Transform target , CancellationToken cancelToken)
-        {
-            var targetPosition = target.position;
-            float distance = Vector3.Distance(transform.position, targetPosition);
-
-            Vector3 modifiedYPos = new(targetPosition.x, transform.position.y, targetPosition.z);
-
-            while (distance > _distanceCheckThreshold)
-            {
-                cancelToken.ThrowIfCancellationRequested();
-
-                transform.position = Vector3.Lerp(transform.position, modifiedYPos, lerpSpeed * Time.deltaTime);
-
-                distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(modifiedYPos.x, modifiedYPos.z));
-
-                await Task.Yield();
-            }
-
-            transform.position = modifiedYPos;
-        }
-        
-        public void DestroyDice()
-        {
-            //Logic for cleaning up here and spawning shit as needed.
-            Destroy(gameObject);
-        }
-        
-        public void HoverOnDice(bool to)
-        {
-            _diceMat.SetInt(IsHovering, to? 1 : 0);
-        }
-        public void HighlightDice()
-        {
-            _diceMat.SetInt(Isflashing, 1);
-            _diceMat.SetFloat(StartTime, Time.time);
-        }
-        public void RemoveHighlight()
-        {
-            _diceMat.SetInt(Isflashing, 0);
         }
     }
 }

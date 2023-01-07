@@ -15,30 +15,30 @@ namespace DiceGame.Dice
         [SerializeField] private Transform[] diceTray = new Transform[5];
         [SerializeField] private Camera diceCam;
 
-        private List<DiceFace> _rolledDice = new List<DiceFace>();
-        private List<DiceFace> _selectedDice = new List<DiceFace>();
-        private Dictionary<Transform, DiceFace> _diceTraySlotToFaceDictionary = new Dictionary<Transform, DiceFace>();
+        private List<DiceController> _rolledDice = new List<DiceController>();
+        private List<DiceController> _selectedDice = new List<DiceController>();
+        private Dictionary<Transform, DiceController> _diceTraySlotToFaceDictionary = new Dictionary<Transform, DiceController>();
 
 
         private bool _shouldRaycast;
 
         //public int SelectedVal { get; private set; } <- uniused
-        public DiceFace SelectedDie { get; set; }
+        public DiceController SelectedDie { get; set; }
 
         public HeroSO CharacterSoStats { get; set; }
 
-        public DiceFace HoveredDie { get; set; }
+        public DiceController HoveredDie { get; set; }
         
         public Transform[] DiceTray => diceTray;
         public Transform FirstAvailableDiceTrayTransform => _diceTraySlotToFaceDictionary.First(x => x.Value == null).Key;
         public bool HasAvailableTrySlot => _diceTraySlotToFaceDictionary.Any(x => x.Value == null);
 
-        public List<DiceFace> SelectedDice 
+        public List<DiceController> SelectedDice 
         { 
             get => _selectedDice; 
             set => _selectedDice = value; 
         }
-        public List<DiceFace> RolledDice 
+        public List<DiceController> RolledDice 
         { 
             get => _rolledDice; 
             set => _rolledDice = value; 
@@ -50,7 +50,7 @@ namespace DiceGame.Dice
             set => _shouldRaycast = value;
         }
 
-        public Dictionary<Transform, DiceFace> DiceSlotToFaceDictionary
+        public Dictionary<Transform, DiceController> DiceSlotToFaceDictionary
         {
             get => _diceTraySlotToFaceDictionary;
             set => _diceTraySlotToFaceDictionary = value;
@@ -111,7 +111,7 @@ namespace DiceGame.Dice
             }
         }
 
-        public void RemoveFromDiceTray(DiceFace diceFace)
+        public void RemoveFromDiceTray(DiceController diceFace)
         {
             bool exists = _diceTraySlotToFaceDictionary.Any(x => x.Value == diceFace);
 
@@ -124,7 +124,7 @@ namespace DiceGame.Dice
             _diceTraySlotToFaceDictionary[diceSlot] = null;
         }
 
-        public Transform AddDiceToTraySlot(DiceFace diceFace)
+        public Transform AddDiceToTraySlot(DiceController diceFace)
         {
             Debug.Log("AddDiceToTraySlot");
             if (!HasAvailableTrySlot) return null;
@@ -136,13 +136,13 @@ namespace DiceGame.Dice
             return emptyDiceTransform;
         }
 
-        public void DestroyAllDiceAndCleanList(ref List<DiceFace> diceFaces)
+        public void DestroyAllDiceAndCleanList(ref List<DiceController> diceControllers)
         {
-            foreach (DiceFace dice in diceFaces)
+            foreach (DiceController dice in diceControllers)
             {
                 dice.DestroyDice();
             }
-            diceFaces.Clear();
+            diceControllers.Clear();
         }
         
         private void DiceSelection()
@@ -158,7 +158,7 @@ namespace DiceGame.Dice
 
                 if (!hit.collider.gameObject.CompareTag("Dice")) return;
 
-                HoveredDie = hit.collider.gameObject.GetComponent<DiceFace>();
+                HoveredDie = hit.collider.gameObject.GetComponent<DiceController>();
                 if (!HoveredDie.isInTray)
                 {
                     HoveredDie.HoverOnDice(true);
@@ -172,7 +172,7 @@ namespace DiceGame.Dice
                 }
                 if (HoveredDie != SelectedDie)
                 {
-                    SelectedDie = hit.collider.gameObject.GetComponent<DiceFace>();
+                    SelectedDie = hit.collider.gameObject.GetComponent<DiceController>();
                     SelectedDie.HighlightDice();
                     _uiManager.ConfirmDice.SetActive(true);
                 }

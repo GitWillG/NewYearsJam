@@ -11,8 +11,11 @@ GameObject:
   - component: {fileID: 2367960216642263446}
   - component: {fileID: 2367960216642263447}
   - component: {fileID: 2367960216642263444}
-  - component: {fileID: 2367960216642263445}
+  - component: {fileID: 3268604185173890518}
   - component: {fileID: 2367960216642263441}
+  - component: {fileID: 6585321729520243644}
+  - component: {fileID: 6359480764892138240}
+  - component: {fileID: 2367960216642263445}
   - component: {fileID: 2367960216642263440}
   m_Layer: 6
   m_Name: Dice
@@ -86,19 +89,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2367960216642263445
-BoxCollider:
+--- !u!114 &3268604185173890518
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2367960216642263466}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 079b4aad9c71e1842b06e42ed5e7ea6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInTray: 0
 --- !u!114 &2367960216642263441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,13 +115,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rollingThreshold: 0.2
-  lerpSpeed: 2.5
   diceType: {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
-  isInTray: 0
-  _anchorTransform: {fileID: 0}
   onDiceRollResult:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6585321729520243644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367960216642263466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6941cb75ded411fb48a81e3ec856942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpSpeed: 2.5
+  _anchorTransform: {fileID: 0}
+--- !u!114 &6359480764892138240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367960216642263466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2c9faf644e84a889bcdc434fd425598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &2367960216642263445
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367960216642263466}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2367960216642263440
 Rigidbody:
   m_ObjectHideFlags: 0

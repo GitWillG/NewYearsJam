@@ -11,9 +11,9 @@ namespace DiceGame
         [SerializeField] private List<Transform> diceSlotTransforms = new List<Transform>();
         [SerializeField] private DiceSlotContainerSO diceSlotContainerSo;
 
-        private List<DiceFace> _diceFaces = new List<DiceFace>();
+        private List<DiceController> _diceControllers = new List<DiceController>();
 
-        private Dictionary<Transform, DiceFace> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceFace>();
+        private Dictionary<Transform, DiceController> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceController>();
         
         public bool HasSlotAvailable => _diceSlotToFaceDictionary.Any(x => x.Value == null);
 
@@ -30,7 +30,7 @@ namespace DiceGame
             diceSlotContainerSo.AddToDiceList(this);
         }
 
-        public void AddDiceToSlot(DiceFace diceFace)
+        public void AddDiceToSlot(DiceController diceController)
         {
             var hasFreeSlot = _diceSlotToFaceDictionary.Any(x => x.Value == null);
 
@@ -40,44 +40,44 @@ namespace DiceGame
                 return;
             }
             
-            if (_diceFaces.Contains(diceFace)) return; // Already have this dice? Wth?
+            if (_diceControllers.Contains(diceController)) return; // Already have this dice? Wth?
 
             var emptyDiceSlot = _diceSlotToFaceDictionary.First(x => x.Value == null).Key;
             if (emptyDiceSlot == null) return;
 
-            _diceSlotToFaceDictionary[emptyDiceSlot] = diceFace;
+            _diceSlotToFaceDictionary[emptyDiceSlot] = diceController;
             //diceFace.transform.position = emptyDiceSlot.position;
-            _diceFaces.Add(diceFace);
-            diceFace.CurrentSlot = this;
-            diceFace.SetAnchor(emptyDiceSlot);
+            _diceControllers.Add(diceController);
+            diceController.CurrentSlot = this;
+            diceController.SetAnchor(emptyDiceSlot);
         }
         
-        public void RemoveFromDiceSlot(DiceFace diceFace)
+        public void RemoveFromDiceSlot(DiceController diceController)
         {
-            if (!_diceFaces.Contains(diceFace)) return;
+            if (!_diceControllers.Contains(diceController)) return;
             
-            _diceFaces.Remove(diceFace);
+            _diceControllers.Remove(diceController);
 
-            var slotForDice = _diceSlotToFaceDictionary.First(x => x.Value == diceFace).Key;
+            var slotForDice = _diceSlotToFaceDictionary.First(x => x.Value == diceController).Key;
             _diceSlotToFaceDictionary[slotForDice] = null;
         }
         
         public List<int> GetDiceResults()
         {
             var returnList = new List<int>();
-            foreach (var diceFace in _diceFaces)
+            foreach (var diceController in _diceControllers)
             {
-                returnList.Add(diceFace.FaceValue);
+                returnList.Add(diceController.FaceValue);
             }
 
 
-            for (var i = 0; i < _diceFaces.Count; i++)
+            for (var i = 0; i < _diceControllers.Count; i++)
             {
-                var diceFace = _diceFaces[i];
+                var diceFace = _diceControllers[i];
                 diceFace.DestroyDice();
             }
 
-            _diceFaces = new List<DiceFace>();
+            _diceControllers = new List<DiceController>();
             foreach (var key in _diceSlotToFaceDictionary.Keys.ToList())
             {
                 _diceSlotToFaceDictionary[key] = null;
