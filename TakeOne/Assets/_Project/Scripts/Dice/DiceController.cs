@@ -12,10 +12,9 @@ namespace DiceGame.Dice
         private DiceSlot _currentSlot;
         private DiceShaderHandler _diceShader;
         public bool IsInSlot => _currentSlot != null;
-        public bool IsResultFound => _diceFace.IsResultFound;
-
-        public int FaceValue => _diceFace.FaceValue;
         public bool isInTray;
+        public bool IsResultFound => _diceFace.IsResultFound;
+        public int FaceValue => _diceFace.FaceValue;
         
         public DiceSlot CurrentSlot
         {

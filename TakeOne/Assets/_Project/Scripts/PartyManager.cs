@@ -60,9 +60,10 @@ namespace DiceGame
         {
             _currentTurn = 0;
             _diceMan.CharacterSoStats = CurrentPartyMember;
-            _turnManager.EndTurn();
-            StartCoroutine(_monsterManager.PlayAnimations(1));
             _monsterManager.MonsterTakeDamage();
+            _turnManager.EndTurn();
+            // StartCoroutine(_monsterManager.PlayAnimations(1));
+            _monsterManager.ProgressTurn();
         }
         
         public void FinishHeroActions()

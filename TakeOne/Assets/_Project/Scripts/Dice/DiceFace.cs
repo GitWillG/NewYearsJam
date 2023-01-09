@@ -140,7 +140,6 @@ namespace DiceGame.Dice
                     closestDieFace = faceValues[Array.IndexOf(_faceRotations, direction)];
                 }
             }
-            //TODO: Rotate object such that the closest direction is pointing up and Y = 0;
             _dieUp = closestDirection;
             return closestDieFace;
         }

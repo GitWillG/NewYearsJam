@@ -31,8 +31,6 @@ namespace DiceGame
             _diceSlot.transform.position = diceSlotLocation.localPosition;
             monsterLife = MonsterSo.Health;
             _monsterManager = MManager;
-
-
             
             //Scale Health Bar based on monster stats
             
@@ -47,7 +45,7 @@ namespace DiceGame
             {
                 Debug.Log("dead");
                 monsterLife = 0;
-                Invoke(nameof(killSelf), 0.2f);
+                Invoke(nameof(KillSelf), 0.2f);
             }
             else
             {
@@ -57,9 +55,9 @@ namespace DiceGame
 
             //Take damage from health
         }
-        public void killSelf()
+        public void KillSelf()
         {
-            _monsterManager.removeDead(this);
+            _monsterManager.RemoveDead(this);
             GameObject.Destroy(this.gameObject);   
         }
     }

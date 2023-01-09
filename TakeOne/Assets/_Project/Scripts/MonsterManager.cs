@@ -59,9 +59,7 @@ namespace DiceGame
             CreateEncounter();
 
         }
-
-       
-
+        
         public void InitializeMonsters()
         {
             for (int i=0; i<EncounterMembers.Count; i++)
@@ -69,36 +67,33 @@ namespace DiceGame
                 var newMonster = Instantiate(monster).GetComponent<Monster>();
                 newMonster.InitializeMonster(encounterMembers[i], spawnLocations[i], diceHolderSpawn[i], this);
                 SpawnedMonsters.Add(newMonster);
-                //Spawn a monster prefab
-                //Call some function in the script and pass along the MonsterSO.
-                //In the script, make this monster class look like the MonsterSO
+
             }
         }
-        //Figure out how to deal damage to monster??
-        //When monster dies, check if all monsters are dead
-        //If so call EndEncounter.
-     
+
         //maybe belongs in encounter manager?
         public void EndEncounter()
         {
             StopAllCoroutines();
-            ProgressTurn();
+            currentTurn = 0;
+            turnOrder.EndTurn();
+            //ProgressTurn();
             CreateEncounter();
             
         }
 
         public void ProgressTurn()
         {                
-            if (currentTurn < EncounterMembers.Count-1)
+            if (currentTurn < EncounterMembers.Count)
             {
-                currentTurn++;
                 StartCoroutine(PlayAnimations(1));
+                return;
             }
-            else
-            {
-                currentTurn = 0;
-                turnOrder.EndTurn();
-            }
+            
+            StopAllCoroutines();
+            currentTurn = 0;
+            turnOrder.EndTurn();
+
             //currentTurn++;
         }
 
@@ -112,6 +107,7 @@ namespace DiceGame
             {
                 _partyManager.TPK();
             }
+            currentTurn++;
             ProgressTurn();
         }
 
@@ -128,19 +124,16 @@ namespace DiceGame
                 encounterMembers.Add((MonsterSO)allMonsters[PickMonster]);
             }
             InitializeMonsters();
-
-
         }
         public void MonsterTakeDamage()
         {
             for (int i = 0; i < SpawnedMonsters.Count; i++)
             {
-                    Monster aliveMonster = SpawnedMonsters[i];
-                    aliveMonster.TryDealDamage();
+                Monster aliveMonster = SpawnedMonsters[i];
+                aliveMonster.TryDealDamage();
             }
-
         }
-        public void removeDead(Monster monster)
+        public void RemoveDead(Monster monster)
         {
             SpawnedMonsters.Remove(monster);
             encounterMembers.Remove(monster.MonsterSo);
@@ -148,9 +141,6 @@ namespace DiceGame
             {
                 EndEncounter();
             }
-
         }
-
-
     }
 }
