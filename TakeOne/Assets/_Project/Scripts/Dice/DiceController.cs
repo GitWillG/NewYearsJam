@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DiceGame.Dice
 {
@@ -7,12 +8,16 @@ namespace DiceGame.Dice
     /// </summary>
     public class DiceController : MonoBehaviour
     {
+        public UnityEvent OnLaunch, OnSetAnchor, OnSnapToAnchor, OnDetachFromSlot, OnDestroyDice, OnHover, OnUnHover;
+        
         private DiceFace _diceFace;
         private DiceMovement _diceMovement;
         private DiceSlot _currentSlot;
         private DiceShaderHandler _diceShader;
+        private bool _isHovering;
+        private bool _previousHoverState;
+
         public bool IsInSlot => _currentSlot != null;
-        public bool isInTray;
         public bool IsResultFound => _diceFace.IsResultFound;
         public int FaceValue => _diceFace.FaceValue;
         public ObjectDirections ObjectDirectionsEnum => _diceFace.ObjectDirectionsEnum;
@@ -22,6 +27,8 @@ namespace DiceGame.Dice
             get => _currentSlot;
             set => _currentSlot = value;
         }
+
+        public bool IsInTray { get; set; }
 
         private void Awake()
         {
@@ -33,6 +40,7 @@ namespace DiceGame.Dice
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
         {
             _diceMovement.LaunchDice(diceForce, diceTorque);
+            OnLaunch?.Invoke();
         }
 
         public void LaunchDice()
@@ -46,22 +54,45 @@ namespace DiceGame.Dice
             
             _currentSlot.RemoveFromDiceSlot(this);
             _currentSlot = null;
+            OnDetachFromSlot?.Invoke();
         }
 
         public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false)
         {
-            _diceMovement.SetAnchor(anchorTransform, snapToAnchor);
+            OnSetAnchor?.Invoke();
+            _diceMovement.SetAnchor(anchorTransform,ArrivedAtAnchor, snapToAnchor );
+        }
+
+        private void ArrivedAtAnchor()
+        {
+            OnSnapToAnchor?.Invoke();
         }
 
         public void DestroyDice()
         {
             //Logic for cleaning up here and spawning shit as needed.
+            OnDestroyDice?.Invoke();
             Destroy(gameObject);
         }
 
         public void HoverOnDice(bool to)
         {
-            _diceShader.HoverOnDice(to);
+            if (_previousHoverState == to) return;
+            
+            _isHovering = to;
+
+            _diceShader.HoverOnDice(_isHovering);      
+            
+            _previousHoverState = _isHovering;
+            
+            if (_isHovering)
+            {
+                OnHover?.Invoke();
+            }
+            else
+            {
+                OnUnHover?.Invoke();
+            }
         }
 
         public void HighlightDice()

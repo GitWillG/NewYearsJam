@@ -3,6 +3,7 @@ using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DiceGame
 {
@@ -11,6 +12,8 @@ namespace DiceGame
         [SerializeField] private List<Transform> diceSlotTransforms = new List<Transform>();
         [SerializeField] private DiceSlotContainerSO diceSlotContainerSo;
 
+        public UnityEvent OnAttachToSlot, OnDetachFromSlot;
+        
         private List<DiceController> _diceControllers = new List<DiceController>();
 
         private Dictionary<Transform, DiceController> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceController>();
@@ -50,6 +53,7 @@ namespace DiceGame
             _diceControllers.Add(diceController);
             diceController.CurrentSlot = this;
             diceController.SetAnchor(emptyDiceSlot);
+            OnAttachToSlot?.Invoke();
         }
         
         public void RemoveFromDiceSlot(DiceController diceController)
@@ -60,6 +64,7 @@ namespace DiceGame
 
             var slotForDice = _diceSlotToFaceDictionary.First(x => x.Value == diceController).Key;
             _diceSlotToFaceDictionary[slotForDice] = null;
+            OnDetachFromSlot?.Invoke();
         }
         
         public List<int> GetDiceResults()

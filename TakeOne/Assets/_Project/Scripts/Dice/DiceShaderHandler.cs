@@ -6,12 +6,11 @@ namespace DiceGame.Dice
     public class DiceShaderHandler : MonoBehaviour
     {
         private Material _diceMat;
-
+        
         private static readonly int Isflashing = Shader.PropertyToID("_IsFlashing");
         private static readonly int StartTime = Shader.PropertyToID("_StartTime");
         private static readonly int IsHovering = Shader.PropertyToID("_IsHover");
-
-
+        
         private void Awake()
         {
             _diceMat = gameObject.GetComponent<MeshRenderer>().material;

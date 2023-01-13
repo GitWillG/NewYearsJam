@@ -88,7 +88,7 @@ namespace DiceGame.Dice
             if(SelectedDie == null) return;
             
             SelectedDie.RemoveHighlight();
-            SelectedDie.isInTray = true;
+            SelectedDie.IsInTray = true;
             RolledDice.Remove(SelectedDie);
             SelectedDice.Add(SelectedDie);
             
@@ -157,12 +157,12 @@ namespace DiceGame.Dice
                 if (!hit.collider.gameObject.CompareTag("Dice")) return;
 
                 HoveredDie = hit.collider.gameObject.GetComponent<DiceController>();
-                if (!HoveredDie.isInTray)
+                if (!HoveredDie.IsInTray)
                 {
                     HoveredDie.HoverOnDice(true);
                 }
                 //TODO: hover selector
-                if (!Input.GetMouseButtonUp(0) || HoveredDie.isInTray || !HoveredDie.IsResultFound) return;
+                if (!Input.GetMouseButtonUp(0) || HoveredDie.IsInTray || !HoveredDie.IsResultFound) return;
                 
                 if (SelectedDie != null)
                 {
