@@ -1,5 +1,4 @@
 using DiceGame.ScriptableObjects;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,7 +10,6 @@ namespace DiceGame.Dice
         private DiceRoller _diceRoller;
         private UIManager _uiManager;
        
-        [SerializeField] private float tweenDuration = 100f;
         [SerializeField] private Transform[] diceTray = new Transform[5];
         [SerializeField] private Camera diceCam;
 
