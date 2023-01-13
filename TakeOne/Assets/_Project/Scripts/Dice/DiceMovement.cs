@@ -77,75 +77,83 @@ namespace DiceGame.Dice
         
         async Task RotateAsync(CancellationToken cancelToken)
         {
-            if (_diceController.ObjectDirectionsEnum == ObjectDirections.up)
+            switch (_diceController.ObjectDirectionsEnum)
             {
-                Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up);
-                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                case ObjectDirections.up:
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
-                }
+                    Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up);
+                    while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    {
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                        await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                    }
 
-                transform.up = Vector3.up;
-            }
-            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.down)
-            {
-                Quaternion targetRotation = Quaternion.FromToRotation(-transform.up, Vector3.down);
-                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    transform.up = Vector3.up;
+                    break;
+                }
+                case ObjectDirections.down:
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
-                }
+                    Quaternion targetRotation = Quaternion.FromToRotation(-transform.up, Vector3.down);
+                    while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    {
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                        await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                    }
 
-                transform.up = Vector3.down;
-            }
-            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.right)
-            {
-                Quaternion targetRotation = Quaternion.FromToRotation(transform.right, Vector3.left);
-                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    transform.up = Vector3.down;
+                    break;
+                }
+                case ObjectDirections.right:
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
-                }
+                    Quaternion targetRotation = Quaternion.FromToRotation(transform.right, Vector3.left);
+                    while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    {
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                        await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                    }
 
-                transform.right = Vector3.up;
-            }
-            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.left)
-            {
-                Quaternion targetRotation = Quaternion.FromToRotation(-transform.right, Vector3.right);
-                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    transform.right = Vector3.up;
+                    break;
+                }
+                case ObjectDirections.left:
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
-                }
+                    Quaternion targetRotation = Quaternion.FromToRotation(-transform.right, Vector3.right);
+                    while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    {
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                        await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                    }
 
-                transform.right = Vector3.down;
-            }
-            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.forward)
-            {
-                Quaternion targetRotation = Quaternion.FromToRotation(transform.forward, Vector3.back);
-                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    transform.right = Vector3.down;
+                    break;
+                }
+                case ObjectDirections.forward:
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
-                }
+                    Quaternion targetRotation = Quaternion.FromToRotation(transform.forward, Vector3.back);
+                    while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    {
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                        await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                    }
 
-                transform.forward = Vector3.up;
-            }
-            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.backward)
-            {
-                Quaternion targetRotation = Quaternion.FromToRotation(-transform.forward, Vector3.forward);
-                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    transform.forward = Vector3.up;
+                    break;
+                }
+                case ObjectDirections.backward:
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
-                }
+                    Quaternion targetRotation = Quaternion.FromToRotation(-transform.forward, Vector3.forward);
+                    while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                    {
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                        await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                    }
 
-                transform.forward = Vector3.down;
+                    transform.forward = Vector3.down;
+                    break;
+                }
             }
 
             _hasRotated = true;
-
         }
         
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
