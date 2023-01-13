@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DiceGame.ScriptableObjects.Conditions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DiceGame.ScriptableObjects
 {
@@ -11,14 +12,14 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private string monsterName;
         [SerializeField] private string monsterSkills;
         [SerializeField] private Vector2Int damageMinMax;
-        [SerializeField] private int health;
+        [FormerlySerializedAs("health")] [SerializeField] private int maxHealth;
         [SerializeField] private Condition damageCondition;
         [SerializeField] private DiceSlotSO diceSlotSo;
         [SerializeField] private GameObject monsterVisualPrefab;
 
         public string MonsterName => monsterName;
         public string MonsterSkills => monsterSkills;
-        public int Health => health;
+        public int MAXHealth => maxHealth;
         public int DamageModifier { get; set; } // don't worry Rider
         public int Damage => Random.Range(damageMinMax.x, damageMinMax.y) + DamageModifier;
 

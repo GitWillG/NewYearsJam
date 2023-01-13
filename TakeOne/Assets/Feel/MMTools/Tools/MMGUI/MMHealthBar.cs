@@ -163,6 +163,8 @@ namespace MoreMountains.Tools
 		protected Image _delayedImage = null;
 		protected bool _finalHideStarted = false;
 
+		public MMProgressBar ProgressBar => _progressBar;
+
 		/// <summary>
 		/// On Start, creates or sets the health bar up
 		/// </summary>

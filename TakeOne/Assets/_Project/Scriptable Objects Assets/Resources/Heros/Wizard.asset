@@ -16,3 +16,4 @@ MonoBehaviour:
   numOfDice: 5
   lifeMod: 6
   diePrefab: {fileID: 2367960216642263466, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
+  visual: {fileID: 0}
