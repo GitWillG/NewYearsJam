@@ -15,6 +15,7 @@ namespace DiceGame.Dice
         public bool isInTray;
         public bool IsResultFound => _diceFace.IsResultFound;
         public int FaceValue => _diceFace.FaceValue;
+        public ObjectDirections ObjectDirectionsEnum => _diceFace.ObjectDirectionsEnum;
         
         public DiceSlot CurrentSlot
         {

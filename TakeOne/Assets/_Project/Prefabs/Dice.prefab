@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 2.5
+  rotationSpeed: 7.5
   _anchorTransform: {fileID: 0}
 --- !u!114 &6359480764892138240
 MonoBehaviour:

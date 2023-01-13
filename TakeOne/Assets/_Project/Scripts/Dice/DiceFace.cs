@@ -4,6 +4,15 @@ using UnityEngine.Events;
 
 namespace DiceGame.Dice
 {
+    public enum ObjectDirections
+    {
+        up,
+        right,
+        backward,
+        forward,
+        left,
+        down,
+    }    
     public class DiceFace : MonoBehaviour
     {
         // The possible face values of the dice
@@ -19,9 +28,9 @@ namespace DiceGame.Dice
         private float _rollingTimer;// A timer for checking if the dice has stopped rolling
         private bool _isResultFound;
         private DiceController _diceController;
-        
-        private Vector3 _dieUp;
-        
+
+        public ObjectDirections ObjectDirectionsEnum { get; private set; }
+
         public DiceSO DiceType 
         { 
             get => diceType; 
@@ -137,10 +146,10 @@ namespace DiceGame.Dice
                 {
                     closestDirection = direction;
                     closestDot = dot;
+                    ObjectDirectionsEnum = (ObjectDirections)Array.IndexOf(_faceRotations, direction);
                     closestDieFace = faceValues[Array.IndexOf(_faceRotations, direction)];
                 }
             }
-            _dieUp = closestDirection;
             return closestDieFace;
         }
     }

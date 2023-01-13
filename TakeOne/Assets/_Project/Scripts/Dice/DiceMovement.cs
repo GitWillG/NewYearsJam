@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -6,24 +8,30 @@ using Random = UnityEngine.Random;
 
 namespace DiceGame.Dice
 {
+    
+    
     /// <summary>
     /// Controls the logic for moving and rotating the die.
     /// </summary>
     public class DiceMovement : MonoBehaviour
     {
         [SerializeField] private float lerpSpeed = 2.5f;
+        [SerializeField] private float rotationSpeed = 2.5f;
 
         private CancellationTokenSource _cancelSource = new CancellationTokenSource();
         public Transform _anchorTransform;
         private bool _hasRotated;
         private float _distanceCheckThreshold = 0.01f;
+        private float _rotationCheckThreshold = 0.01f;
         private Vector2 _cachedDiceForce, _cachedDiceTorque;
         private Rigidbody _rigidbody;
+        private DiceController _diceController;
 
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            _diceController = GetComponent<DiceController>();
         }
 
         public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false)
@@ -42,7 +50,7 @@ namespace DiceGame.Dice
 
             if (!_hasRotated)
             {
-                //
+                RotateAsync(_cancelSource.Token);
             }
         }
         
@@ -67,6 +75,79 @@ namespace DiceGame.Dice
             transform.position = modifiedYPos;
         }
         
+        async Task RotateAsync(CancellationToken cancelToken)
+        {
+            if (_diceController.ObjectDirectionsEnum == ObjectDirections.up)
+            {
+                Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up);
+                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                }
+
+                transform.up = Vector3.up;
+            }
+            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.down)
+            {
+                Quaternion targetRotation = Quaternion.FromToRotation(-transform.up, Vector3.down);
+                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                }
+
+                transform.up = Vector3.down;
+            }
+            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.right)
+            {
+                Quaternion targetRotation = Quaternion.FromToRotation(transform.right, Vector3.left);
+                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                }
+
+                transform.right = Vector3.up;
+            }
+            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.left)
+            {
+                Quaternion targetRotation = Quaternion.FromToRotation(-transform.right, Vector3.right);
+                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                }
+
+                transform.right = Vector3.down;
+            }
+            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.forward)
+            {
+                Quaternion targetRotation = Quaternion.FromToRotation(transform.forward, Vector3.back);
+                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                }
+
+                transform.forward = Vector3.up;
+            }
+            else if (_diceController.ObjectDirectionsEnum == ObjectDirections.backward)
+            {
+                Quaternion targetRotation = Quaternion.FromToRotation(-transform.forward, Vector3.forward);
+                while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                    await Task.Delay(TimeSpan.FromSeconds(0.01f));
+                }
+
+                transform.forward = Vector3.down;
+            }
+
+            _hasRotated = true;
+
+        }
+        
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
         {
             _cachedDiceForce = diceForce;
@@ -81,10 +162,7 @@ namespace DiceGame.Dice
 
         public void LaunchDice()
         {
-            if (_cachedDiceForce == null && _cachedDiceTorque == null) return;
-            
             LaunchDice(_cachedDiceForce, _cachedDiceTorque);
-
         }
 
     }
