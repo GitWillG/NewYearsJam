@@ -11,7 +11,7 @@ namespace DiceGame.Dice
         [SerializeField] private Camera diceCam;
         [SerializeField] private DiceSlotContainerSO diceSlotCollectionSO;
         
-        private List<DiceSlot> DiceSlots => diceSlotCollectionSO.DiceSlots.ToList();
+        private List<DiceSlotHolder> DiceSlots => diceSlotCollectionSO.DiceSlots.ToList();
 
         private DiceManager _diceManager;
         private DiceController _currentDice;

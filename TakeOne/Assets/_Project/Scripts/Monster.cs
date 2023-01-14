@@ -14,7 +14,7 @@ namespace DiceGame
         private MMHealthBar _healthBar; 
         private TextExposer _textExposer; 
         
-        private DiceSlot _diceSlot;
+        private DiceSlotHolder _diceSlotHolder;
 
         public MonsterSO MonsterSo => _monsterSo;
         private int CurrentHealth => _currentHealth;
@@ -35,8 +35,8 @@ namespace DiceGame
 
             Debug.Log(MonsterSo.DiceSlotSo.SlotPrefab);
             //Spawn Die slots
-            _diceSlot = Instantiate(MonsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlot>();
-            _diceSlot.transform.position = diceSlotLocation.localPosition;
+            _diceSlotHolder = Instantiate(MonsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlotHolder>();
+            _diceSlotHolder.transform.position = diceSlotLocation.localPosition;
             _currentHealth = MonsterSo.MAXHealth;
             _monsterManager = MManager;
             
@@ -49,7 +49,7 @@ namespace DiceGame
         
         public void TryDealDamage()
         {
-            var dieRolls = _diceSlot.GetDiceResults();
+            var dieRolls = _diceSlotHolder.GetDiceResults();
             
             if (dieRolls == null || dieRolls.Count < 1) return;
             

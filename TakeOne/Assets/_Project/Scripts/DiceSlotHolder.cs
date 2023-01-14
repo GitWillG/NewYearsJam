@@ -7,12 +7,12 @@ using UnityEngine.Events;
 
 namespace DiceGame
 {
-    public class DiceSlot : MonoBehaviour
+    public class DiceSlotHolder : MonoBehaviour
     {
         [SerializeField] private List<Transform> diceSlotTransforms = new List<Transform>();
         [SerializeField] private DiceSlotContainerSO diceSlotContainerSo;
 
-        public UnityEvent OnAttachToSlot, OnDetachFromSlot;
+        public UnityEvent OnAwake, OnAttachToSlot, OnDetachFromSlot;
         
         private List<DiceController> _diceControllers = new List<DiceController>();
 
@@ -31,6 +31,7 @@ namespace DiceGame
             }
             
             diceSlotContainerSo.AddToDiceList(this);
+            OnAwake?.Invoke();
         }
 
         public void AddDiceToSlot(DiceController diceController)
@@ -49,9 +50,11 @@ namespace DiceGame
             if (emptyDiceSlot == null) return;
 
             _diceSlotToFaceDictionary[emptyDiceSlot] = diceController;
+            var diceSlot = emptyDiceSlot.GetComponent<DiceSlot>();
+            diceSlot.OnAttachToSlot?.Invoke();
             //diceFace.transform.position = emptyDiceSlot.position;
             _diceControllers.Add(diceController);
-            diceController.CurrentSlot = this;
+            diceController.CurrentSlotHolder = this;
             diceController.SetAnchor(emptyDiceSlot);
             OnAttachToSlot?.Invoke();
         }
@@ -65,6 +68,9 @@ namespace DiceGame
             var slotForDice = _diceSlotToFaceDictionary.First(x => x.Value == diceController).Key;
             _diceSlotToFaceDictionary[slotForDice] = null;
             OnDetachFromSlot?.Invoke();
+            
+            var diceSlot = slotForDice.GetComponent<DiceSlot>();
+            diceSlot.OnDetachFromSlot?.Invoke();
         }
         
         public List<int> GetDiceResults()

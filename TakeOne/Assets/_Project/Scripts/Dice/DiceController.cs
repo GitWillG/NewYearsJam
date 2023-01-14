@@ -12,20 +12,20 @@ namespace DiceGame.Dice
         
         private DiceFace _diceFace;
         private DiceMovement _diceMovement;
-        private DiceSlot _currentSlot;
+        private DiceSlotHolder _currentSlotHolder;
         private DiceShaderHandler _diceShader;
         private bool _isHovering;
         private bool _previousHoverState;
 
-        public bool IsInSlot => _currentSlot != null;
+        public bool IsInSlot => _currentSlotHolder != null;
         public bool IsResultFound => _diceFace.IsResultFound;
         public int FaceValue => _diceFace.FaceValue;
         public ObjectDirections ObjectDirectionsEnum => _diceFace.ObjectDirectionsEnum;
         
-        public DiceSlot CurrentSlot
+        public DiceSlotHolder CurrentSlotHolder
         {
-            get => _currentSlot;
-            set => _currentSlot = value;
+            get => _currentSlotHolder;
+            set => _currentSlotHolder = value;
         }
 
         public bool IsInTray { get; set; }
@@ -52,8 +52,8 @@ namespace DiceGame.Dice
         {
             if(!IsInSlot) return;
             
-            _currentSlot.RemoveFromDiceSlot(this);
-            _currentSlot = null;
+            _currentSlotHolder.RemoveFromDiceSlot(this);
+            _currentSlotHolder = null;
             OnDetachFromSlot?.Invoke();
         }
 

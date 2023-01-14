@@ -48,6 +48,9 @@ MonoBehaviour:
   diceSlotTransforms:
   - {fileID: 1681805374015215528}
   diceSlotContainerSo: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
+  OnAwake:
+    m_PersistentCalls:
+      m_Calls: []
   OnAttachToSlot:
     m_PersistentCalls:
       m_Calls: []
@@ -79,23 +82,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2472520341715093839, guid: 84d53fa17f16dee45919f7f569fca627, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 2472520341715093839, guid: 84d53fa17f16dee45919f7f569fca627, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 2472520341715093839, guid: 84d53fa17f16dee45919f7f569fca627, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2472520341715093839, guid: 84d53fa17f16dee45919f7f569fca627, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2472520341715093839, guid: 84d53fa17f16dee45919f7f569fca627, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 2472520341715093839, guid: 84d53fa17f16dee45919f7f569fca627, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
