@@ -41,8 +41,9 @@ namespace DiceGame
             _monsterManager = MManager;
             
             //Scale Health Bar based on monster stats
-            _healthBar.UpdateBar(_currentHealth, 0, _monsterSo.MAXHealth, true);
             _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
+            // _textExposer.UpdateText(_currentHealth + " / " + _monsterSo.MAXHealth);
+
             UpdateHealthBar();
         }
         

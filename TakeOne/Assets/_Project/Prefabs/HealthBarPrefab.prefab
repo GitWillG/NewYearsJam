@@ -487,7 +487,6 @@ GameObject:
   - component: {fileID: 6960913048371751508}
   - component: {fileID: 1554982306610164721}
   - component: {fileID: 11507696883097488}
-  - component: {fileID: 6629110810795828035}
   m_Layer: 0
   m_Name: HealthBarPrefab
   m_TagString: Untagged
@@ -823,19 +822,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   field: {fileID: 3446731791901090645}
---- !u!114 &6629110810795828035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8548912973552457482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90e9b0613a9f9544580c1644719392dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GrabMainCameraOnStart: 1
-  NestObject: 0
-  OffsetDirection: {x: 0, y: 0, z: 1}
-  Up: {x: 0, y: 1, z: 0}

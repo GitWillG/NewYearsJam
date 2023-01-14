@@ -712,7 +712,11 @@ namespace MoreMountains.Tools
 			{
 				return;
 			}
-			
+
+			// if (float.IsNaN(newAmount))
+			// {
+			// 	newAmount = 1f;
+			// }
 			switch (FillMode)
 			{
 				case FillModes.LocalScale:
@@ -732,7 +736,7 @@ namespace MoreMountains.Tools
 							_targetLocalScale.y = 1f - newAmount;
 							break;
 					}
-
+					
 					bar.localScale = _targetLocalScale;
 					break;
 

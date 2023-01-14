@@ -15,7 +15,7 @@ MonoBehaviour:
   monsterName: Orc
   monsterSkills: attack
   damageMinMax: {x: 1, y: 3}
-  health: 5
+  maxHealth: 10
   damageCondition: {fileID: 0}
   diceSlotSo: {fileID: 11400000, guid: aa632003f04eb6a418acc566b8833f6d, type: 2}
   monsterVisualPrefab: {fileID: 6723841204764200227, guid: 763216f62f817ee4dbe582c8ddc62bb6, type: 3}
