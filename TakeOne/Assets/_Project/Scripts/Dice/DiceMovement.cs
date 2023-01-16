@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using DiceGame.Utility;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,7 +20,6 @@ namespace DiceGame.Dice
         [SerializeField] private float rotationSpeed = 2.5f;
 
         private CancellationTokenSource _cancelSource = new CancellationTokenSource();
-        public Transform _anchorTransform;
         private bool _hasRotated;
         private float _distanceCheckThreshold = 0.01f;
         private float _rotationCheckThreshold = 0.01f;
@@ -34,10 +34,9 @@ namespace DiceGame.Dice
             _diceController = GetComponent<DiceController>();
         }
 
-        public async Task SetAnchorAsync(Transform anchorTransform, Action onArriveAtAnchor, bool snapToAnchor = false)
+        public void SetAnchorAsync(Transform anchorTransform, Action onArriveAtAnchor, bool snapToAnchor = false, bool alertTarget = false)
         {
             _cancelSource.Cancel();
-            _anchorTransform = anchorTransform;
 
             if (snapToAnchor)
             {
@@ -46,15 +45,18 @@ namespace DiceGame.Dice
             }
 
             _cancelSource = new CancellationTokenSource();
-            await LerpAsync(anchorTransform, _cancelSource.Token, onArriveAtAnchor);
+#pragma warning disable 4014
+            LerpAsync(anchorTransform, _cancelSource.Token, onArriveAtAnchor, alertTarget);
 
             if (!_hasRotated)
             {
-                await RotateAsync(_cancelSource.Token);
+                RotateAsync(_cancelSource.Token);
             }
+#pragma warning restore 4014
+
         }
-        
-        async Task LerpAsync(Transform target , CancellationToken cancelToken, Action onArriveAtAnchor)
+
+        private async Task LerpAsync(Transform target , CancellationToken cancelToken, Action onArriveAtAnchor, bool alertTarget)
         {
             var targetPosition = target.position;
             float distance = Vector3.Distance(transform.position, targetPosition);
@@ -74,6 +76,17 @@ namespace DiceGame.Dice
 
             transform.position = modifiedYPos;
             onArriveAtAnchor?.Invoke();
+            
+            if (alertTarget)
+            {
+                //Fire some event on the target
+                var notificationReceiver = target.GetComponent<INotificationReceiver>();
+
+                if (notificationReceiver != null)
+                {
+                    notificationReceiver.Notify();
+                }
+            }
         }
         
         async Task RotateAsync(CancellationToken cancelToken)

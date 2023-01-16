@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DiceGame.Dice
 {
     public class DiceRoller : MonoBehaviour
     {
+        public UnityEvent onLaunchAllDice;
+        
         // The dice prefab that we will be instantiating
         [SerializeField] private GameObject defaultDicePrefab;
         // The force that will be applied to the dice when it is rolled
@@ -12,23 +15,19 @@ namespace DiceGame.Dice
         [SerializeField] private Vector2 diceTorque;
         [SerializeField] private float spawnRadius = 1f;
         [SerializeField] private DiceManager diceMan;
-
-        public DiceManager DiceMan 
-        { 
-            get => diceMan; 
-            set => diceMan = value; 
-        }
-
+        
         public void RollDie(GameObject dieType = null)
         {
             if (dieType == null) dieType = defaultDicePrefab;
 
             // Instantiate a new dice at the position of the DiceRoller game object
             DiceController dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity).GetComponent<DiceController>();
-            DiceMan.RolledDice.Add(dice);
+            diceMan.RolledDice.Add(dice);
             RandomizeRotation(dice.gameObject);
             dice.GetComponent<DiceController>().LaunchDice(diceForce, diceTorque);
+            onLaunchAllDice?.Invoke();
         }
+        
         // Randomize the rotation of an object
         private void RandomizeRotation(GameObject obj)
         {

@@ -10,10 +10,18 @@ namespace DiceGame.Dice
         private static readonly int Isflashing = Shader.PropertyToID("_IsFlashing");
         private static readonly int StartTime = Shader.PropertyToID("_StartTime");
         private static readonly int IsHovering = Shader.PropertyToID("_IsHover");
+        private static readonly int DissolveAmount = Shader.PropertyToID("_DissolveTValue");
+
+        public float dissolveVal;
         
         private void Awake()
         {
             _diceMat = gameObject.GetComponent<MeshRenderer>().material;
+        }
+
+        private void Update()
+        {
+            _diceMat.SetFloat(DissolveAmount, dissolveVal);
         }
 
         public void HoverOnDice(bool to)

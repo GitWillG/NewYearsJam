@@ -5,10 +5,11 @@ namespace DiceGame.Dice
 {
     /// <summary>
     /// Access point for all other scripts to set and get values from the die.
+    /// Controls <see cref="DiceGame.Dice.DiceFace"/>,  <see cref="DiceGame.Dice.DiceMovement"/> and <see cref="DiceGame.Dice.DiceShaderHandler"/>.
     /// </summary>
     public class DiceController : MonoBehaviour
     {
-        public UnityEvent OnLaunch, OnSetAnchor, OnSnapToAnchor, OnDetachFromSlot, OnDestroyDice, OnHover, OnUnHover;
+        public UnityEvent onAwake, onLaunch, onSetAnchor, onSnapToAnchor, onDetachFromSlot, onDestroyDice, onHover, onUnHover;
         
         private DiceFace _diceFace;
         private DiceMovement _diceMovement;
@@ -23,8 +24,7 @@ namespace DiceGame.Dice
         public ObjectDirections ObjectDirectionsEnum => _diceFace.ObjectDirectionsEnum;
         
         public DiceSlotHolder CurrentSlotHolder
-        {
-            get => _currentSlotHolder;
+        { 
             set => _currentSlotHolder = value;
         }
 
@@ -35,12 +35,13 @@ namespace DiceGame.Dice
             _diceFace = GetComponent<DiceFace>();
             _diceMovement = GetComponent<DiceMovement>();
             _diceShader = GetComponent<DiceShaderHandler>();
+            onAwake?.Invoke();
         }
 
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
         {
             _diceMovement.LaunchDice(diceForce, diceTorque);
-            OnLaunch?.Invoke();
+            onLaunch?.Invoke();
         }
 
         public void LaunchDice()
@@ -54,27 +55,25 @@ namespace DiceGame.Dice
             
             _currentSlotHolder.RemoveFromDiceSlot(this);
             _currentSlotHolder = null;
-            OnDetachFromSlot?.Invoke();
+            onDetachFromSlot?.Invoke();
         }
 
-        public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false)
+        public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false, bool alertTarget = false)
         {
-            OnSetAnchor?.Invoke();
-#pragma warning disable 4014
-            _diceMovement.SetAnchorAsync(anchorTransform,ArrivedAtAnchor, snapToAnchor );
-#pragma warning restore 4014
+            onSetAnchor?.Invoke();
+            _diceMovement.SetAnchorAsync(anchorTransform,ArrivedAtAnchor, snapToAnchor , alertTarget);
         }
 
         private void ArrivedAtAnchor()
         {
-            OnSnapToAnchor?.Invoke();
+            onSnapToAnchor?.Invoke();
         }
 
         public void DestroyDice()
         {
             //Logic for cleaning up here and spawning shit as needed.
-            OnDestroyDice?.Invoke();
-            Destroy(gameObject);
+            onDestroyDice?.Invoke();
+            //Destroy(gameObject);
         }
 
         public void HoverOnDice(bool to)
@@ -89,11 +88,11 @@ namespace DiceGame.Dice
             
             if (_isHovering)
             {
-                OnHover?.Invoke();
+                onHover?.Invoke();
             }
             else
             {
-                OnUnHover?.Invoke();
+                onUnHover?.Invoke();
             }
         }
 

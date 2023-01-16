@@ -810,7 +810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01a9991b906f4f4cb75ed3dfea66bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnAwake:
+  onAwake:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8057948424651123699}
@@ -825,7 +825,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnAttachToSlot:
+  onAttachToSlot:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8057948424651123699}
@@ -840,12 +840,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnDetachFromSlot:
+  onDetachFromSlot:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8057948424651123699}
         m_TargetAssemblyTypeName: MoreMountains.Feedbacks.MMF_Player, MoreMountains.Feedbacks
-        m_MethodName: ResumeFeedbacks
+        m_MethodName: PlayFeedbacks
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

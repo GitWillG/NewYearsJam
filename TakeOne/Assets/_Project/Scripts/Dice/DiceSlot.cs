@@ -1,16 +1,18 @@
-using System;
+using DiceGame.Utility;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace DiceGame.Dice
 {
-    public class DiceSlot : MonoBehaviour
+    public class DiceSlot : MonoBehaviour , INotificationReceiver
     {
-        public UnityEvent OnAwake, OnAttachToSlot, OnDetachFromSlot;
+        public UnityEvent onAwake, onAttachToSlot, onDetachFromSlot;
 
         private void Awake()
         {
-            OnAwake?.Invoke();
+            onAwake?.Invoke();
         }
+
+        public UnityEvent OnNotify => onAttachToSlot;
     }
 }

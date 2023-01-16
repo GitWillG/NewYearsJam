@@ -57,11 +57,9 @@ namespace DiceGame.Dice
             if (emptyDiceSlot == null) return;
 
             _diceSlotToFaceDictionary[emptyDiceSlot] = diceController;
-            var diceSlot = emptyDiceSlot.GetComponent<DiceSlot>();
-            diceSlot.OnAttachToSlot?.Invoke();
             _diceControllers.Add(diceController);
             diceController.CurrentSlotHolder = this;
-            diceController.SetAnchor(emptyDiceSlot);
+            diceController.SetAnchor(emptyDiceSlot, false, true);
             OnAttachToSlot?.Invoke();
         }
         
@@ -76,7 +74,7 @@ namespace DiceGame.Dice
             OnDetachFromSlot?.Invoke();
             
             var diceSlot = slotForDice.GetComponent<DiceSlot>();
-            diceSlot.OnDetachFromSlot?.Invoke();
+            diceSlot.onDetachFromSlot?.Invoke();
         }
         
         public List<int> GetDiceResults()

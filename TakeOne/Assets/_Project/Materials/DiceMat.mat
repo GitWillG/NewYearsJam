@@ -68,7 +68,7 @@ Material:
     - _ISFLASHING: 0
     - _IsFlashing: 0
     - _IsHover: 0
-    - _NoiseScale: 75
+    - _NoiseScale: 50
     - _PixelDensity: 25
     - _PulsingFrequency: 3
     - _QueueControl: 0
@@ -78,7 +78,7 @@ Material:
     m_Colors:
     - _BackVector: {r: 0, g: 0, b: -1, a: 0}
     - _DownVector: {r: 0, g: -1, b: 0, a: 0}
-    - _EdgeCol: {r: 0, g: 1, b: 0.01486158, a: 0}
+    - _EdgeCol: {r: 0, g: 1, b: 0.01486158, a: 1}
     - _ForwardVector: {r: 0, g: 0, b: 1, a: 0}
     - _HighlightColor: {r: 0.051754624, g: 0.40636963, b: 0.19572954, a: 1}
     - _LeftVector: {r: -1, g: 0, b: 0, a: 0}

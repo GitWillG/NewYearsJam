@@ -102,7 +102,7 @@ namespace DiceGame.Dice
         public void ConfirmAllDice()
         {
             StopAllCoroutines();
-            DestroyAllDiceAndCleanList(ref _selectedDice, false); // Added this extra bool cause selected dice are currently being destroyed by the dice slot 
+            DestroyAllDiceAndCleanList(ref _selectedDice, true); // Added this extra bool cause selected dice are currently being destroyed by the dice slot 
             foreach (var key in _diceTraySlotToFaceDictionary.Keys.ToList())
             {
                 _diceTraySlotToFaceDictionary[key] = null;
@@ -134,19 +134,30 @@ namespace DiceGame.Dice
             return emptyDiceTransform;
         }
 
-        public void DestroyAllDiceAndCleanList(ref List<DiceController> diceControllers, bool shouldDestroy = true)
+        private void DestroyAllDiceAndCleanList(ref List<DiceController> diceControllers, bool destroyIfInTray = false)
         {
-            if (shouldDestroy)
+            if (!destroyIfInTray)
             {
                 foreach (DiceController dice in diceControllers)
                 {
                     dice.DestroyDice();
                 }
             }
+            else
+            {
+                foreach (DiceController dice in diceControllers)
+                {
+                    if (dice.IsInTray)
+                    {
+                        dice.DestroyDice();
+                    }
+                }
+            }
 
             diceControllers.Clear();
         }
         
+        //TODO: Refactor this, very dense function
         private void DiceSelection()
         {
             var ray = diceCam.ScreenPointToRay(Input.mousePosition);
