@@ -37,21 +37,10 @@ namespace DiceGame.Dice
                 }
             }
             
-            // diceSlotContainerSo.Register(this);
-            Register();
+            ((ICollectionElement<DiceSlotHolder>)this).Register();
             OnAwake?.Invoke();
         }
         
-        public void Register()
-        {
-            CollectionReference.Register(this);
-        }
-
-        public void UnRegister()
-        {
-            CollectionReference.UnRegister(this);
-        }
-
         public void AddDiceToSlot(DiceController diceController)
         {
             var hasFreeSlot = _diceSlotToFaceDictionary.Any(x => x.Value == null);
@@ -70,7 +59,6 @@ namespace DiceGame.Dice
             _diceSlotToFaceDictionary[emptyDiceSlot] = diceController;
             var diceSlot = emptyDiceSlot.GetComponent<DiceSlot>();
             diceSlot.OnAttachToSlot?.Invoke();
-            //diceFace.transform.position = emptyDiceSlot.position;
             _diceControllers.Add(diceController);
             diceController.CurrentSlotHolder = this;
             diceController.SetAnchor(emptyDiceSlot);
@@ -116,9 +104,7 @@ namespace DiceGame.Dice
 
         private void OnDestroy()
         {
-            // diceSlotContainerSo.UnRegister(this);
-            UnRegister();
+            ((ICollectionElement<DiceSlotHolder>)this).UnRegister();
         }
-
     }
 }

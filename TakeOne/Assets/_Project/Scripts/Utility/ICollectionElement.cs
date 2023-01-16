@@ -11,7 +11,15 @@ namespace DiceGame.Utility
     public interface ICollectionElement<T>
     {
         public CollectionExposerSO<T> CollectionReference { get; set; }
-        public void Register();
-        public void UnRegister();
+
+        public void Register()
+        {
+            CollectionReference.RegisterElement((T)this);
+        }
+
+        public void UnRegister()
+        {
+            CollectionReference.UnRegisterElement((T)this);
+        }
     }
 }

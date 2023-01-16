@@ -19,7 +19,7 @@ namespace DiceGame.ScriptableObjects
             set => _collectionHashset = value;
         }
         
-        public void Register(T element)
+        public void RegisterElement(T element)
         {
             if (!_collectionHashset.Contains(element))
             {
@@ -27,7 +27,7 @@ namespace DiceGame.ScriptableObjects
             }
         }
 
-        public void UnRegister(T element)
+        public void UnRegisterElement(T element)
         {
             if(!_collectionHashset.Contains(element)) return;
             _collectionHashset.Remove(element);
