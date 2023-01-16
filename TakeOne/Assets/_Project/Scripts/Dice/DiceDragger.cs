@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DiceGame.ScriptableObjects;
+using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
 
 namespace DiceGame.Dice
@@ -9,9 +10,9 @@ namespace DiceGame.Dice
     {
         [SerializeField] private float releaseThreshold;
         [SerializeField] private Camera diceCam;
-        [SerializeField] private DiceSlotContainerSO diceSlotCollectionSO;
+        [SerializeField] private DiceSlotHolderCollection diceSlotCollectionCollection;
         
-        private List<DiceSlotHolder> DiceSlots => diceSlotCollectionSO.DiceSlots.ToList();
+        private List<DiceSlotHolder> DiceSlots => diceSlotCollectionCollection.CollectionHashset.ToList();
 
         private DiceManager _diceManager;
         private DiceController _currentDice;

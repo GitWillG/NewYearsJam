@@ -51,7 +51,7 @@ MonoBehaviour:
   - {fileID: 3863333322324538739}
   - {fileID: 3496714881978254665}
   - {fileID: 1247681674408620367}
-  diceSlotContainerSo: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
+  diceSlotHolderCollection: {fileID: 11400000, guid: 834361bb65488d34f89916fa60f885e4, type: 2}
   OnAwake:
     m_PersistentCalls:
       m_Calls: []

@@ -49,7 +49,7 @@ MonoBehaviour:
   diceSlotTransforms:
   - {fileID: 6027275185337231852}
   - {fileID: 3884962878611685646}
-  diceSlotContainerSo: {fileID: 11400000, guid: 87b8abba5747acf448b149f5b8ce32d3, type: 2}
+  diceSlotHolderCollection: {fileID: 11400000, guid: 834361bb65488d34f89916fa60f885e4, type: 2}
   OnAwake:
     m_PersistentCalls:
       m_Calls: []

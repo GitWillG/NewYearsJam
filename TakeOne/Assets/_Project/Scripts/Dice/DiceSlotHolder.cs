@@ -1,23 +1,30 @@
 using System.Collections.Generic;
 using System.Linq;
-using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
+using DiceGame.ScriptableObjects.Dice;
+using DiceGame.Utility;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DiceGame
+namespace DiceGame.Dice
 {
-    public class DiceSlotHolder : MonoBehaviour
+    public class DiceSlotHolder : MonoBehaviour, ICollectionElement<DiceSlotHolder>
     {
         [SerializeField] private List<Transform> diceSlotTransforms = new List<Transform>();
-        [SerializeField] private DiceSlotContainerSO diceSlotContainerSo;
+        [SerializeField] private  DiceSlotHolderCollection diceSlotHolderCollection;
 
         public UnityEvent OnAwake, OnAttachToSlot, OnDetachFromSlot;
         
         private List<DiceController> _diceControllers = new List<DiceController>();
 
         private Dictionary<Transform, DiceController> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceController>();
-        
+
+        public CollectionExposerSO<DiceSlotHolder> CollectionReference
+        {
+            get => diceSlotHolderCollection;
+            set => diceSlotHolderCollection = (DiceSlotHolderCollection)value;
+        }
+
         public bool HasSlotAvailable => _diceSlotToFaceDictionary.Any(x => x.Value == null);
 
         private void Awake()
@@ -30,8 +37,19 @@ namespace DiceGame
                 }
             }
             
-            diceSlotContainerSo.AddToDiceList(this);
+            // diceSlotContainerSo.Register(this);
+            Register();
             OnAwake?.Invoke();
+        }
+        
+        public void Register()
+        {
+            CollectionReference.Register(this);
+        }
+
+        public void UnRegister()
+        {
+            CollectionReference.UnRegister(this);
         }
 
         public void AddDiceToSlot(DiceController diceController)
@@ -98,7 +116,9 @@ namespace DiceGame
 
         private void OnDestroy()
         {
-            diceSlotContainerSo.RemoveFromDiceList(this);
+            // diceSlotContainerSo.UnRegister(this);
+            UnRegister();
         }
+
     }
 }
