@@ -101,7 +101,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 079b4aad9c71e1842b06e42ed5e7ea6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInTray: 0
+  OnLaunch:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSetAnchor:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSnapToAnchor:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDetachFromSlot:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDestroyDice:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnHover:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2367960216642263441
 MonoBehaviour:
   m_ObjectHideFlags: 0

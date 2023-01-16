@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3858486774269624981}
   - component: {fileID: 5520030051954334029}
   m_Layer: 8
-  m_Name: 3DiceSlots
+  m_Name: 3DiceSlotHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

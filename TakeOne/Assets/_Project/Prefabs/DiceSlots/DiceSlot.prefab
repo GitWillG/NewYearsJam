@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 2472520341715093839}
   - component: {fileID: 3108334390988872801}
   m_Layer: 8
-  m_Name: SlotCorners
+  m_Name: DiceSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
