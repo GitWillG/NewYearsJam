@@ -86,8 +86,7 @@ namespace DiceGame.Dice
             {
                 returnList.Add(diceController.FaceValue);
             }
-
-
+            
             for (var i = 0; i < _diceControllers.Count; i++)
             {
                 var diceFace = _diceControllers[i];

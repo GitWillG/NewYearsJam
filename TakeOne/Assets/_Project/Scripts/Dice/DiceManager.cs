@@ -102,7 +102,7 @@ namespace DiceGame.Dice
         public void ConfirmAllDice()
         {
             StopAllCoroutines();
-            DestroyAllDiceAndCleanList(ref _selectedDice);
+            DestroyAllDiceAndCleanList(ref _selectedDice, false); // Added this extra bool cause selected dice are currently being destroyed by the dice slot 
             foreach (var key in _diceTraySlotToFaceDictionary.Keys.ToList())
             {
                 _diceTraySlotToFaceDictionary[key] = null;
@@ -134,18 +134,21 @@ namespace DiceGame.Dice
             return emptyDiceTransform;
         }
 
-        public void DestroyAllDiceAndCleanList(ref List<DiceController> diceControllers)
+        public void DestroyAllDiceAndCleanList(ref List<DiceController> diceControllers, bool shouldDestroy = true)
         {
-            foreach (DiceController dice in diceControllers)
+            if (shouldDestroy)
             {
-                dice.DestroyDice();
+                foreach (DiceController dice in diceControllers)
+                {
+                    dice.DestroyDice();
+                }
             }
+
             diceControllers.Clear();
         }
         
         private void DiceSelection()
         {
-            Debug.Log("Raycasting for dice in Dice Manager");
             var ray = diceCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
@@ -161,7 +164,6 @@ namespace DiceGame.Dice
                 {
                     HoveredDie.HoverOnDice(true);
                 }
-                //TODO: hover selector
                 if (!Input.GetMouseButtonUp(0) || HoveredDie.IsInTray || !HoveredDie.IsResultFound) return;
                 
                 if (SelectedDie != null)

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Knight
   numOfDice: 2
-  lifeMod: 12
+  healthContribution: 10
   diePrefab: {fileID: 2367960216642263466, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
   visual: {fileID: 0}

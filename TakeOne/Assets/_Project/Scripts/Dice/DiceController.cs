@@ -60,7 +60,9 @@ namespace DiceGame.Dice
         public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false)
         {
             OnSetAnchor?.Invoke();
-            _diceMovement.SetAnchor(anchorTransform,ArrivedAtAnchor, snapToAnchor );
+#pragma warning disable 4014
+            _diceMovement.SetAnchorAsync(anchorTransform,ArrivedAtAnchor, snapToAnchor );
+#pragma warning restore 4014
         }
 
         private void ArrivedAtAnchor()

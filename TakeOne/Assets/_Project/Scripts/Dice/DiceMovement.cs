@@ -34,7 +34,7 @@ namespace DiceGame.Dice
             _diceController = GetComponent<DiceController>();
         }
 
-        public void SetAnchor(Transform anchorTransform, Action onArriveAtAnchor, bool snapToAnchor = false)
+        public async Task SetAnchorAsync(Transform anchorTransform, Action onArriveAtAnchor, bool snapToAnchor = false)
         {
             _cancelSource.Cancel();
             _anchorTransform = anchorTransform;
@@ -46,11 +46,11 @@ namespace DiceGame.Dice
             }
 
             _cancelSource = new CancellationTokenSource();
-            LerpAsync(anchorTransform, _cancelSource.Token, onArriveAtAnchor);
+            await LerpAsync(anchorTransform, _cancelSource.Token, onArriveAtAnchor);
 
             if (!_hasRotated)
             {
-                RotateAsync(_cancelSource.Token);
+                await RotateAsync(_cancelSource.Token);
             }
         }
         

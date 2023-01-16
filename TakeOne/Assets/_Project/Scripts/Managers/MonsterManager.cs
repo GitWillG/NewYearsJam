@@ -1,52 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DiceGame.ScriptableObjects;
-using UnityEditor;
 using UnityEngine;
 
-namespace DiceGame
+namespace DiceGame.Managers
 {
     //Spawn monsters, invoke effects on monster turns, manage monster pool, handle end encounter.
     public class MonsterManager : MonoBehaviour
     {
-        private List<MonsterSO> encounterMembers = new List<MonsterSO>();
-        private Object[] allMonsters;
         [SerializeField] private List<Transform> spawnLocations = new List<Transform>();
         [SerializeField] private List<Transform> diceHolderSpawn = new List<Transform>();
-        private TurnManager turnOrder;
         [SerializeField] private string encounterName;
         [SerializeField] private string monsterIntent;
         [SerializeField] private int attackDamage;
-        private PartyManager _partyManager;
         [SerializeField] private Monster monster;
         [SerializeField] private List<Monster> spawnedMonsters = new List<Monster>();
 
+        private TurnManager _turnOrder;
+        private PartyManager _partyManager;
+        private List<MonsterSO> _encounterMembers = new List<MonsterSO>();
+        private MonsterSO[] _allMonsters;
 
-        private int currentTurn = 0;
-        public List<MonsterSO> EncounterMembers 
-        { 
-            get => encounterMembers; 
-            set => encounterMembers = value; 
-        }
+        private int _currentTurn = 0;
+        
+        public List<MonsterSO> EncounterMembers => _encounterMembers;
         public string EncounterName => encounterName;
-
-        public TurnManager TurnOrder => turnOrder;
-
-        public List<Transform> SpawnLocations { get => spawnLocations; set => spawnLocations = value; }
-        public List<Monster> SpawnedMonsters { get => spawnedMonsters; set => spawnedMonsters = value; }
+        
+        public List<Monster> SpawnedMonsters => spawnedMonsters;
 
         private void Awake()
         {
-            //allMonsters.Add((MonsterSO)AssetDatabase.LoadAssetAtPath("Assets/_Project/Scriptable Objects Assets/Monsters", typeof(MonsterSO)));
-            allMonsters = Resources.LoadAll("Monsters", typeof(MonsterSO));
+            _allMonsters = Resources.LoadAll("Monsters", typeof(MonsterSO)).Cast<MonsterSO>().ToArray();
         }
 
         private void Start()
         {
             //monster = GameObject.FindObjectOfType<Monster>();
-            _partyManager = GameObject.FindObjectOfType<PartyManager>();
-            turnOrder = GameObject.FindObjectOfType<TurnManager>();
+            _partyManager = FindObjectOfType<PartyManager>();
+            _turnOrder = FindObjectOfType<TurnManager>();
+            
             spawnLocations = new List<Transform>();
+            
+            //TODO: This should probably be just set in the editor so we don't do this call each time.
+            //Maybe some sort of editor extension that does this functionality as is, so it only runs in editor once and not during runtime in the build.
+            //Generally bad practice to do FindObject for anything tbh...
             foreach (GameObject spawns in GameObject.FindGameObjectsWithTag("MonsterSpawn"))
             {
                 spawnLocations.Add(spawns.transform);
@@ -59,72 +57,79 @@ namespace DiceGame
             CreateEncounter();
 
         }
-        
-        public void InitializeMonsters()
+
+        private void InitializeMonsters()
         {
             for (int i=0; i<EncounterMembers.Count; i++)
             {
                 var newMonster = Instantiate(monster).GetComponent<Monster>();
-                newMonster.InitializeMonster(encounterMembers[i], spawnLocations[i], diceHolderSpawn[i], this);
+                
+                newMonster.InitializeMonster(_encounterMembers[i], spawnLocations[i], diceHolderSpawn[i], this);
+                
                 SpawnedMonsters.Add(newMonster);
-
             }
         }
 
         //maybe belongs in encounter manager?
-        public void EndEncounter()
+        private void EndEncounter()
         {
             StopAllCoroutines();
-            currentTurn = 0;
-            turnOrder.EndTurn();
-            //ProgressTurn();
-            CreateEncounter();
             
+            _currentTurn = 0;
+            _turnOrder.EndTurn();
+            
+            CreateEncounter();
         }
 
         public void ProgressTurn()
         {                
-            if (currentTurn < EncounterMembers.Count)
+            if (_currentTurn < EncounterMembers.Count)
             {
                 StartCoroutine(PlayAnimations(1));
                 return;
             }
             
             StopAllCoroutines();
-            currentTurn = 0;
-            turnOrder.EndTurn();
-
-            //currentTurn++;
+            
+            _currentTurn = 0;
+            _turnOrder.EndTurn();
         }
 
         public IEnumerator PlayAnimations(float duration)
         {
             yield return new WaitForSeconds(duration);
-            int DamageToDeal = encounterMembers[currentTurn].Damage;
-            Debug.Log(encounterMembers[currentTurn] + "dealt " + DamageToDeal);
-            _partyManager.LifePool -= DamageToDeal;// make a forloop
-            if (_partyManager.LifePool <= 0) ///TODO: <- refactor rahul
-            {
-                _partyManager.TPK();
-            }
-            currentTurn++;
+            
+            int damageToDeal = _encounterMembers[_currentTurn].Damage;
+            
+            Debug.Log(_encounterMembers[_currentTurn] + "Tries to deal : " + damageToDeal);
+            
+            _partyManager.TryDealDamage(damageToDeal);
+            
+            _currentTurn++;
             ProgressTurn();
         }
 
         [ContextMenu("create encounter")]
         public void CreateEncounter()
         {
-            if (encounterMembers != null){
-                encounterMembers.Clear();
-            }
-            int PartySize = Random.Range(1, 4);
-            for (int i = 0; i< PartySize; i++)
+            if (_encounterMembers != null)
             {
-                int PickMonster = Random.Range(0, allMonsters.Length);
-                encounterMembers.Add((MonsterSO)allMonsters[PickMonster]);
+                _encounterMembers.Clear();
             }
+
+            _encounterMembers = new List<MonsterSO>();
+            
+            int partySize = Random.Range(1, 4);
+            
+            for (int i = 0; i< partySize; i++)
+            {
+                int pickMonster = Random.Range(0, _allMonsters.Length);
+                _encounterMembers.Add((MonsterSO)_allMonsters[pickMonster]);
+            }
+            
             InitializeMonsters();
         }
+        
         public void MonsterTakeDamage()
         {
             for (int i = 0; i < SpawnedMonsters.Count; i++)
@@ -133,10 +138,12 @@ namespace DiceGame
                 aliveMonster.TryDealDamage();
             }
         }
-        public void RemoveDead(Monster monster)
+        
+        public void RemoveDead(Monster currentMonster)
         {
-            SpawnedMonsters.Remove(monster);
-            encounterMembers.Remove(monster.MonsterSo);
+            SpawnedMonsters.Remove(currentMonster);
+            _encounterMembers.Remove(currentMonster.MonsterSo);
+            
             if (SpawnedMonsters.Count == 0)
             {
                 EndEncounter();
