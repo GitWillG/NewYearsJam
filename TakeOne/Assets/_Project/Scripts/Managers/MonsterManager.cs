@@ -103,7 +103,7 @@ namespace DiceGame.Managers
         {
             var currentMonster = _dataToMonoBehaviours[_currentTurn].monoBehaviour;
             
-            yield return currentMonster.Attack(_partyManager);
+            yield return StartCoroutine(currentMonster.Attack(_partyManager));
             
             _currentTurn++;
             ProgressTurn();
@@ -130,12 +130,17 @@ namespace DiceGame.Managers
             InitializeMonsters();
         }
         
-        public void MonsterTakeDamage()
+        public IEnumerator MonsterTakeDamage()
         {
             for (int i = 0; i < SpawnedMonsters.Count; i++)
             {
                 Monster.Monster aliveMonster = SpawnedMonsters[i];
-                aliveMonster.TryDealDamage();
+                if (aliveMonster.TryDealDamage())
+                {
+                    yield return new WaitForSeconds(1f);
+                }
+
+                yield return new WaitForEndOfFrame();
             }
         }
         

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DiceGame.Dice;
@@ -67,9 +68,17 @@ namespace DiceGame.Managers
         
         public void EndPartyTurn()
         {
+            StartCoroutine(EndTurnEnumerator());
+        }
+
+        private IEnumerator EndTurnEnumerator()
+        {
             _currentTurn = 0;
             _diceMan.CharacterSoStats = CurrentPartyMember;
-            _monsterManager.MonsterTakeDamage();
+            
+            yield return StartCoroutine( _monsterManager.MonsterTakeDamage());
+
+            yield return new WaitForSeconds(.2f);
             _turnManager.EndTurn();
             _monsterManager.ProgressTurn();
             _damageNegation = CalculateDamageNegation();

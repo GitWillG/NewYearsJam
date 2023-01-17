@@ -13,6 +13,7 @@ namespace DiceGame.Monster
     {
         public UnityEvent onAttack;
         [SerializeField] private float attackDuration;
+        [SerializeField] private float paddingBetweenAttacks;
         [SerializeField] private Transform visualsHolder;
         
         private MonsterSO _monsterSo;
@@ -56,11 +57,11 @@ namespace DiceGame.Monster
             UpdateHealthBar();
         }
         
-        public void TryDealDamage()
+        public bool TryDealDamage()
         {
             var dieRolls = _diceSlotHolder.GetDiceResults();
             
-            if (dieRolls == null || dieRolls.Count < 1) return;
+            if (dieRolls == null || dieRolls.Count < 1) return false;
             
             var damage = MonsterSo.DamageFromCondition(dieRolls);
             
@@ -75,6 +76,8 @@ namespace DiceGame.Monster
                 _currentHealth -= damage;
                 UpdateHealthBar();
             }
+
+            return true;
         }
         
         public IEnumerator Attack(PartyManager partyManager)
@@ -86,8 +89,10 @@ namespace DiceGame.Monster
             var damageToDeal = _monsterSo.Damage;
 
             partyManager.TryDealDamage(damageToDeal);
-            
             Debug.Log(name + "Tries to deal : " + damageToDeal);
+
+            yield return new WaitForSeconds(paddingBetweenAttacks);
+            
         }
 
         private void UpdateHealthBar()
