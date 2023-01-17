@@ -1,14 +1,20 @@
+using System.Collections;
 using System.Collections.Generic;
 using DiceGame.Dice;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
 using MoreMountains.Tools;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace DiceGame
+namespace DiceGame.Monster
 {
     public class Monster : MonoBehaviour
     {
+        public UnityEvent onAttack;
+        [SerializeField] private float attackDuration;
+        [SerializeField] private Transform visualsHolder;
+        
         private MonsterSO _monsterSo;
         private List<int> _dieResults;
         private int _currentHealth;
@@ -26,12 +32,13 @@ namespace DiceGame
             _healthBar = GetComponent<MMHealthBar>();
         }
 
-        public void InitializeMonster(MonsterSO so, Transform spawnLocation, Transform diceSlotLocation, MonsterManager MManager)
+        public void InitializeMonster(MonsterSO so, Transform spawnLocation, Transform diceSlotLocation, MonsterManager monsterManager)
         {
             _monsterSo = so;
             transform.parent = spawnLocation;
             //Spawn Visuals
-            var visuals = Instantiate(MonsterSo.MonsterVisualPrefab, transform);
+            
+            Instantiate(MonsterSo.MonsterVisualPrefab, visualsHolder);
 
             transform.localPosition = Vector3.zero;
 
@@ -40,7 +47,7 @@ namespace DiceGame
             _diceSlotHolder = Instantiate(MonsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlotHolder>();
             _diceSlotHolder.transform.position = diceSlotLocation.localPosition;
             _currentHealth = MonsterSo.MAXHealth;
-            _monsterManager = MManager;
+            _monsterManager = monsterManager;
             
             //Scale Health Bar based on monster stats
             _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
@@ -68,6 +75,19 @@ namespace DiceGame
                 _currentHealth -= damage;
                 UpdateHealthBar();
             }
+        }
+        
+        public IEnumerator Attack(PartyManager partyManager)
+        {
+            onAttack?.Invoke();
+            
+            yield return new WaitForSeconds(attackDuration);
+
+            var damageToDeal = _monsterSo.Damage;
+
+            partyManager.TryDealDamage(damageToDeal);
+            
+            Debug.Log(name + "Tries to deal : " + damageToDeal);
         }
 
         private void UpdateHealthBar()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
+using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,7 +17,10 @@ namespace DiceGame.Managers
         //move functions to appripriate scripts, automation
         private List<HeroSO> _partyMembers = new List<HeroSO>();
         private int _health;
-        
+        private int _maxHealth;
+        private MMHealthBar _healthBar; 
+        private TextExposer _textExposer; 
+
         private MonsterManager _monsterManager;
         private UIManager _uIManager;
         private DiceManager _diceMan;
@@ -48,6 +52,7 @@ namespace DiceGame.Managers
             _monsterManager = FindObjectOfType<MonsterManager>();
             _diceMan = FindObjectOfType<DiceManager>();
             _turnManager = FindObjectOfType<TurnManager>();
+            _healthBar = GetComponent<MMHealthBar>();
             _allHeroes = Resources.LoadAll("Heros", typeof(HeroSO)).Cast<HeroSO>().ToArray();
         }
 
@@ -56,6 +61,8 @@ namespace DiceGame.Managers
             CreateParty();
             _diceMan.CharacterSoStats = _partyMembers[_currentTurn];
             _currentTurn = 0;
+            _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
+            UpdateHealthBar();
         }
         
         public void EndPartyTurn()
@@ -81,13 +88,19 @@ namespace DiceGame.Managers
             {
                 _health = 0;
                 Invoke(nameof(KillSelf), 0.2f);
-                //UpdateHealthBar();
+                UpdateHealthBar();
             }
             else
             {
                 _health -= totalDamage;
-                //UpdateHealthBar();
+                UpdateHealthBar();
             }
+        }
+        
+        private void UpdateHealthBar()
+        {
+            _healthBar.UpdateBar(_health, 0, _maxHealth, true);
+            _textExposer.UpdateText(_health + " / " + _maxHealth);
         }
 
         private int CalculateDamageNegation()
@@ -139,6 +152,8 @@ namespace DiceGame.Managers
             {
                 _health += hero.HealthContribution;
             }
+
+            _maxHealth = _health;
         }
         
         public void KillSelf()

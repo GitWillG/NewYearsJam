@@ -12,22 +12,23 @@ namespace DiceGame.Managers
         [SerializeField] private List<Transform> spawnLocations = new List<Transform>();
         [SerializeField] private List<Transform> diceHolderSpawn = new List<Transform>();
         [SerializeField] private string encounterName;
-        [SerializeField] private string monsterIntent;
-        [SerializeField] private int attackDamage;
-        [SerializeField] private Monster monster;
-        [SerializeField] private List<Monster> spawnedMonsters = new List<Monster>();
+        [SerializeField] private Monster.Monster monster;
+        [SerializeField] private List<Monster.Monster> spawnedMonsters = new List<Monster.Monster>();
 
         private TurnManager _turnOrder;
         private PartyManager _partyManager;
         private List<MonsterSO> _encounterMembers = new List<MonsterSO>();
         private MonsterSO[] _allMonsters;
 
+        private List<DataToMonoBehaviour<MonsterSO, Monster.Monster>> _dataToMonoBehaviours =
+            new List<DataToMonoBehaviour<MonsterSO, Monster.Monster>>();
+
         private int _currentTurn = 0;
         
         public List<MonsterSO> EncounterMembers => _encounterMembers;
         public string EncounterName => encounterName;
         
-        public List<Monster> SpawnedMonsters => spawnedMonsters;
+        public List<Monster.Monster> SpawnedMonsters => spawnedMonsters;
 
         private void Awake()
         {
@@ -60,13 +61,16 @@ namespace DiceGame.Managers
 
         private void InitializeMonsters()
         {
+            _dataToMonoBehaviours = new List<DataToMonoBehaviour<MonsterSO, Monster.Monster>>();
+            
             for (int i=0; i<EncounterMembers.Count; i++)
             {
-                var newMonster = Instantiate(monster).GetComponent<Monster>();
+                var newMonster = Instantiate(monster).GetComponent<Monster.Monster>();
                 
                 newMonster.InitializeMonster(_encounterMembers[i], spawnLocations[i], diceHolderSpawn[i], this);
                 
                 SpawnedMonsters.Add(newMonster);
+                _dataToMonoBehaviours.Add(new DataToMonoBehaviour<MonsterSO, Monster.Monster>(_encounterMembers[i], newMonster));
             }
         }
 
@@ -85,7 +89,7 @@ namespace DiceGame.Managers
         {                
             if (_currentTurn < EncounterMembers.Count)
             {
-                StartCoroutine(PlayAnimations(1));
+                StartCoroutine(PlayAnimations());
                 return;
             }
             
@@ -95,15 +99,11 @@ namespace DiceGame.Managers
             _turnOrder.EndTurn();
         }
 
-        public IEnumerator PlayAnimations(float duration)
+        private IEnumerator PlayAnimations()
         {
-            yield return new WaitForSeconds(duration);
+            var currentMonster = _dataToMonoBehaviours[_currentTurn].monoBehaviour;
             
-            int damageToDeal = _encounterMembers[_currentTurn].Damage;
-            
-            Debug.Log(_encounterMembers[_currentTurn] + "Tries to deal : " + damageToDeal);
-            
-            _partyManager.TryDealDamage(damageToDeal);
+            yield return currentMonster.Attack(_partyManager);
             
             _currentTurn++;
             ProgressTurn();
@@ -134,12 +134,12 @@ namespace DiceGame.Managers
         {
             for (int i = 0; i < SpawnedMonsters.Count; i++)
             {
-                Monster aliveMonster = SpawnedMonsters[i];
+                Monster.Monster aliveMonster = SpawnedMonsters[i];
                 aliveMonster.TryDealDamage();
             }
         }
         
-        public void RemoveDead(Monster currentMonster)
+        public void RemoveDead(Monster.Monster currentMonster)
         {
             SpawnedMonsters.Remove(currentMonster);
             _encounterMembers.Remove(currentMonster.MonsterSo);
@@ -148,6 +148,18 @@ namespace DiceGame.Managers
             {
                 EndEncounter();
             }
+        }
+    }
+
+    public struct DataToMonoBehaviour<T, U>
+    {
+        public T data;
+        public U monoBehaviour;
+
+        public DataToMonoBehaviour(T data, U monoBehaviour)
+        {
+            this.data = data;
+            this.monoBehaviour = monoBehaviour;
         }
     }
 }
