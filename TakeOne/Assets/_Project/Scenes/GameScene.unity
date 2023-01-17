@@ -392,6 +392,8 @@ GameObject:
   - component: {fileID: 119609509}
   - component: {fileID: 119609508}
   - component: {fileID: 119609510}
+  - component: {fileID: 119609512}
+  - component: {fileID: 119609511}
   m_Layer: 0
   m_Name: DiceCamera
   m_TagString: Untagged
@@ -437,7 +439,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -505,6 +507,360 @@ MonoBehaviour:
   releaseThreshold: 1.5
   diceCam: {fileID: 119609509}
   diceSlotCollectionCollection: {fileID: 11400000, guid: 834361bb65488d34f89916fa60f885e4, type: 2}
+--- !u!114 &119609511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119609506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf8e915527fa424a8b17dc168fe20eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 0
+  Channel: 0
+  MMChannelDefinition: {fileID: 0}
+  CooldownBetweenShakes: 0
+--- !u!114 &119609512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119609506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347013242dca7c44fb5001793033ea59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateMode: 0
+  PositionActive: 1
+  RotationActive: 1
+  ScaleActive: 0
+  PositionWiggleProperties:
+    WigglePermitted: 0
+    WiggleType: 3
+    UseUnscaledTime: 0
+    StartWigglingAutomatically: 1
+    SmoothPingPong: 1
+    UseSpeedCurve: 0
+    SpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    FrequencyMin: 0
+    FrequencyMax: 1
+    AmplitudeMin: {x: 0, y: 0, z: 0}
+    AmplitudeMax: {x: 1, y: 1, z: 1}
+    RelativeAmplitude: 1
+    UniformValues: 0
+    Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.19140625
+        value: 1.0055237
+        inSlope: 1.1182947
+        outSlope: 1.1182947
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.1884058
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
+    RemapCurveZeroMax: {x: 0.5, y: 0.5, z: 0.5}
+    RemapCurveOneMin: {x: 0.5, y: 0.5, z: 0.5}
+    RemapCurveOneMax: {x: 1, y: 1, z: 1}
+    RelativeCurveAmplitude: 1
+    CurvePingPong: 0
+    PauseMin: 0
+    PauseMax: 0
+    LimitedTime: 0
+    LimitedTimeTotal: 0
+    LimitedTimeFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    LimitedTimeResetValue: 1
+    LimitedTimeLeft: 0
+    NoiseFrequencyMin: {x: 0, y: 0, z: 0}
+    NoiseFrequencyMax: {x: 1, y: 1, z: 1}
+    NoiseShiftMin: {x: 0, y: 0, z: 0}
+    NoiseShiftMax: {x: 0, y: 0, z: 0}
+  RotationWiggleProperties:
+    WigglePermitted: 0
+    WiggleType: 3
+    UseUnscaledTime: 0
+    StartWigglingAutomatically: 1
+    SmoothPingPong: 1
+    UseSpeedCurve: 0
+    SpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    FrequencyMin: 0
+    FrequencyMax: 1
+    AmplitudeMin: {x: 0, y: 0, z: 0}
+    AmplitudeMax: {x: 1, y: 1, z: 1}
+    RelativeAmplitude: 1
+    UniformValues: 0
+    Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.18359375
+        value: 1
+        inSlope: 1.1647716
+        outSlope: 1.1647716
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08133971
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
+    RemapCurveZeroMax: {x: 0.5, y: 0, z: 0.5}
+    RemapCurveOneMin: {x: 0.5, y: 0.5, z: 0.5}
+    RemapCurveOneMax: {x: 1, y: 1, z: 1}
+    RelativeCurveAmplitude: 1
+    CurvePingPong: 0
+    PauseMin: 0
+    PauseMax: 0
+    LimitedTime: 0
+    LimitedTimeTotal: 0
+    LimitedTimeFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    LimitedTimeResetValue: 1
+    LimitedTimeLeft: 0
+    NoiseFrequencyMin: {x: 0, y: 0, z: 0}
+    NoiseFrequencyMax: {x: 1, y: 1, z: 1}
+    NoiseShiftMin: {x: 0, y: 0, z: 0}
+    NoiseShiftMax: {x: 0, y: 0, z: 0}
+  ScaleWiggleProperties:
+    WigglePermitted: 1
+    WiggleType: 1
+    UseUnscaledTime: 0
+    StartWigglingAutomatically: 1
+    SmoothPingPong: 1
+    UseSpeedCurve: 0
+    SpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    FrequencyMin: 0
+    FrequencyMax: 1
+    AmplitudeMin: {x: 0, y: 0, z: 0}
+    AmplitudeMax: {x: 1, y: 1, z: 1}
+    RelativeAmplitude: 1
+    UniformValues: 0
+    Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
+    RemapCurveZeroMax: {x: 0, y: 0, z: 0}
+    RemapCurveOneMin: {x: 1, y: 1, z: 1}
+    RemapCurveOneMax: {x: 1, y: 1, z: 1}
+    RelativeCurveAmplitude: 1
+    CurvePingPong: 0
+    PauseMin: 0
+    PauseMax: 0
+    LimitedTime: 0
+    LimitedTimeTotal: 0
+    LimitedTimeFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    LimitedTimeResetValue: 1
+    LimitedTimeLeft: 0
+    NoiseFrequencyMin: {x: 0, y: 0, z: 0}
+    NoiseFrequencyMax: {x: 1, y: 1, z: 1}
+    NoiseShiftMin: {x: 0, y: 0, z: 0}
+    NoiseShiftMax: {x: 0, y: 0, z: 0}
+  DebugWiggleDuration: 2
 --- !u!1 &157304905
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,6 +1330,116 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &414346081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 414346083}
+  - component: {fileID: 414346082}
+  - component: {fileID: 414346084}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &414346082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414346081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: d5885f6cf98a3b045819444d0ba5a135, type: 2}
+--- !u!4 &414346083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414346081}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.293762, y: 0.4500003, z: -0.97586113}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &414346084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414346081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d01154bce0123949a8800d85a063092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 0
+  Channel: 0
+  MMChannelDefinition: {fileID: 0}
+  ShakeDuration: 0.2
+  PlayOnAwake: 0
+  PermanentShake: 0
+  Interruptible: 1
+  AlwaysResetTargetValuesAfterShake: 0
+  CooldownBetweenShakes: 0
+  Shaking: 0
+  ForwardDirection: 1
+  TimescaleMode: 0
+  RelativeIntensity: 0
+  ShakeIntensity:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  RemapIntensityZero: 0
+  RemapIntensityOne: 1
 --- !u!1 &514719522
 GameObject:
   m_ObjectHideFlags: 0
@@ -2093,6 +2559,8 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194231}
+  - component: {fileID: 963194233}
+  - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2190,7 +2658,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -2200,6 +2668,360 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &963194232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf8e915527fa424a8b17dc168fe20eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChannelMode: 0
+  Channel: 0
+  MMChannelDefinition: {fileID: 0}
+  CooldownBetweenShakes: 0
+--- !u!114 &963194233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347013242dca7c44fb5001793033ea59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateMode: 0
+  PositionActive: 1
+  RotationActive: 1
+  ScaleActive: 0
+  PositionWiggleProperties:
+    WigglePermitted: 0
+    WiggleType: 3
+    UseUnscaledTime: 0
+    StartWigglingAutomatically: 1
+    SmoothPingPong: 1
+    UseSpeedCurve: 0
+    SpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    FrequencyMin: 0
+    FrequencyMax: 1
+    AmplitudeMin: {x: 0, y: 0, z: 0}
+    AmplitudeMax: {x: 1, y: 1, z: 1}
+    RelativeAmplitude: 1
+    UniformValues: 0
+    Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.19140625
+        value: 1.0055237
+        inSlope: 1.1182947
+        outSlope: 1.1182947
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.1884058
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
+    RemapCurveZeroMax: {x: 0.5, y: 0.5, z: 0.5}
+    RemapCurveOneMin: {x: 0.5, y: 0.5, z: 0.5}
+    RemapCurveOneMax: {x: 1, y: 1, z: 1}
+    RelativeCurveAmplitude: 1
+    CurvePingPong: 0
+    PauseMin: 0
+    PauseMax: 0
+    LimitedTime: 0
+    LimitedTimeTotal: 0
+    LimitedTimeFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    LimitedTimeResetValue: 1
+    LimitedTimeLeft: 0
+    NoiseFrequencyMin: {x: 0, y: 0, z: 0}
+    NoiseFrequencyMax: {x: 1, y: 1, z: 1}
+    NoiseShiftMin: {x: 0, y: 0, z: 0}
+    NoiseShiftMax: {x: 0, y: 0, z: 0}
+  RotationWiggleProperties:
+    WigglePermitted: 0
+    WiggleType: 3
+    UseUnscaledTime: 0
+    StartWigglingAutomatically: 1
+    SmoothPingPong: 1
+    UseSpeedCurve: 0
+    SpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    FrequencyMin: 0
+    FrequencyMax: 1
+    AmplitudeMin: {x: 0, y: 0, z: 0}
+    AmplitudeMax: {x: 1, y: 1, z: 1}
+    RelativeAmplitude: 1
+    UniformValues: 0
+    Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.18359375
+        value: 1
+        inSlope: 1.1647716
+        outSlope: 1.1647716
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08133971
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
+    RemapCurveZeroMax: {x: 0.5, y: 0, z: 0.5}
+    RemapCurveOneMin: {x: 0.5, y: 0.5, z: 0.5}
+    RemapCurveOneMax: {x: 1, y: 1, z: 1}
+    RelativeCurveAmplitude: 1
+    CurvePingPong: 0
+    PauseMin: 0
+    PauseMax: 0
+    LimitedTime: 0
+    LimitedTimeTotal: 0
+    LimitedTimeFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    LimitedTimeResetValue: 1
+    LimitedTimeLeft: 0
+    NoiseFrequencyMin: {x: 0, y: 0, z: 0}
+    NoiseFrequencyMax: {x: 1, y: 1, z: 1}
+    NoiseShiftMin: {x: 0, y: 0, z: 0}
+    NoiseShiftMax: {x: 0, y: 0, z: 0}
+  ScaleWiggleProperties:
+    WigglePermitted: 1
+    WiggleType: 1
+    UseUnscaledTime: 0
+    StartWigglingAutomatically: 1
+    SmoothPingPong: 1
+    UseSpeedCurve: 0
+    SpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    FrequencyMin: 0
+    FrequencyMax: 1
+    AmplitudeMin: {x: 0, y: 0, z: 0}
+    AmplitudeMax: {x: 1, y: 1, z: 1}
+    RelativeAmplitude: 1
+    UniformValues: 0
+    Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
+    RemapCurveZeroMax: {x: 0, y: 0, z: 0}
+    RemapCurveOneMin: {x: 1, y: 1, z: 1}
+    RemapCurveOneMax: {x: 1, y: 1, z: 1}
+    RelativeCurveAmplitude: 1
+    CurvePingPong: 0
+    PauseMin: 0
+    PauseMax: 0
+    LimitedTime: 0
+    LimitedTimeTotal: 0
+    LimitedTimeFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: -1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    LimitedTimeResetValue: 1
+    LimitedTimeLeft: 0
+    NoiseFrequencyMin: {x: 0, y: 0, z: 0}
+    NoiseFrequencyMax: {x: 1, y: 1, z: 1}
+    NoiseShiftMin: {x: 0, y: 0, z: 0}
+    NoiseShiftMax: {x: 0, y: 0, z: 0}
+  DebugWiggleDuration: 2
 --- !u!1 &967800014
 GameObject:
   m_ObjectHideFlags: 0
@@ -2894,13 +3716,90 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   DebugActive: 0
-  FeedbacksList: []
+  FeedbacksList:
+  - rid: 5192908056404951044
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   ForceStopFeedbacksOnDisable: 1
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5192908056404951044
+      type: {class: MMF_CameraShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
+      data:
+        Active: 1
+        UniqueID: 813210890
+        Label: Camera Shake
+        ChannelMode: 0
+        Channel: 0
+        MMChannelDefinition: {fileID: 0}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        Owner: {fileID: 1158474568}
+        DebugActive: 0
+        RepeatUntilStopped: 0
+        CameraShakeProperties:
+          Duration: 0.4
+          Amplitude: 0.3
+          Frequency: 10
+          AmplitudeX: 0
+          AmplitudeY: 0
+          AmplitudeZ: 0
 --- !u!1 &1167241615
 GameObject:
   m_ObjectHideFlags: 0
