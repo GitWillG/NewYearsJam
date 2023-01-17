@@ -21,6 +21,7 @@ namespace DiceGame.Managers
         private UIManager _uIManager;
         private DiceManager _diceMan;
         private TurnManager _turnManager;
+        private int _damageNegation;
 
         public UnityEvent onRollingFinished;
         private int _currentTurn;
@@ -64,13 +65,14 @@ namespace DiceGame.Managers
             _monsterManager.MonsterTakeDamage();
             _turnManager.EndTurn();
             _monsterManager.ProgressTurn();
+            _damageNegation = CalculateDamageNegation();
         }
 
         public void TryDealDamage(int amount)
         {
-            var damageNegation = CalculateDamageNegation();
+            // var damageNegation = CalculateDamageNegation();
             
-            var totalDamage = amount - damageNegation;
+            var totalDamage = amount - _damageNegation;
             
             if(totalDamage < 1) return; // Don't take the damage
 
@@ -110,6 +112,7 @@ namespace DiceGame.Managers
             {
                 onRollingFinished?.Invoke();
                 _uIManager.EnableUIElement(_uIManager.ConfirmAll);
+                _damageNegation = 0;
             }
         }
 

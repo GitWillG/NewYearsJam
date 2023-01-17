@@ -71,9 +71,7 @@ namespace DiceGame.Dice
 
         public void DestroyDice()
         {
-            //Logic for cleaning up here and spawning shit as needed.
             onDestroyDice?.Invoke();
-            //Destroy(gameObject);
         }
 
         public void HoverOnDice(bool to)
