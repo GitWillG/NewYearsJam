@@ -86,25 +86,46 @@ namespace DiceGame.Managers
         }
 
         public void ProgressTurn()
-        {                
-            if (_currentTurn < EncounterMembers.Count)
+        {
+            //TODO: Need to see if any of the monster have still not attacked, if so, play the animation for that monster.
+            //Otherwise end turn and reset everything.
+
+            bool isAnyMonsterLeft = _dataToMonoBehaviours.Any(x => !x.monoBehaviour.HasAttacked);
+
+            if (isAnyMonsterLeft)
             {
-                StartCoroutine(PlayAnimations());
+                Monster.Monster leftMonster = _dataToMonoBehaviours.First(x => !x.monoBehaviour.HasAttacked).monoBehaviour;
+                StartCoroutine(PlayAnimations(leftMonster));
                 return;
             }
+            // if (_currentTurn < EncounterMembers.Count)
+            // {
+            //     StartCoroutine(PlayAnimations());
+            //     return;
+            // }
             
             StopAllCoroutines();
+
+            foreach (var monsterData in _dataToMonoBehaviours)
+            {
+                monsterData.monoBehaviour.HasAttacked = false;
+            }
             
             _currentTurn = 0;
             _turnOrder.EndTurn();
         }
 
-        private IEnumerator PlayAnimations()
+        private IEnumerator PlayAnimations(Monster.Monster currentMonster)
         {
-            var currentMonster = _dataToMonoBehaviours[_currentTurn].monoBehaviour;
-            
-            yield return StartCoroutine(currentMonster.Attack(_partyManager));
-            
+            // var leftMonster = _dataToMonoBehaviours.First(x => !x.monoBehaviour.HasAttacked);
+            // currentMonster = _dataToMonoBehaviours[_currentTurn].monoBehaviour;
+
+            if (currentMonster != null)
+            {
+                yield return StartCoroutine(currentMonster.Attack(_partyManager));
+            }
+
+            yield return new WaitForSeconds(1f);
             _currentTurn++;
             ProgressTurn();
         }
@@ -135,20 +156,25 @@ namespace DiceGame.Managers
             for (int i = 0; i < SpawnedMonsters.Count; i++)
             {
                 Monster.Monster aliveMonster = SpawnedMonsters[i];
-                if (aliveMonster.TryDealDamage())
-                {
-                    yield return new WaitForSeconds(1f);
-                }
 
+                if (aliveMonster != null)
+                {
+                    if (aliveMonster.TryDealDamage())
+                    {
+                        yield return new WaitForSeconds(1f);
+                    }
+                }
+                
                 yield return new WaitForEndOfFrame();
             }
         }
         
         public void RemoveDead(Monster.Monster currentMonster)
         {
+            _dataToMonoBehaviours.Remove(new DataToMonoBehaviour<MonsterSO, Monster.Monster>(currentMonster.MonsterSo, currentMonster));
             SpawnedMonsters.Remove(currentMonster);
             _encounterMembers.Remove(currentMonster.MonsterSo);
-            
+
             if (SpawnedMonsters.Count == 0)
             {
                 EndEncounter();

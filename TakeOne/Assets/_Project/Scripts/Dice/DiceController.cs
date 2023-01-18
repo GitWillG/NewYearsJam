@@ -9,7 +9,7 @@ namespace DiceGame.Dice
     /// </summary>
     public class DiceController : MonoBehaviour
     {
-        public UnityEvent onAwake, onLaunch, onSetAnchor, onSnapToAnchor, onDetachFromSlot, onDestroyDice, onHover, onUnHover;
+        public UnityEvent onAwake, onLaunch, onSetAnchor, onSnapToAnchor, onDetachFromSlot, onDestroyDice, onHover, onUnHover, onUse;
         
         private DiceFace _diceFace;
         private DiceMovement _diceMovement;
@@ -72,6 +72,11 @@ namespace DiceGame.Dice
         public void DestroyDice()
         {
             onDestroyDice?.Invoke();
+        }
+
+        public void UseDice()
+        {
+            onUse?.Invoke();
         }
 
         public void HoverOnDice(bool to)

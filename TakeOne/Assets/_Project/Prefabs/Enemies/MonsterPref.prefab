@@ -728,7 +728,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   attackDuration: 0.5
-  paddingBetweenAttacks: 0.8
+  paddingBetweenAttacks: 0.2
   visualsHolder: {fileID: 8248728305900428009}
 --- !u!114 &6900742294921666828
 MonoBehaviour:

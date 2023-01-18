@@ -88,7 +88,7 @@ namespace DiceGame.Dice
             for (var i = 0; i < _diceControllers.Count; i++)
             {
                 var diceFace = _diceControllers[i];
-                diceFace.DestroyDice();
+                diceFace.UseDice();
             }
 
             _diceControllers = new List<DiceController>();

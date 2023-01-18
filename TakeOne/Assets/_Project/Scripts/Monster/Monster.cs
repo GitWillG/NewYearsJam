@@ -15,6 +15,8 @@ namespace DiceGame.Monster
         [SerializeField] private float attackDuration;
         [SerializeField] private float paddingBetweenAttacks;
         [SerializeField] private Transform visualsHolder;
+
+        public bool HasAttacked { get; set; }
         
         private MonsterSO _monsterSo;
         private List<int> _dieResults;
@@ -93,6 +95,7 @@ namespace DiceGame.Monster
 
             yield return new WaitForSeconds(paddingBetweenAttacks);
             
+            HasAttacked = true;
         }
 
         private void UpdateHealthBar()
