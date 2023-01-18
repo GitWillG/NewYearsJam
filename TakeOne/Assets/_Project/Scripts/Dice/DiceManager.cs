@@ -79,7 +79,7 @@ namespace DiceGame.Dice
         {
             for (int i = 0; i < CharacterSoStats.NumOfDice; i++)
             {
-                _diceRoller.RollDie(CharacterSoStats.DiePrefab);
+                _diceRoller.RollDie(CharacterSoStats ,CharacterSoStats.DiePrefab);
             }
         }
 

@@ -54,7 +54,6 @@ namespace DiceGame.Monster
             
             //Scale Health Bar based on monster stats
             _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
-            // _textExposer.UpdateText(_currentHealth + " / " + _monsterSo.MAXHealth);
 
             UpdateHealthBar();
         }
@@ -107,7 +106,7 @@ namespace DiceGame.Monster
         public void KillSelf()
         {
             _monsterManager.RemoveDead(this);
-            GameObject.Destroy(this.gameObject);   
+            Destroy(gameObject);   
         }
     }
 }

@@ -9,11 +9,15 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private int numOfDice;
         [SerializeField] private int healthContribution;
         [SerializeField] private GameObject diePrefab;
+        [SerializeField] private GameObject attackEffectPrefab;
         [SerializeField] private Sprite visual;
         public int HealthContribution => healthContribution;
         public string CharacterName => characterName;
         public GameObject DiePrefab => diePrefab;
         //TODO: Refactor this to work with multiple types of dice and new dice
+        
+        public GameObject AttackEffectPrefab => attackEffectPrefab;
+
 
         public Sprite Visual 
         { 
@@ -25,5 +29,6 @@ namespace DiceGame.ScriptableObjects
             get => numOfDice;
             set => numOfDice = value;
         }
+
     }
 }

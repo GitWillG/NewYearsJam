@@ -466,8 +466,8 @@ MonoBehaviour:
         DebugActive: 0
         PauseDuration: 0
         RandomizePauseDuration: 1
-        MinPauseDuration: 0.5
-        MaxPauseDuration: 1.5
+        MinPauseDuration: 0.2
+        MaxPauseDuration: 1
         RandomizeOnEachPlay: 1
         ScriptDriven: 0
         AutoResume: 0

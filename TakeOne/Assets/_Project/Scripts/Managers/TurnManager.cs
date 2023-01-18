@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DiceGame
+namespace DiceGame.Managers
 {
     public class TurnManager : MonoBehaviour
     {

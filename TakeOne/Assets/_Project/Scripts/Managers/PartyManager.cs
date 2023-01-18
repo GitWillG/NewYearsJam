@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
+using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,10 @@ namespace DiceGame.Managers
     public class PartyManager : MonoBehaviour
     {
         [SerializeField] private DiceSlotHolder diceSlotHolder;
+        [SerializeField] private MMF_Player damageFeedbackPlayer;
+        [SerializeField] private MMF_Player damageNegationFeedbackPlayer;
+        [SerializeField] private Transform damageNumberTransform;
+        [SerializeField] private Transform damageNegationNumberTransform;
 
         private HeroSO[] _allHeroes;
         //TODO: Fix publics, fix naming conventions, seperate get/set into multiple lines, grouping fields
@@ -29,6 +34,8 @@ namespace DiceGame.Managers
         private int _damageNegation;
 
         public UnityEvent onRollingFinished;
+        public UnityEvent<int> onTakeDamage;
+        public UnityEvent<int> onDamageNegated;
         private int _currentTurn;
 
         public HeroSO CurrentPartyMember => PartyMembers[CurrentTurn];
@@ -73,6 +80,7 @@ namespace DiceGame.Managers
 
         private IEnumerator EndTurnEnumerator()
         {
+            _damageNegation = 0;
             _currentTurn = 0;
             _diceMan.CharacterSoStats = CurrentPartyMember;
             
@@ -90,7 +98,17 @@ namespace DiceGame.Managers
             
             var totalDamage = amount - _damageNegation;
             
+            if (_damageNegation > 0)
+            {
+                damageNegationFeedbackPlayer?.PlayFeedbacks(damageNumberTransform.position, _damageNegation);
+            }
+            
             if(totalDamage < 1) return; // Don't take the damage
+            
+            damageFeedbackPlayer?.PlayFeedbacks(damageNumberTransform.position, totalDamage);
+
+            onTakeDamage?.Invoke(totalDamage);
+            onDamageNegated?.Invoke(_damageNegation);
             
             if (_health - totalDamage <= 0)
             {

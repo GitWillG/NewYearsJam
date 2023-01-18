@@ -1,3 +1,4 @@
+using DiceGame.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +11,8 @@ namespace DiceGame.Dice
     public class DiceController : MonoBehaviour
     {
         public UnityEvent onAwake, onLaunch, onSetAnchor, onSnapToAnchor, onDetachFromSlot, onDestroyDice, onHover, onUnHover, onUse;
-        
+
+        private HeroSO _diceOwner;
         private DiceFace _diceFace;
         private DiceMovement _diceMovement;
         private DiceSlotHolder _currentSlotHolder;
@@ -22,6 +24,8 @@ namespace DiceGame.Dice
         public bool IsResultFound => _diceFace.IsResultFound;
         public int FaceValue => _diceFace.FaceValue;
         public ObjectDirections ObjectDirectionsEnum => _diceFace.ObjectDirectionsEnum;
+
+        public GameObject AttackEffectPrefab => _diceOwner.AttackEffectPrefab;
         
         public DiceSlotHolder CurrentSlotHolder
         { 
@@ -36,6 +40,11 @@ namespace DiceGame.Dice
             _diceMovement = GetComponent<DiceMovement>();
             _diceShader = GetComponent<DiceShaderHandler>();
             onAwake?.Invoke();
+        }
+
+        public void Initialize(HeroSO diceOwner)
+        {
+            _diceOwner = diceOwner;
         }
 
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)

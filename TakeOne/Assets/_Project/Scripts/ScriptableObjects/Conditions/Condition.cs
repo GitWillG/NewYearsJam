@@ -31,7 +31,7 @@ namespace DiceGame.ScriptableObjects.Conditions
 
         private void Awake()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void EvaluateConditions(List<int> results)

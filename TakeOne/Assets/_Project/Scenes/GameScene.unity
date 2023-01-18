@@ -1413,7 +1413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Roll dice
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1926,9 +1926,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -100, y: 30}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -28, y: 18.25}
+  m_SizeDelta: {x: 199.8319, y: 30}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &773474525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3815,9 +3815,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Confirm All Dice
-
-'
+  m_text: End Turn
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4092,9 +4090,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 19}
+  m_SizeDelta: {x: 208.5, y: 30}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &1386917910
 GameObject:
   m_ObjectHideFlags: 0
@@ -5064,9 +5062,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Confirm
-
-'
+  m_text: Confirm Selected
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5386,8 +5382,6 @@ MonoBehaviour:
   spawnLocations: []
   diceHolderSpawn: []
   encounterName: 
-  monsterIntent: 
-  attackDamage: 0
   monster: {fileID: 6167208836626514516, guid: 343b006cb824f5343bfc0fcf688ba4fb, type: 3}
   spawnedMonsters: []
 --- !u!1001 &958629393712138639
@@ -5476,38 +5470,6 @@ PrefabInstance:
     - target: {fileID: 958629392675909975, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
       propertyPath: m_Name
       value: PartyManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3621550287332819199, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 40.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 3621550287332819199, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7702541785336424316, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4.6944165
-      objectReference: {fileID: 0}
-    - target: {fileID: 7702541785336424316, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9914448
-      objectReference: {fileID: 0}
-    - target: {fileID: 7702541785336424316, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.1305268
-      objectReference: {fileID: 0}
-    - target: {fileID: 7702541785336424316, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -8.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7702541785336424316, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 1.3743355
-      objectReference: {fileID: 0}
-    - target: {fileID: 7702541785336424316, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
