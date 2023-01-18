@@ -76,8 +76,16 @@ namespace DiceGame.Dice
             var diceSlot = slotForDice.GetComponent<DiceSlot>();
             diceSlot.onDetachFromSlot?.Invoke();
         }
-        
-        public List<int> GetDiceResults()
+
+        //Look at the dice results from a given dice slot without using the dice.
+        public List<int> PeekDiceResults()
+        {
+            return GetDiceResults(false);
+        }
+
+        //TODO: Refactor the general functionality to work with any list of dice and move to a static helper class.
+        //That way we can get the die result for any set of die.
+        public List<int> GetDiceResults(bool useDice = true)
         {
             var returnList = new List<int>();
             foreach (var diceController in _diceControllers)
@@ -88,14 +96,20 @@ namespace DiceGame.Dice
             for (var i = 0; i < _diceControllers.Count; i++)
             {
                 var diceFace = _diceControllers[i];
-                diceFace.UseDice();
+                if (useDice)
+                {
+                    diceFace.UseDice();
+                }
             }
 
+            if (!useDice) return returnList;
+            
             _diceControllers = new List<DiceController>();
             foreach (var key in _diceSlotToFaceDictionary.Keys.ToList())
             {
                 _diceSlotToFaceDictionary[key] = null;
             }
+
             return returnList;
         }
 

@@ -91,8 +91,7 @@ namespace DiceGame.Managers
             var totalDamage = amount - _damageNegation;
             
             if(totalDamage < 1) return; // Don't take the damage
-
-
+            
             if (_health - totalDamage <= 0)
             {
                 _health = 0;
