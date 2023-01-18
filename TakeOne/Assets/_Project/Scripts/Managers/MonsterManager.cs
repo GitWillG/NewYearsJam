@@ -159,7 +159,7 @@ namespace DiceGame.Managers
 
                 if (aliveMonster != null)
                 {
-                    if (aliveMonster.TryDealDamage())
+                    if (aliveMonster.TryDealDamage(_partyManager.RandomPartyMember))
                     {
                         yield return new WaitForSeconds(1f);
                     }

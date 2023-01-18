@@ -16,4 +16,5 @@ MonoBehaviour:
   numOfDice: 5
   healthContribution: 7
   diePrefab: {fileID: 2367960216642263466, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
+  attackEffectPrefab: {fileID: 4132001976196060033, guid: 620dce791a090cf4fb2fa254255c7b1b, type: 3}
   visual: {fileID: 0}

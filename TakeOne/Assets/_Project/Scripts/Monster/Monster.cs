@@ -4,6 +4,7 @@ using DiceGame.Dice;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
 using MoreMountains.Tools;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +13,8 @@ namespace DiceGame.Monster
     public class Monster : MonoBehaviour
     {
         public UnityEvent onAttack;
+        public UnityEvent<int> onTakeDamage;
+        
         [SerializeField] private float attackDuration;
         [SerializeField] private float paddingBetweenAttacks;
         [SerializeField] private Transform visualsHolder;
@@ -58,13 +61,21 @@ namespace DiceGame.Monster
             UpdateHealthBar();
         }
         
-        public bool TryDealDamage()
+        public bool TryDealDamage(HeroSO attackingHero)
         {
             var dieRolls = _diceSlotHolder.GetDiceResults();
             
             if (dieRolls == null || dieRolls.Count < 1) return false;
             
             var damage = MonsterSo.DamageFromCondition(dieRolls);
+            
+            onTakeDamage?.Invoke(damage);
+            var particlePrefab = Instantiate(attackingHero.AttackEffectPrefab, transform.position, quaternion.identity);
+            var transformPosition = particlePrefab.transform.position;
+            transformPosition.z -= 1f;
+
+            particlePrefab.transform.position = transformPosition;
+            Destroy(particlePrefab, 2f);
             
             if (_currentHealth - damage <= 0)
             {

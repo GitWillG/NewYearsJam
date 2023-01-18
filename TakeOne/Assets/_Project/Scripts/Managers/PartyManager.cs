@@ -39,6 +39,7 @@ namespace DiceGame.Managers
         private int _currentTurn;
 
         public HeroSO CurrentPartyMember => PartyMembers[CurrentTurn];
+        public HeroSO RandomPartyMember => PartyMembers[Random.Range(0, _partyMembers.Count)];
 
         public List<HeroSO> PartyMembers => _partyMembers;
 
