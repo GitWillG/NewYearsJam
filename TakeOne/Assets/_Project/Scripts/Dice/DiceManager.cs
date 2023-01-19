@@ -2,11 +2,14 @@ using DiceGame.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DiceGame.Dice
 {
     public class DiceManager : MonoBehaviour
     {
+        public UnityEvent<List<DiceController>> onDiceRolled;
+        
         private DiceRoller _diceRoller;
         private UIManager _uiManager;
        
@@ -16,8 +19,7 @@ namespace DiceGame.Dice
         private List<DiceController> _rolledDice = new List<DiceController>();
         private List<DiceController> _selectedDice = new List<DiceController>();
         private Dictionary<Transform, DiceController> _diceTraySlotToFaceDictionary = new Dictionary<Transform, DiceController>();
-
-
+        
         private bool _shouldRaycast;
 
         //public int SelectedVal { get; private set; } <- uniused
@@ -81,6 +83,7 @@ namespace DiceGame.Dice
             {
                 _diceRoller.RollDie(CharacterSoStats ,CharacterSoStats.DiePrefab);
             }
+            onDiceRolled?.Invoke(_rolledDice);
         }
 
         public void AddCurrentDiceToTray()
@@ -157,7 +160,8 @@ namespace DiceGame.Dice
             diceControllers.Clear();
         }
         
-        //TODO: Refactor this, very dense function
+        //TODO: Refactor this, very dense function.
+        //Probably move this to a separate script? Does not seem like the dice manager's responsibility 
         private void DiceSelection()
         {
             var ray = diceCam.ScreenPointToRay(Input.mousePosition);

@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 119609511}
   m_Layer: 0
   m_Name: DiceCamera
-  m_TagString: Untagged
+  m_TagString: DiceCam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3530,6 +3530,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501d68d5eb88a2e448369c30724f3965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDiceRolled:
+    m_PersistentCalls:
+      m_Calls: []
   diceTray:
   - {fileID: 967800015}
   - {fileID: 352075033}
@@ -4611,7 +4614,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1719991955
 Transform:
   m_ObjectHideFlags: 0

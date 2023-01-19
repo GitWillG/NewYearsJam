@@ -16,6 +16,6 @@ MonoBehaviour:
   monsterSkills: attack
   damageMinMax: {x: 8, y: 15}
   maxHealth: 15
-  damageCondition: {fileID: 0}
+  damageCondition: {fileID: 11400000, guid: 2dc559529f86377459f22e904ca7e67e, type: 2}
   diceSlotSo: {fileID: 11400000, guid: aa632003f04eb6a418acc566b8833f6d, type: 2}
   monsterVisualPrefab: {fileID: 2584132749088954260, guid: ad3135395109f48449ee6feb291e924e, type: 3}

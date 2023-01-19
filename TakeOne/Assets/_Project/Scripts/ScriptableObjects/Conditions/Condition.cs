@@ -29,10 +29,8 @@ namespace DiceGame.ScriptableObjects.Conditions
 
         private readonly List<DieValeResult> _dieValeResults = new List<DieValeResult>();
 
-        private void Awake()
-        {
-            
-        }
+        public string ConditionDescription => conditionDescription;
+        
 
         public void EvaluateConditions(List<int> results)
         {

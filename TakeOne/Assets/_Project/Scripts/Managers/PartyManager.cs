@@ -19,8 +19,6 @@ namespace DiceGame.Managers
         [SerializeField] private Transform damageNegationNumberTransform;
 
         private HeroSO[] _allHeroes;
-        //TODO: Fix publics, fix naming conventions, seperate get/set into multiple lines, grouping fields
-        //move functions to appripriate scripts, automation
         private List<HeroSO> _partyMembers = new List<HeroSO>();
         private int _health;
         private int _maxHealth;

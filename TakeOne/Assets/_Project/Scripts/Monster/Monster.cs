@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DiceGame.Dice;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
+using DiceGame.Utility;
 using MoreMountains.Tools;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,6 +21,8 @@ namespace DiceGame.Monster
         [SerializeField] private float attackDuration;
         [SerializeField] private float paddingBetweenAttacks;
         [SerializeField] private Transform visualsHolder;
+        [SerializeField] private TextMeshProUGUI intentText;
+        [SerializeField] private TextMeshProUGUI damageConditionText;
 
         public bool HasAttacked { get; set; }
         
@@ -55,10 +60,24 @@ namespace DiceGame.Monster
             _currentHealth = MonsterSo.MAXHealth;
             _monsterManager = monsterManager;
             
+            intentText.GetComponent<UISnapWithOffset>().SetTarget(_diceSlotHolder.transform);
+            damageConditionText.GetComponent<UISnapWithOffset>().SetTarget(_diceSlotHolder.transform);
+            
             //Scale Health Bar based on monster stats
             _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
 
+            UpdateIntentText("Intent: " + "Damage( " + _monsterSo.DamageMinMax.x + " - " + _monsterSo.DamageMinMax.y + " )");
+            UpdateDamageConditionText(_monsterSo.DamageCondition.ConditionDescription);
             UpdateHealthBar();
+        }
+
+        public void UpdateIntentText(string newIntentText)
+        {
+            intentText.text = newIntentText;
+        }
+        public void UpdateDamageConditionText(string newConditionText)
+        {
+            damageConditionText.text = newConditionText;
         }
         
         public bool TryDealDamage(HeroSO attackingHero)

@@ -80,37 +80,20 @@ namespace DiceGame.Dice
         //Look at the dice results from a given dice slot without using the dice.
         public List<int> PeekDiceResults()
         {
-            return GetDiceResults(false);
+            return DiceUtility.PeekDiceResults(ref _diceControllers);
         }
 
-        //TODO: Refactor the general functionality to work with any list of dice and move to a static helper class.
-        //That way we can get the die result for any set of die.
         public List<int> GetDiceResults(bool useDice = true)
         {
-            var returnList = new List<int>();
-            foreach (var diceController in _diceControllers)
+            if (useDice)
             {
-                returnList.Add(diceController.FaceValue);
-            }
-            
-            for (var i = 0; i < _diceControllers.Count; i++)
-            {
-                var diceFace = _diceControllers[i];
-                if (useDice)
+                foreach (var key in _diceSlotToFaceDictionary.Keys.ToList())
                 {
-                    diceFace.UseDice();
+                    _diceSlotToFaceDictionary[key] = null;
                 }
             }
-
-            if (!useDice) return returnList;
             
-            _diceControllers = new List<DiceController>();
-            foreach (var key in _diceSlotToFaceDictionary.Keys.ToList())
-            {
-                _diceSlotToFaceDictionary[key] = null;
-            }
-
-            return returnList;
+            return DiceUtility.GetDiceResults(ref _diceControllers, useDice);
         }
 
         private void OnDestroy()

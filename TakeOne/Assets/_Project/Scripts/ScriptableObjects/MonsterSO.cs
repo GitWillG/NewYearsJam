@@ -28,6 +28,10 @@ namespace DiceGame.ScriptableObjects
 
         public DiceSlotSO DiceSlotSo => diceSlotSo;
 
+        public Vector2Int DamageMinMax => damageMinMax;
+
+        public Condition DamageCondition => damageCondition;
+
         public int DamageFromCondition(List<int> dieResults)
         {
             if (damageCondition == null)
