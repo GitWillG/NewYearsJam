@@ -1579,6 +1579,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3def60d9a458b8e43b67571cb13283f4, type: 3}
+--- !u!1 &2359597539056494895 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8548912973552457482, guid: 3def60d9a458b8e43b67571cb13283f4, type: 3}
+  m_PrefabInstance: {fileID: 6205166971228241445}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7189803840493223571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359597539056494895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e9b0613a9f9544580c1644719392dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrabMainCameraOnStart: 1
+  NestObject: 1
+  OffsetDirection: {x: 0, y: 0, z: 1}
+  Up: {x: 0, y: 1, z: 0}
 --- !u!224 &3817580871604832042 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7126924318836963599, guid: 3def60d9a458b8e43b67571cb13283f4, type: 3}
@@ -1589,7 +1610,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 372963199248442725, guid: 3def60d9a458b8e43b67571cb13283f4, type: 3}
   m_PrefabInstance: {fileID: 6205166971228241445}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2359597539056494895}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a42a23ce4f9ed24abde69beacbef2f4, type: 3}
