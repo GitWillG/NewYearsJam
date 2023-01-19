@@ -11,7 +11,9 @@ namespace DiceGame.ScriptableObjects.Conditions
         Odd,
         LessThan,
         GreaterThan,
-        EqualTo
+        EqualTo, 
+        LessThanEqualTo,
+        GreaterThanEqualTo
     }
     
     [CreateAssetMenu(order = 0, fileName = "NewCondition", menuName = "Create New Condition")]
@@ -42,8 +44,11 @@ namespace DiceGame.ScriptableObjects.Conditions
                 ConditionType.LessThan => IsLessThan,
                 ConditionType.GreaterThan => IsGreaterThan,
                 ConditionType.EqualTo => IsEqualTo,
+                ConditionType.LessThanEqualTo => IsLessThanEqualTo,
+                ConditionType.GreaterThanEqualTo => IsGreaterThanEqualTo,
                 _ => _ => true
             };
+            
             foreach (var val in results)
             {
                 var result = new DieValeResult(val, _myDelegate(val));
@@ -58,7 +63,9 @@ namespace DiceGame.ScriptableObjects.Conditions
 
         private bool IsEqualTo(int val) => val == amount;
         private bool IsGreaterThan(int val) => val > amount;
+        private bool IsGreaterThanEqualTo(int val) => val >= amount;
         private bool IsLessThan(int val) => val < amount;
+        private bool IsLessThanEqualTo(int val) => val <= amount;
         private static bool IsOdd(int val) => val % 2 == 1;
         private static bool IsEven(int val) => val % 2 == 0;
         
