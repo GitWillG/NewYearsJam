@@ -740,6 +740,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c9faf644e84a889bcdc434fd425598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  faceSprites:
+  - value: 1
+    texture: {fileID: 2800000, guid: 0f57173186bb08c4f81b827ea147fa98, type: 3}
+  - value: 2
+    texture: {fileID: 2800000, guid: 94f7ffe7f8306344fbcc620c224f3917, type: 3}
+  - value: 3
+    texture: {fileID: 2800000, guid: 68469522c60d4a046950f9bf431cd145, type: 3}
+  - value: 4
+    texture: {fileID: 2800000, guid: ed75999f4b7508749bd2f34a42d4818e, type: 3}
+  - value: 5
+    texture: {fileID: 2800000, guid: 3f0ec2a6316d21349b9c9b3709a278f8, type: 3}
+  - value: 6
+    texture: {fileID: 2800000, guid: 53df80eb7006c4749847153d837b8938, type: 3}
   dissolveVal: 0
 --- !u!65 &2367960216642263445
 BoxCollider:

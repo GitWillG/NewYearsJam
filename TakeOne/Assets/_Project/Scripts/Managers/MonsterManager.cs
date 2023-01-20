@@ -87,9 +87,6 @@ namespace DiceGame.Managers
 
         public void ProgressTurn()
         {
-            //TODO: Need to see if any of the monster have still not attacked, if so, play the animation for that monster.
-            //Otherwise end turn and reset everything.
-
             bool isAnyMonsterLeft = _dataToMonoBehaviours.Any(x => !x.monoBehaviour.HasAttacked);
 
             if (isAnyMonsterLeft)
@@ -98,12 +95,7 @@ namespace DiceGame.Managers
                 StartCoroutine(PlayAnimations(leftMonster));
                 return;
             }
-            // if (_currentTurn < EncounterMembers.Count)
-            // {
-            //     StartCoroutine(PlayAnimations());
-            //     return;
-            // }
-            
+
             StopAllCoroutines();
 
             foreach (var monsterData in _dataToMonoBehaviours)

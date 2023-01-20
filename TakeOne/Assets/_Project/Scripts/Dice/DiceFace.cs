@@ -1,4 +1,5 @@
 using System;
+using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,11 +17,10 @@ namespace DiceGame.Dice
     public class DiceFace : MonoBehaviour
     {
         // The possible face values of the dice
-        private int[] faceValues = new int[6];
+        private int[] _faceValues = new int[6];
 
         // A threshold for determining if the dice is rolling or not
         [SerializeField] private float rollingThreshold = 0.2f;
-        [SerializeField] private DiceSO diceType;
 
         private Rigidbody _rigidbody;
         private Vector3[] _faceRotations = new Vector3[6];// The rotations of the dice's faces, in local space
@@ -31,18 +31,16 @@ namespace DiceGame.Dice
 
         public ObjectDirections ObjectDirectionsEnum { get; private set; }
 
-        public DiceSO DiceType 
-        { 
-            get => diceType; 
-            set => diceType = value; 
-        }
+        private DiceSO _diceType;
         public int FaceValue 
         { 
             get; 
             private set; 
         }
         public bool IsResultFound => _isResultFound;
-        
+
+        public int[] FaceValues => _faceValues;
+
         public UnityEvent<int> onDiceRollResult;
 
         private void Awake()
@@ -51,20 +49,10 @@ namespace DiceGame.Dice
             _diceController = GetComponent<DiceController>();
         }
 
-        private void Start()
+        public void InitDieFace(DiceSO diceType)
         {
-            InitDieFace();
-        }
-
-        private void InitDieFace()
-        {
-            //Iterates through the dice faces applying 
-            for (int i = 0; i <= 5; i++)
-            {
-                faceValues[i] = diceType.DieSides[i % diceType.DieSides.Count];
-                //TODO: apply sprites to appropriate face
-                //DiceFaceImage[i] = diceType.FaceSprites[faceValues[i]];
-            }
+            _diceType = diceType;
+            _faceValues = _diceType.DieSides.ToArray();
         }
 
         private void UpdateFaceRotations()
@@ -132,13 +120,14 @@ namespace DiceGame.Dice
         private int GetDieFace()
         {
             // Get the dice's up direction
-            // Vector3 up = transform.up;
             Vector3 up = transform.InverseTransformDirection(Vector3.up);
             UpdateFaceRotations();
+            
             // Find the die face that is closest to the up direction
             float closestDot = float.MinValue;
-            int closestDieFace = faceValues[0];
+            int closestDieFace = _faceValues[0];
             Vector3 closestDirection = Vector3.zero;
+            
             foreach (var direction in _faceRotations)
             {
                 float dot = Vector3.Dot(up, direction);
@@ -147,7 +136,7 @@ namespace DiceGame.Dice
                     closestDirection = direction;
                     closestDot = dot;
                     ObjectDirectionsEnum = (ObjectDirections)Array.IndexOf(_faceRotations, direction);
-                    closestDieFace = faceValues[Array.IndexOf(_faceRotations, direction)];
+                    closestDieFace = _faceValues[Array.IndexOf(_faceRotations, direction)];
                 }
             }
             return closestDieFace;

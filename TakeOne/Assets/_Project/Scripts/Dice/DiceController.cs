@@ -45,6 +45,9 @@ namespace DiceGame.Dice
         public void Initialize(HeroSO diceOwner)
         {
             _diceOwner = diceOwner;
+            //Update dice visuals
+            _diceFace.InitDieFace(diceOwner.DiceSo);
+            _diceShader.UpdateDiceFaceTextures(diceOwner.DiceSo.DieSides);
         }
 
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)

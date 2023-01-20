@@ -1,24 +1,32 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-namespace DiceGame
+namespace DiceGame.ScriptableObjects.Dice
 {
     [CreateAssetMenu(fileName = "CreateDiceSO", menuName = "Assets/Create/CreateDiceSO", order = 1)]
     public class DiceSO : ScriptableObject
     {
-        [SerializeField] private Sprite[] faceSprites = new Sprite[6];
         [SerializeField] private List<int> dieSides;
+        [SerializeField] private GameObject dicePrefab;
 
-        public List<int> DieSides 
-        { 
-            get => dieSides; 
-            set => dieSides = value; 
+        public List<int> DieSides
+        {
+            get
+            {
+                if (dieSides.Count < 6)
+                {
+                    var returnList = new int[6];
+                    for (int i = 0; i <= 5; i++)
+                    {
+                         returnList[i] = dieSides[i % dieSides.Count];
+                    }
+                    return returnList.ToList();
+                }
+                return dieSides;
+            }
         }
-        public Sprite[] FaceSprites 
-        { 
-            get => faceSprites; 
-            set => faceSprites = value; 
-        }
+
+        public GameObject DicePrefab => dicePrefab;
     }
 }

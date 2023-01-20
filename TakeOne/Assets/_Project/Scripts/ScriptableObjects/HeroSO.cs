@@ -1,3 +1,4 @@
+using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
 
 namespace DiceGame.ScriptableObjects
@@ -8,17 +9,15 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private string characterName;
         [SerializeField] private int numOfDice;
         [SerializeField] private int healthContribution;
-        [SerializeField] private GameObject diePrefab;
+        [SerializeField] private DiceSO diceSo;
         [SerializeField] private GameObject attackEffectPrefab;
         [SerializeField] private Sprite visual;
         public int HealthContribution => healthContribution;
         public string CharacterName => characterName;
-        public GameObject DiePrefab => diePrefab;
-        //TODO: Refactor this to work with multiple types of dice and new dice
+        public GameObject DiePrefab => diceSo.DicePrefab;
         
         public GameObject AttackEffectPrefab => attackEffectPrefab;
-
-
+        
         public Sprite Visual 
         { 
             get => visual; 
@@ -30,5 +29,10 @@ namespace DiceGame.ScriptableObjects
             set => numOfDice = value;
         }
 
+        public DiceSO DiceSo
+        {
+            get => diceSo;
+            set => diceSo = value;
+        }
     }
 }
