@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DiceGame.Enemy;
 using DiceGame.ScriptableObjects;
 using UnityEngine;
 
@@ -12,23 +13,23 @@ namespace DiceGame.Managers
         [SerializeField] private List<Transform> spawnLocations = new List<Transform>();
         [SerializeField] private List<Transform> diceHolderSpawn = new List<Transform>();
         [SerializeField] private string encounterName;
-        [SerializeField] private Monster.Monster monster;
-        [SerializeField] private List<Monster.Monster> spawnedMonsters = new List<Monster.Monster>();
+        [SerializeField] private Monster monster;
+        [SerializeField] private List<Monster> spawnedMonsters = new List<Monster>();
 
         private TurnManager _turnOrder;
         private PartyManager _partyManager;
         private List<MonsterSO> _encounterMembers = new List<MonsterSO>();
         private MonsterSO[] _allMonsters;
 
-        private List<DataToMonoBehaviour<MonsterSO, Monster.Monster>> _dataToMonoBehaviours =
-            new List<DataToMonoBehaviour<MonsterSO, Monster.Monster>>();
+        private List<DataToMonoBehaviour<MonsterSO, Monster>> _dataToMonoBehaviours =
+            new List<DataToMonoBehaviour<MonsterSO, Monster>>();
 
         private int _currentTurn = 0;
         
         public List<MonsterSO> EncounterMembers => _encounterMembers;
         public string EncounterName => encounterName;
         
-        public List<Monster.Monster> SpawnedMonsters => spawnedMonsters;
+        public List<Monster> SpawnedMonsters => spawnedMonsters;
 
         private void Awake()
         {
@@ -61,16 +62,16 @@ namespace DiceGame.Managers
 
         private void InitializeMonsters()
         {
-            _dataToMonoBehaviours = new List<DataToMonoBehaviour<MonsterSO, Monster.Monster>>();
+            _dataToMonoBehaviours = new List<DataToMonoBehaviour<MonsterSO, Monster>>();
             
             for (int i=0; i<EncounterMembers.Count; i++)
             {
-                var newMonster = Instantiate(monster).GetComponent<Monster.Monster>();
+                var newMonster = Instantiate(monster).GetComponent<Monster>();
                 
                 newMonster.InitializeMonster(_encounterMembers[i], spawnLocations[i], diceHolderSpawn[i], this);
                 
                 SpawnedMonsters.Add(newMonster);
-                _dataToMonoBehaviours.Add(new DataToMonoBehaviour<MonsterSO, Monster.Monster>(_encounterMembers[i], newMonster));
+                _dataToMonoBehaviours.Add(new DataToMonoBehaviour<MonsterSO, Monster>(_encounterMembers[i], newMonster));
             }
         }
 
@@ -91,7 +92,7 @@ namespace DiceGame.Managers
 
             if (isAnyMonsterLeft)
             {
-                Monster.Monster leftMonster = _dataToMonoBehaviours.First(x => !x.monoBehaviour.HasAttacked).monoBehaviour;
+                Monster leftMonster = _dataToMonoBehaviours.First(x => !x.monoBehaviour.HasAttacked).monoBehaviour;
                 StartCoroutine(PlayAnimations(leftMonster));
                 return;
             }
@@ -107,7 +108,7 @@ namespace DiceGame.Managers
             _turnOrder.EndTurn();
         }
 
-        private IEnumerator PlayAnimations(Monster.Monster currentMonster)
+        private IEnumerator PlayAnimations(Monster currentMonster)
         {
             // var leftMonster = _dataToMonoBehaviours.First(x => !x.monoBehaviour.HasAttacked);
             // currentMonster = _dataToMonoBehaviours[_currentTurn].monoBehaviour;
@@ -147,7 +148,7 @@ namespace DiceGame.Managers
         {
             for (int i = 0; i < SpawnedMonsters.Count; i++)
             {
-                Monster.Monster aliveMonster = SpawnedMonsters[i];
+                Monster aliveMonster = SpawnedMonsters[i];
 
                 if (aliveMonster != null)
                 {
@@ -161,9 +162,9 @@ namespace DiceGame.Managers
             }
         }
         
-        public void RemoveDead(Monster.Monster currentMonster)
+        public void RemoveDead(Monster currentMonster)
         {
-            _dataToMonoBehaviours.Remove(new DataToMonoBehaviour<MonsterSO, Monster.Monster>(currentMonster.MonsterSo, currentMonster));
+            _dataToMonoBehaviours.Remove(new DataToMonoBehaviour<MonsterSO, Monster>(currentMonster.MonsterSo, currentMonster));
             SpawnedMonsters.Remove(currentMonster);
             _encounterMembers.Remove(currentMonster.MonsterSo);
 

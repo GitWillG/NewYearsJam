@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DiceGame.Dice;
@@ -11,7 +10,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DiceGame.Monster
+namespace DiceGame.Enemy
 {
     public class Monster : MonoBehaviour
     {
@@ -53,7 +52,6 @@ namespace DiceGame.Monster
 
             transform.localPosition = Vector3.zero;
 
-            Debug.Log(MonsterSo.DiceSlotSo.SlotPrefab);
             //Spawn Die slots
             _diceSlotHolder = Instantiate(MonsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlotHolder>();
             _diceSlotHolder.transform.position = diceSlotLocation.localPosition;

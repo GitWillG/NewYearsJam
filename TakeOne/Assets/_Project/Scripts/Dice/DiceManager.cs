@@ -6,6 +6,9 @@ using UnityEngine.Events;
 
 namespace DiceGame.Dice
 {
+    /// <summary>
+    /// Tracks and manages the lifecycle of all dice
+    /// </summary>
     public class DiceManager : MonoBehaviour
     {
         public UnityEvent<List<DiceController>> onDiceRolled;
