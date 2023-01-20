@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Wizard
   m_EditorClassIdentifier: 
   characterName: Wizard
-  numOfDice: 5
   healthContribution: 7
-  diceSo: {fileID: 11400000, guid: 3c85d6272ee1031458466d05be16f57b, type: 2}
+  characterDice:
+  - {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
+  - {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
+  - {fileID: 11400000, guid: 3c85d6272ee1031458466d05be16f57b, type: 2}
+  - {fileID: 11400000, guid: 3c85d6272ee1031458466d05be16f57b, type: 2}
   attackEffectPrefab: {fileID: 4132001976196060033, guid: 620dce791a090cf4fb2fa254255c7b1b, type: 3}
   visual: {fileID: 0}

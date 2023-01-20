@@ -1,4 +1,5 @@
 using DiceGame.ScriptableObjects;
+using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -46,11 +47,11 @@ namespace DiceGame.Dice
         }
 
         //Setup the initial state of the dice
-        public void Initialize(HeroSO diceOwner)
+        public void Initialize(HeroSO diceOwner, DiceSO diceSo)
         {
             _diceOwner = diceOwner;
-            _diceFace.InitDieFace(_diceOwner.DiceSo);
-            _diceShader.UpdateDiceFaceTextures(_diceOwner.DiceSo.DieSides);
+            _diceFace.InitDieFace(diceSo);
+            _diceShader.UpdateDiceFaceTextures(diceSo.DieSides);
         }
         
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)

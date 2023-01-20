@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   characterName: Knight
-  numOfDice: 2
   healthContribution: 10
-  diceSo: {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
+  characterDice:
+  - {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
+  - {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
   attackEffectPrefab: {fileID: 7615479485316220435, guid: c2c0545f0afc46242b7aed267eb29df9, type: 3}
   visual: {fileID: 0}

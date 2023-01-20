@@ -1,6 +1,7 @@
 using DiceGame.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
+using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -59,10 +60,11 @@ namespace DiceGame.Dice
         //Rolls x number of dice based on data
         public void RollDice()
         {
-            for (int i = 0; i < CharacterSoStats.NumOfDice; i++)
+            foreach (var diceSo in CharacterSoStats.CharacterDice)
             {
-                _diceRoller.RollDie(CharacterSoStats , CharacterSoStats.DiePrefab);
+                _diceRoller.RollDie(CharacterSoStats, diceSo, diceSo.DicePrefab);
             }
+
             onDiceRolled?.Invoke(_rolledDice);
         }
 

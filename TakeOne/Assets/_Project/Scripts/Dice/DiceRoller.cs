@@ -1,4 +1,5 @@
 using DiceGame.ScriptableObjects;
+using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,13 +19,13 @@ namespace DiceGame.Dice
         [SerializeField] private float spawnRadius = 1f;
         [SerializeField] private DiceManager diceMan;
         
-        public void RollDie(HeroSO diceOwner ,GameObject dieType = null)
+        public void RollDie(HeroSO diceOwner, DiceSO diceSo ,GameObject dieType = null)
         {
             if (dieType == null) dieType = defaultDicePrefab;
             onLaunchAllDice?.Invoke();
 
             DiceController dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity).GetComponent<DiceController>();
-            dice.Initialize(diceOwner);
+            dice.Initialize(diceOwner, diceSo);
             diceMan.RolledDice.Add(dice);
             dice.transform.RandomizeRotation();
             dice.GetComponent<DiceController>().LaunchDice(diceForce, diceTorque);
