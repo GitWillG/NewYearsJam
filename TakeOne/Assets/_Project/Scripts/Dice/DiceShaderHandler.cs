@@ -40,7 +40,7 @@ namespace DiceGame.Dice
         {
             _diceMat.SetFloat(DissolveAmount, dissolveVal);
         }
-
+        
         public void UpdateDiceFaceTextures(List<int> faceValues)
         {
             SetSideTexture(TopTexture, _intToTextureDictionary[faceValues[0]]);

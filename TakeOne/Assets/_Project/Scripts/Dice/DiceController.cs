@@ -15,8 +15,8 @@ namespace DiceGame.Dice
         private HeroSO _diceOwner;
         private DiceFace _diceFace;
         private DiceMovement _diceMovement;
-        private DiceSlotHolder _currentSlotHolder;
         private DiceShaderHandler _diceShader;
+        private DiceSlotHolder _currentSlotHolder;
         private bool _isHovering;
         private bool _previousHoverState;
 
@@ -24,8 +24,6 @@ namespace DiceGame.Dice
         public bool IsResultFound => _diceFace.IsResultFound;
         public int FaceValue => _diceFace.FaceValue;
         public ObjectDirections ObjectDirectionsEnum => _diceFace.ObjectDirectionsEnum;
-
-        public GameObject AttackEffectPrefab => _diceOwner.AttackEffectPrefab;
         
         public DiceSlotHolder CurrentSlotHolder
         { 
@@ -36,31 +34,37 @@ namespace DiceGame.Dice
 
         private void Awake()
         {
-            _diceFace = GetComponent<DiceFace>();
-            _diceMovement = GetComponent<DiceMovement>();
-            _diceShader = GetComponent<DiceShaderHandler>();
+            AssignReferences();
             onAwake?.Invoke();
         }
 
+        private void AssignReferences()
+        {
+            _diceFace = GetComponent<DiceFace>();
+            _diceMovement = GetComponent<DiceMovement>();
+            _diceShader = GetComponent<DiceShaderHandler>();
+        }
+
+        //Setup the initial state of the dice
         public void Initialize(HeroSO diceOwner)
         {
             _diceOwner = diceOwner;
-            //Update dice visuals
-            _diceFace.InitDieFace(diceOwner.DiceSo);
-            _diceShader.UpdateDiceFaceTextures(diceOwner.DiceSo.DieSides);
+            _diceFace.InitDieFace(_diceOwner.DiceSo);
+            _diceShader.UpdateDiceFaceTextures(_diceOwner.DiceSo.DieSides);
         }
-
+        
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
         {
             _diceMovement.LaunchDice(diceForce, diceTorque);
             onLaunch?.Invoke();
         }
 
+        //Can be called subsequently after dice force and Torque have been assigned 
         public void LaunchDice()
         {
             _diceMovement.LaunchDice();
         }
-
+        
         public void DetachFromSlot()
         {
             if(!IsInSlot) return;
@@ -73,7 +77,7 @@ namespace DiceGame.Dice
         public void SetAnchor(Transform anchorTransform, bool snapToAnchor = false, bool alertTarget = false)
         {
             onSetAnchor?.Invoke();
-            _diceMovement.SetAnchorAsync(anchorTransform,ArrivedAtAnchor, snapToAnchor , alertTarget);
+            _diceMovement.SetAnchorAsync(anchorTransform, ArrivedAtAnchor, snapToAnchor, alertTarget);
         }
 
         private void ArrivedAtAnchor()
@@ -91,6 +95,7 @@ namespace DiceGame.Dice
             onUse?.Invoke();
         }
 
+        //Sets the state based on new and previous state.
         public void HoverOnDice(bool to)
         {
             if (_previousHoverState == to) return;

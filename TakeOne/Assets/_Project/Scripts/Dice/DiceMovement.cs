@@ -93,7 +93,7 @@ namespace DiceGame.Dice
         {
             switch (_diceController.ObjectDirectionsEnum)
             {
-                case ObjectDirections.up:
+                case ObjectDirections.Up:
                 {
                     Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up);
                     while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
@@ -105,7 +105,7 @@ namespace DiceGame.Dice
                     transform.up = Vector3.up;
                     break;
                 }
-                case ObjectDirections.down:
+                case ObjectDirections.Down:
                 {
                     Quaternion targetRotation = Quaternion.FromToRotation(-transform.up, Vector3.down);
                     while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
@@ -117,7 +117,7 @@ namespace DiceGame.Dice
                     transform.up = Vector3.down;
                     break;
                 }
-                case ObjectDirections.right:
+                case ObjectDirections.Right:
                 {
                     Quaternion targetRotation = Quaternion.FromToRotation(transform.right, Vector3.left);
                     while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
@@ -129,7 +129,7 @@ namespace DiceGame.Dice
                     transform.right = Vector3.up;
                     break;
                 }
-                case ObjectDirections.left:
+                case ObjectDirections.Left:
                 {
                     Quaternion targetRotation = Quaternion.FromToRotation(-transform.right, Vector3.right);
                     while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
@@ -141,7 +141,7 @@ namespace DiceGame.Dice
                     transform.right = Vector3.down;
                     break;
                 }
-                case ObjectDirections.forward:
+                case ObjectDirections.Forward:
                 {
                     Quaternion targetRotation = Quaternion.FromToRotation(transform.forward, Vector3.back);
                     while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)
@@ -153,7 +153,7 @@ namespace DiceGame.Dice
                     transform.forward = Vector3.up;
                     break;
                 }
-                case ObjectDirections.backward:
+                case ObjectDirections.Backward:
                 {
                     Quaternion targetRotation = Quaternion.FromToRotation(-transform.forward, Vector3.forward);
                     while (Quaternion.Angle(transform.rotation, targetRotation) > _rotationCheckThreshold)

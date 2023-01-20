@@ -10,57 +10,40 @@ namespace DiceGame.Dice
     {
         public UnityEvent<List<DiceController>> onDiceRolled;
         
-        private DiceRoller _diceRoller;
-        private UIManager _uiManager;
-       
         [SerializeField] private Transform[] diceTray = new Transform[5];
-        [SerializeField] private Camera diceCam;
 
+        private DiceRoller _diceRoller;
+        private DiceSelector _diceSelector;
         private List<DiceController> _rolledDice = new List<DiceController>();
         private List<DiceController> _selectedDice = new List<DiceController>();
         private Dictionary<Transform, DiceController> _diceTraySlotToFaceDictionary = new Dictionary<Transform, DiceController>();
-        
         private bool _shouldRaycast;
 
         //public int SelectedVal { get; private set; } <- uniused
-        public DiceController SelectedDie { get; set; }
-
+        public DiceController SelectedDie => _diceSelector.SelectedDie;
         public HeroSO CharacterSoStats { get; set; }
-
-        public DiceController HoveredDie { get; set; }
-        
         public Transform[] DiceTray => diceTray;
         public Transform FirstAvailableDiceTrayTransform => _diceTraySlotToFaceDictionary.First(x => x.Value == null).Key;
         public bool HasAvailableTrySlot => _diceTraySlotToFaceDictionary.Any(x => x.Value == null);
 
-        public List<DiceController> SelectedDice 
-        { 
-            get => _selectedDice; 
-            set => _selectedDice = value; 
-        }
-        public List<DiceController> RolledDice 
-        { 
-            get => _rolledDice; 
-            set => _rolledDice = value; 
-        }
-
-        public bool ShouldRaycast
-        {
-            get => _shouldRaycast;
-            set => _shouldRaycast = value;
-        }
-
-        public Dictionary<Transform, DiceController> DiceSlotToFaceDictionary
-        {
-            get => _diceTraySlotToFaceDictionary;
-            set => _diceTraySlotToFaceDictionary = value;
-        }
+        public List<DiceController> SelectedDice => _selectedDice;
+        public List<DiceController> RolledDice => _rolledDice;
 
         private void Start()
         {
-            _uiManager = FindObjectOfType<UIManager>();
-            _diceRoller = FindObjectOfType<DiceRoller>();
+            AssignReferences();
 
+            InitializeDictionary();
+        }
+
+        private void AssignReferences()
+        {
+            _diceRoller = FindObjectOfType<DiceRoller>();
+            _diceSelector = GetComponent<DiceSelector>();
+        }
+        
+        private void InitializeDictionary()
+        {
             foreach (var diceTrayTransform in diceTray)
             {
                 if (!_diceTraySlotToFaceDictionary.ContainsKey(diceTrayTransform))
@@ -70,13 +53,7 @@ namespace DiceGame.Dice
             }
         }
         
-        private void Update()
-        {
-            if(!_shouldRaycast) return;
-            
-            DiceSelection();
-        }
-        
+        //Rolls x number of dice based on data
         public void RollDice()
         {
             for (int i = 0; i < CharacterSoStats.NumOfDice; i++)
@@ -86,6 +63,7 @@ namespace DiceGame.Dice
             onDiceRolled?.Invoke(_rolledDice);
         }
 
+        //Logic for selecting a dice for later use
         public void AddCurrentDiceToTray()
         {
             if(SelectedDie == null) return;
@@ -102,6 +80,7 @@ namespace DiceGame.Dice
             DestroyAllDiceAndCleanList(ref _rolledDice);
         }
         
+        //Cleans up any extra dice that are not used at the end of player turn
         public void ConfirmAllDice()
         {
             StopAllCoroutines();
@@ -127,7 +106,6 @@ namespace DiceGame.Dice
 
         public Transform AddDiceToTraySlot(DiceController diceFace)
         {
-            Debug.Log("AddDiceToTraySlot");
             if (!HasAvailableTrySlot) return null;
             
             var emptyDiceTransform = FirstAvailableDiceTrayTransform;
@@ -137,7 +115,8 @@ namespace DiceGame.Dice
             return emptyDiceTransform;
         }
 
-        private void DestroyAllDiceAndCleanList(ref List<DiceController> diceControllers, bool destroyIfInTray = false)
+        //Cleanup logic
+        private static void DestroyAllDiceAndCleanList(ref List<DiceController> diceControllers, bool destroyIfInTray = false)
         {
             if (!destroyIfInTray)
             {
@@ -148,56 +127,13 @@ namespace DiceGame.Dice
             }
             else
             {
-                foreach (DiceController dice in diceControllers)
+                foreach (var dice in diceControllers.Where(dice => dice.IsInTray))
                 {
-                    if (dice.IsInTray)
-                    {
-                        dice.DestroyDice();
-                    }
+                    dice.DestroyDice();
                 }
             }
 
             diceControllers.Clear();
-        }
-        
-        //TODO: Refactor this, very dense function.
-        //Probably move this to a separate script? Does not seem like the dice manager's responsibility 
-        private void DiceSelection()
-        {
-            var ray = diceCam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit))
-            {
-                if (HoveredDie != null)
-                {
-                    HoveredDie.HoverOnDice(false);
-                }
-
-                if (!hit.collider.gameObject.CompareTag("Dice")) return;
-
-                HoveredDie = hit.collider.gameObject.GetComponent<DiceController>();
-                if (!HoveredDie.IsInTray)
-                {
-                    HoveredDie.HoverOnDice(true);
-                }
-                if (!Input.GetMouseButtonUp(0) || HoveredDie.IsInTray || !HoveredDie.IsResultFound) return;
-                
-                if (SelectedDie != null)
-                {
-                    SelectedDie.RemoveHighlight();
-                }
-                if (HoveredDie != SelectedDie)
-                {
-                    SelectedDie = hit.collider.gameObject.GetComponent<DiceController>();
-                    SelectedDie.HighlightDice();
-                    _uiManager.ConfirmDice.SetActive(true);
-                }
-                else
-                {
-                    SelectedDie.RemoveHighlight();
-                    SelectedDie = null;
-                    _uiManager.ConfirmDice.SetActive(false);
-                }
-            }
         }
     }
 }

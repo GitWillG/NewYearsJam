@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace DiceGame.Dice
 { 
+    /// <summary>
+    /// Used for dragging the dice from the tray to slots.
+    /// <seealso cref="DiceGame.Dice.DiceSlotHolder"/> <seealso cref="DiceGame.Dice.DiceController"/>
+    /// </summary>
     public class DiceDragger : MonoBehaviour
     {
         [SerializeField] private float releaseThreshold;
@@ -13,11 +17,15 @@ namespace DiceGame.Dice
         [SerializeField] private DiceSlotHolderCollection diceSlotCollectionCollection;
         
         private List<DiceSlotHolder> DiceSlots => diceSlotCollectionCollection.CollectionHashset.ToList();
-
         private DiceManager _diceManager;
         private DiceController _currentDice;
         
         private void Awake()
+        {
+            AssignReferences();
+        }
+
+        private void AssignReferences()
         {
             _diceManager = FindObjectOfType<DiceManager>();
         }
@@ -29,7 +37,6 @@ namespace DiceGame.Dice
             _diceManager.RemoveFromDiceTray(_currentDice);
 
             _currentDice.DetachFromSlot();
-
         }
 
         private void Update()
@@ -56,9 +63,11 @@ namespace DiceGame.Dice
             {
                 _currentDice.DetachFromSlot();
             }
-
+            
             var position = _currentDice.transform.position;
             Vector2 currentDiceVector2Pos = new Vector2(position.x, position.z);
+            
+            //Checks if there are any slots within range
             var any = DiceSlots.Any(x => Vector2.Distance(currentDiceVector2Pos, new Vector2(x.transform.position.x, x.transform.position.z)) < releaseThreshold);
 
             if (any)
@@ -77,6 +86,7 @@ namespace DiceGame.Dice
             _currentDice = null;
         }
 
+        //Tracks the given dice along the mouse position
         private void MouseTracking()
         {
             if(_currentDice == null) return;

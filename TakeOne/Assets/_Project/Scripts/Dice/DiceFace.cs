@@ -5,56 +5,58 @@ using UnityEngine.Events;
 
 namespace DiceGame.Dice
 {
+    //The order of the sides is really important here. a lot of places use this exact order and are hard coded.
     public enum ObjectDirections
     {
-        up,
-        right,
-        backward,
-        forward,
-        left,
-        down,
-    }    
+        Up,
+        Right,
+        Backward,
+        Forward,
+        Left,
+        Down,
+    }
+    
+    /// <summary>
+    /// Finds the current face of the dice that is pointing up after being rolled.
+    /// </summary>
     public class DiceFace : MonoBehaviour
     {
-        // The possible face values of the dice
-        private int[] _faceValues = new int[6];
-
         // A threshold for determining if the dice is rolling or not
         [SerializeField] private float rollingThreshold = 0.2f;
 
         private Rigidbody _rigidbody;
-        private Vector3[] _faceRotations = new Vector3[6];// The rotations of the dice's faces, in local space
+        private Vector3[] _faceRotations = new Vector3[6];// The rotations of the die's faces, in local space
         private int _sideRolled;
         private float _rollingTimer;// A timer for checking if the dice has stopped rolling
         private bool _isResultFound;
         private DiceController _diceController;
-
-        public ObjectDirections ObjectDirectionsEnum { get; private set; }
-
         private DiceSO _diceType;
-        public int FaceValue 
-        { 
-            get; 
-            private set; 
-        }
+        private int[] _faceValues = new int[6];// The possible face values of the dice
+        
+        public ObjectDirections ObjectDirectionsEnum { get; private set; }
+        public int FaceValue { get; private set; }
         public bool IsResultFound => _isResultFound;
-
-        public int[] FaceValues => _faceValues;
-
         public UnityEvent<int> onDiceRollResult;
 
         private void Awake()
+        {
+            AssignReferences();
+        }
+
+        private void AssignReferences()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _diceController = GetComponent<DiceController>();
         }
 
+        //Gets the side of the dice based on data
         public void InitDieFace(DiceSO diceType)
         {
             _diceType = diceType;
             _faceValues = _diceType.DieSides.ToArray();
         }
 
+        //Sets and stores the current up in local space
         private void UpdateFaceRotations()
         {
             var diceTransform = transform;
@@ -107,33 +109,28 @@ namespace DiceGame.Dice
         
         private bool IsRolling()
         {
-            // Get the dice's angular velocity
-            Vector3 angularVelocity = GetComponent<Rigidbody>().angularVelocity;
+            Vector3 angularVelocity = _rigidbody.angularVelocity;
 
-            // Calculate the dice's rolling speed
             float rollingSpeed = Mathf.Abs(angularVelocity.x) + Mathf.Abs(angularVelocity.y) + Mathf.Abs(angularVelocity.z);
 
-            // Check if the rolling speed is above the threshold
             return rollingSpeed > rollingThreshold;
         }
         
         private int GetDieFace()
         {
-            // Get the dice's up direction
+            // Get the die's up direction
             Vector3 up = transform.InverseTransformDirection(Vector3.up);
             UpdateFaceRotations();
             
             // Find the die face that is closest to the up direction
             float closestDot = float.MinValue;
             int closestDieFace = _faceValues[0];
-            Vector3 closestDirection = Vector3.zero;
             
             foreach (var direction in _faceRotations)
             {
                 float dot = Vector3.Dot(up, direction);
                 if (dot > closestDot)
                 {
-                    closestDirection = direction;
                     closestDot = dot;
                     ObjectDirectionsEnum = (ObjectDirections)Array.IndexOf(_faceRotations, direction);
                     closestDieFace = _faceValues[Array.IndexOf(_faceRotations, direction)];
