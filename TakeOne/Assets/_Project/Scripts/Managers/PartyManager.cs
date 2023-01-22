@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,8 +6,10 @@ using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace DiceGame.Managers
 {
@@ -17,6 +20,7 @@ namespace DiceGame.Managers
         [SerializeField] private MMF_Player damageNegationFeedbackPlayer;
         [SerializeField] private Transform damageNumberTransform;
         [SerializeField] private Transform damageNegationNumberTransform;
+        [SerializeField] private TextMeshProUGUI rollsLeftText;
 
         private HeroSO[] _allHeroes;
         private List<HeroSO> _partyMembers = new List<HeroSO>();
@@ -61,6 +65,13 @@ namespace DiceGame.Managers
             _turnManager = FindObjectOfType<TurnManager>();
             _healthBar = GetComponent<MMHealthBar>();
             _allHeroes = Resources.LoadAll("Heros", typeof(HeroSO)).Cast<HeroSO>().ToArray();
+            
+            _diceMan.onDiceRolled.AddListener(UpdateRollsLeft);
+        }
+
+        private void UpdateRollsLeft(List<DiceController> arg0)
+        {
+            rollsLeftText.text = "Rolls Left : " + Mathf.Abs((_currentTurn + 1) - _partyMembers.Count ) + " / " + _partyMembers.Count;
         }
 
         private void Start()
@@ -99,7 +110,7 @@ namespace DiceGame.Managers
             
             if (_damageNegation > 0)
             {
-                damageNegationFeedbackPlayer?.PlayFeedbacks(damageNumberTransform.position, _damageNegation);
+                damageNegationFeedbackPlayer?.PlayFeedbacks(damageNegationNumberTransform.position, _damageNegation);
             }
             
             if(totalDamage < 1) return; // Don't take the damage
@@ -184,6 +195,14 @@ namespace DiceGame.Managers
         public void KillSelf()
         {
             CreateParty();
+        }
+
+        private void OnDestroy()
+        {
+            if (_diceMan != null)
+            {
+                _diceMan.onDiceRolled.RemoveListener(UpdateRollsLeft);
+            }
         }
     }
 }

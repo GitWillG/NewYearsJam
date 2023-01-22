@@ -1,7 +1,6 @@
 using DiceGame.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
-using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,12 +17,14 @@ namespace DiceGame.Dice
 
         private DiceRoller _diceRoller;
         private DiceSelector _diceSelector;
+        
         private List<DiceController> _rolledDice = new List<DiceController>();
         private List<DiceController> _selectedDice = new List<DiceController>();
+        
         private Dictionary<Transform, DiceController> _diceTraySlotToFaceDictionary = new Dictionary<Transform, DiceController>();
+        
         private bool _shouldRaycast;
 
-        //public int SelectedVal { get; private set; } <- uniused
         public DiceController SelectedDie => _diceSelector.SelectedDie;
         public HeroSO CharacterSoStats { get; set; }
         public Transform[] DiceTray => diceTray;
@@ -65,6 +66,7 @@ namespace DiceGame.Dice
                 _diceRoller.RollDie(CharacterSoStats, diceSo, diceSo.DicePrefab);
             }
 
+            
             onDiceRolled?.Invoke(_rolledDice);
         }
 
