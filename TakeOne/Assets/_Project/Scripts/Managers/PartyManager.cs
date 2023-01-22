@@ -71,7 +71,7 @@ namespace DiceGame.Managers
 
         private void UpdateRollsLeft(List<DiceController> arg0)
         {
-            rollsLeftText.text = "Rolls Left : " + Mathf.Abs((_currentTurn + 1) - _partyMembers.Count ) + " / " + _partyMembers.Count;
+            rollsLeftText.text = "Rolls Left : " + Mathf.Abs((_currentTurn + 1) - _partyMembers.Count) + " / " + _partyMembers.Count;
         }
 
         private void Start()
@@ -81,6 +81,8 @@ namespace DiceGame.Managers
             _currentTurn = 0;
             _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
             UpdateHealthBar();
+            rollsLeftText.text = "Rolls Left : " + _partyMembers.Count + " / " + _partyMembers.Count;
+
         }
         
         public void EndPartyTurn()

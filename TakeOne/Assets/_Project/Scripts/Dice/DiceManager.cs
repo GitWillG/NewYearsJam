@@ -1,6 +1,7 @@
 using DiceGame.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +15,7 @@ namespace DiceGame.Dice
         public UnityEvent<List<DiceController>> onDiceRolled;
         
         [SerializeField] private Transform[] diceTray = new Transform[5];
+        [SerializeField] private MMF_Player onConfirmHoverFeedback;
 
         private DiceRoller _diceRoller;
         private DiceSelector _diceSelector;
@@ -21,15 +23,17 @@ namespace DiceGame.Dice
         private List<DiceController> _rolledDice = new List<DiceController>();
         private List<DiceController> _selectedDice = new List<DiceController>();
         
-        private Dictionary<Transform, DiceController> _diceTraySlotToFaceDictionary = new Dictionary<Transform, DiceController>();
+        private Dictionary<Transform, DiceController> _TrayToDiceController = new Dictionary<Transform, DiceController>();
         
         private bool _shouldRaycast;
 
         public DiceController SelectedDie => _diceSelector.SelectedDie;
         public HeroSO CharacterSoStats { get; set; }
         public Transform[] DiceTray => diceTray;
-        public Transform FirstAvailableDiceTrayTransform => _diceTraySlotToFaceDictionary.First(x => x.Value == null).Key;
-        public bool HasAvailableTrySlot => _diceTraySlotToFaceDictionary.Any(x => x.Value == null);
+        public Transform FirstAvailableDiceTrayTransform => _TrayToDiceController.First(x => x.Value == null).Key;
+        public bool HasAvailableTrySlot => _TrayToDiceController.Any(x => x.Value == null);
+
+        public bool HasUnUsedDice => _TrayToDiceController.Any(x => x.Value != null);
 
         public List<DiceController> SelectedDice => _selectedDice;
         public List<DiceController> RolledDice => _rolledDice;
@@ -51,9 +55,9 @@ namespace DiceGame.Dice
         {
             foreach (var diceTrayTransform in diceTray)
             {
-                if (!_diceTraySlotToFaceDictionary.ContainsKey(diceTrayTransform))
+                if (!_TrayToDiceController.ContainsKey(diceTrayTransform))
                 {
-                    _diceTraySlotToFaceDictionary.Add(diceTrayTransform, null);
+                    _TrayToDiceController.Add(diceTrayTransform, null);
                 }
             }
         }
@@ -86,29 +90,37 @@ namespace DiceGame.Dice
             
             DestroyAllDiceAndCleanList(ref _rolledDice);
         }
+
+        public void OnHoverConfirm()
+        {
+            if (HasUnUsedDice)
+            {
+                onConfirmHoverFeedback?.PlayFeedbacks();
+            }
+        }
         
         //Cleans up any extra dice that are not used at the end of player turn
         public void ConfirmAllDice()
         {
             StopAllCoroutines();
             DestroyAllDiceAndCleanList(ref _selectedDice, true); // Added this extra bool cause selected dice are currently being destroyed by the dice slot 
-            foreach (var key in _diceTraySlotToFaceDictionary.Keys.ToList())
+            foreach (var key in _TrayToDiceController.Keys.ToList())
             {
-                _diceTraySlotToFaceDictionary[key] = null;
+                _TrayToDiceController[key] = null;
             }
         }
 
         public void RemoveFromDiceTray(DiceController diceFace)
         {
-            bool exists = _diceTraySlotToFaceDictionary.Any(x => x.Value == diceFace);
+            bool exists = _TrayToDiceController.Any(x => x.Value == diceFace);
 
             if (!exists) return;
             
-            var diceSlot =  _diceTraySlotToFaceDictionary.First(x => x.Value == diceFace).Key;
+            var diceSlot =  _TrayToDiceController.First(x => x.Value == diceFace).Key;
             
             if(diceSlot == null) return; 
             
-            _diceTraySlotToFaceDictionary[diceSlot] = null;
+            _TrayToDiceController[diceSlot] = null;
         }
 
         public Transform AddDiceToTraySlot(DiceController diceFace)
@@ -116,7 +128,7 @@ namespace DiceGame.Dice
             if (!HasAvailableTrySlot) return null;
             
             var emptyDiceTransform = FirstAvailableDiceTrayTransform;
-            _diceTraySlotToFaceDictionary[emptyDiceTransform] = diceFace;
+            _TrayToDiceController[emptyDiceTransform] = diceFace;
             diceFace.SetAnchor(emptyDiceTransform);
 
             return emptyDiceTransform;
