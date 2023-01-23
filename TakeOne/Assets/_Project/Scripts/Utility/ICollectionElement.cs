@@ -1,5 +1,4 @@
 using DiceGame.ScriptableObjects;
-using UnityEngine.Events;
 
 namespace DiceGame.Utility
 {

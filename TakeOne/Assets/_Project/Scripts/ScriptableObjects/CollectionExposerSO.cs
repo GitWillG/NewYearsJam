@@ -13,12 +13,8 @@ namespace DiceGame.ScriptableObjects
     {
         private HashSet<T> _collectionHashset = new HashSet<T>();
 
-        public HashSet<T> CollectionHashset
-        {
-            get => _collectionHashset;
-            set => _collectionHashset = value;
-        }
-        
+        public HashSet<T> CollectionHashset => _collectionHashset;
+
         public void RegisterElement(T element)
         {
             if (!_collectionHashset.Contains(element))

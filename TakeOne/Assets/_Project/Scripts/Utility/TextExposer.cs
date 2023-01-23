@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace DiceGame
+namespace DiceGame.Utility
 {
     public class TextExposer : UnityObjectExposer<TextMeshProUGUI>
     {

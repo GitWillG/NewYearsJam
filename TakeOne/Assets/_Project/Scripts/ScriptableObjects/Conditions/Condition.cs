@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +15,9 @@ namespace DiceGame.ScriptableObjects.Conditions
         GreaterThanEqualTo
     }
     
+    /// <summary>
+    /// Calculates the incoming damage based on conditions setup in the SO.
+    /// </summary>
     [CreateAssetMenu(order = 0, fileName = "NewCondition", menuName = "Create New Condition")]
     public class Condition : ScriptableObject
     {
@@ -52,13 +54,13 @@ namespace DiceGame.ScriptableObjects.Conditions
             foreach (var val in results)
             {
                 var result = new DieValeResult(val, _myDelegate(val));
-                Debug.Log("For value : " + result.value + "Condition met? : "+ result.result);
+                // Debug.Log("For value : " + result.value + "Condition met? : "+ result.result);
 
                 _dieValeResults.Add(result);
             }
 
-            var resultString = results.Aggregate("", (current, val) => current + ("(" + val + ")"));
-            Debug.Log("Condition check, Needed : " + conditionDescription + " Die result : " + resultString);
+            // var resultString = results.Aggregate("", (current, val) => current + ("(" + val + ")"));
+            // Debug.Log("Condition check, Needed : " + conditionDescription + " Die result : " + resultString);
         }
 
         private bool IsEqualTo(int val) => val == amount;
@@ -71,8 +73,8 @@ namespace DiceGame.ScriptableObjects.Conditions
         
         public int GetDamage()
         {
-            var anyTrue = _dieValeResults.Any(x => x.result);
-            var anyFalse = _dieValeResults.Any(x => !x.result);
+            var anyTrue = _dieValeResults.Any(x => x.Result);
+            var anyFalse = _dieValeResults.Any(x => !x.Result);
             
             if (allDieShouldMeetCondition)
             {
@@ -98,30 +100,28 @@ namespace DiceGame.ScriptableObjects.Conditions
 
         private int DamageFromAllDie()
         {
-            int totalDamage = 0;
-            totalDamage = _dieValeResults.Sum(x => x.value);
+            var totalDamage = _dieValeResults.Sum(x => x.Value);
             return totalDamage;
         }
 
         private int DamageFromPassingDie()
         {
-            int totalDamage = 0;
-            totalDamage = _dieValeResults.Sum(x => x.result ? x.value : 0);
-            Debug.Log("All die met the condition, total damage to deal :" + totalDamage);
+            var totalDamage = _dieValeResults.Sum(x => x.Result ? x.Value : 0);
+            // Debug.Log("All die met the condition, total damage to deal :" + totalDamage);
             return totalDamage;
         }
     }
 }
 
-public struct DieValeResult
+public readonly struct DieValeResult
 {
-    public int value;
-    public bool result;
+    public readonly int Value;
+    public readonly bool Result;
 
-    public DieValeResult(int val, bool res)
+    public DieValeResult(int val, bool result)
     {
-        value = val;
-        result = res;
+        Value = val;
+        Result = result;
     }
 }
 

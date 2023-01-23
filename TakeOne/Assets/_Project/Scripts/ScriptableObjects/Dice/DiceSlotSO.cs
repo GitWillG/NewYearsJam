@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-namespace DiceGame.ScriptableObjects
+namespace DiceGame.ScriptableObjects.Dice
 {
 
     [CreateAssetMenu(fileName = "CreateDiceSlotSO", menuName = "Assets/Create/CreateDiceSlotSO", order = 1)]
@@ -13,12 +11,6 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private GameObject slotPrefab;
 
         public GameObject SlotPrefab => slotPrefab;
+        public int NumberOfSlots => numberOfSlots;
     }
-}
-
-[System.Serializable]
-public class SlotObjectRelation
-{
-    public GameObject slotPrefab;
-    public int numberOfSlots;
 }

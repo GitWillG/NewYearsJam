@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DiceGame.ScriptableObjects.Conditions;
+using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
 
 namespace DiceGame.ScriptableObjects

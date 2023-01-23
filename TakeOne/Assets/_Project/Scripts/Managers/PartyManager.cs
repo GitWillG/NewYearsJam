@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
+using DiceGame.Utility;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using TMPro;

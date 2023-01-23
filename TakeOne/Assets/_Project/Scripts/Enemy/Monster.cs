@@ -64,16 +64,17 @@ namespace DiceGame.Enemy
             //Scale Health Bar based on monster stats
             _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
 
-            UpdateIntentText("Intent: " + "Damage( " + _monsterSo.DamageMinMax.x + " - " + _monsterSo.DamageMinMax.y + " )");
+            UpdateIntentText("Will do end of turn : " + "Damage up to ( " + _monsterSo.DamageMinMax.y + " )");
             UpdateDamageConditionText(_monsterSo.DamageCondition.ConditionDescription);
             UpdateHealthBar();
         }
 
-        public void UpdateIntentText(string newIntentText)
+        private void UpdateIntentText(string newIntentText)
         {
             intentText.text = newIntentText;
         }
-        public void UpdateDamageConditionText(string newConditionText)
+
+        private void UpdateDamageConditionText(string newConditionText)
         {
             damageConditionText.text = newConditionText;
         }

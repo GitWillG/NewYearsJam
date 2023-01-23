@@ -17,11 +17,7 @@ namespace DiceGame.ScriptableObjects
         public string CharacterName => characterName;
         public GameObject AttackEffectPrefab => attackEffectPrefab;
         
-        public Sprite Visual 
-        { 
-            get => visual; 
-            set => visual = value; 
-        }
+        public Sprite Visual => visual;
         public List<DiceSO> CharacterDice => characterDice;
     }
 }

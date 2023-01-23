@@ -14,16 +14,16 @@ namespace DiceGame.ScriptableObjects.Dice
         {
             get
             {
-                if (dieSides.Count < 6)
+                if (dieSides.Count == 6) return dieSides;
+                
+                var returnList = new int[6];
+                
+                for (int i = 0; i <= 5; i++)
                 {
-                    var returnList = new int[6];
-                    for (int i = 0; i <= 5; i++)
-                    {
-                         returnList[i] = dieSides[i % dieSides.Count];
-                    }
-                    return returnList.ToList();
+                    returnList[i] = dieSides[i % dieSides.Count];
                 }
-                return dieSides;
+                
+                return returnList.ToList();
             }
         }
 
