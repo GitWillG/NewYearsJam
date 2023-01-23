@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DiceGame
 {
@@ -8,7 +9,6 @@ namespace DiceGame
     {
         [SerializeField] private bool isPaused;
         [SerializeField] private GameObject pausePanel;
-
         // Start is called before the first frame update
         void Start()
         {
@@ -39,6 +39,11 @@ namespace DiceGame
         public void SetPauseState(int gameSpd)
         {
             Time.timeScale = gameSpd;
+        }
+        public void StartNewGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1;
         }
 
     }

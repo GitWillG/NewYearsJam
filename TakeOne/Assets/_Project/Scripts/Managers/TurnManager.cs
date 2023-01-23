@@ -21,5 +21,10 @@ namespace DiceGame.Managers
                 _uIManager.EnableUIElement(_uIManager.RollDice);
             }
         }
+        public void newEncounter()
+        {
+            IsPlayerTurn = true;
+            _uIManager.EnableUIElement(_uIManager.RollDice);
+        }
     }
 }

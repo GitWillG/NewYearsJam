@@ -97,10 +97,13 @@ namespace DiceGame.Managers
             _currentTurn = 0;
             _diceMan.CharacterSoStats = CurrentPartyMember;
             
+            //If this kills all monsters it calls End turn which flips the turn back to player
             yield return StartCoroutine( _monsterManager.MonsterTakeDamage());
 
             yield return new WaitForSeconds(.2f);
             _turnManager.EndTurn();
+            //ProgressTurn automatically flips the turn back to player
+            //Coupled with above it double flips, resulting it it never being player turn at the end of an encounter
             _monsterManager.ProgressTurn();
             _damageNegation = CalculateDamageNegation();
         }
@@ -197,7 +200,11 @@ namespace DiceGame.Managers
         
         public void KillSelf()
         {
-            CreateParty();
+            Time.timeScale = 0;
+            _uIManager.RestartGame.SetActive(true);
+            _uIManager.RollDice.SetActive(false);
+
+            //CreateParty();
         }
 
         private void OnDestroy()

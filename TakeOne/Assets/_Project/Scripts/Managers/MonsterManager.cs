@@ -79,9 +79,10 @@ namespace DiceGame.Managers
         private void EndEncounter()
         {
             StopAllCoroutines();
+            _partyManager.StopAllCoroutines();
             
             _currentTurn = 0;
-            _turnOrder.EndTurn();
+            _turnOrder.newEncounter();
             
             CreateEncounter();
         }
