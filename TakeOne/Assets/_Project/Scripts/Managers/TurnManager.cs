@@ -10,7 +10,8 @@ namespace DiceGame.Managers
         private void Start()
         {
             _uIManager = FindObjectOfType<UIManager>();
-            IsPlayerTurn = true;
+            //IsPlayerTurn = true;
+            newEncounter(); //<- temp
         }
 
         public void EndTurn()

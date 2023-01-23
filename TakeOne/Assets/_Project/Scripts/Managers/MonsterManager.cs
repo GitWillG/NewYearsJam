@@ -173,6 +173,7 @@ namespace DiceGame.Managers
             {
                 EndEncounter();
             }
+
         }
     }
 
