@@ -55,11 +55,6 @@ namespace DiceGame.Dice
             _diceFace.InitDieFace(diceSo);
             _diceShader.UpdateDiceFaceTextures(diceSo.DieSides);
         }
-        public void Initialize(DiceSO diceSo)
-        {
-            _diceFace.InitDieFace(diceSo);
-            _diceShader.UpdateDiceFaceTextures(diceSo.DieSides);
-        }
 
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
         {
@@ -133,9 +128,6 @@ namespace DiceGame.Dice
         {
             _diceShader.RemoveHighlight();
         }
-        public void disableRB()
-        {
-            _rigidBody.isKinematic = true;
-        }
+
     }
 }

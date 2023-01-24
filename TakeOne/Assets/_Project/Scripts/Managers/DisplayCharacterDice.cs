@@ -43,10 +43,8 @@ namespace DiceGame.Dice
             foreach (DiceSO die in dice)
             {
                 i++;
-                DiceController singleDie = Instantiate(dicePrefab, transform.GetChild(i)).GetComponent<DiceController>();
-                singleDie.Initialize(die);
-                singleDie.disableRB();
-                //DiceController singleDie = Instantiate(die, characterDice[i].transform.position, Quaternion.identity).GetComponent<DiceController>();
+                DiceShaderHandler singleDie = Instantiate(dicePrefab, transform.GetChild(i)).GetComponent<DiceShaderHandler>();
+                singleDie.UpdateDiceFaceTextures(die.DieSides);
             }
 
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DiceGame
@@ -8,6 +9,7 @@ namespace DiceGame
         [SerializeField] private GameObject rollDice;
         [SerializeField] private GameObject confirmAll;
         [SerializeField] private GameObject restartGame;
+        List<GameObject> UIElements = new List<GameObject>();
 
         public GameObject ConfirmDice => confirmDice;
 
@@ -24,5 +26,22 @@ namespace DiceGame
         {
             element.SetActive(false);
         }
+        public void checkBeforeDisabling(GameObject element)
+        {
+            if (element.activeSelf == true)
+            {
+                UIElements.Add(element);
+                element.SetActive(false);
+            }
+        }
+        public void checkThenEnable()
+        {
+            foreach (GameObject uiElement in UIElements)
+            {
+                uiElement.SetActive(true);
+            }
+            UIElements.Clear();
+        }
+
     }
 }
