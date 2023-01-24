@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects.Dice;
+using DiceGame.ScriptableObjects;
 
 namespace DiceGame.Dice
 {
@@ -11,6 +12,8 @@ namespace DiceGame.Dice
         private GameObject[] characterDice;
         private PartyManager _partyManager;
         public GameObject dicePrefab;
+        private HeroSO ownerHero;
+        public Transform diceSpawnHolder;
 
         public GameObject[] CharacterDice { get => characterDice; set => characterDice = value; }
 
@@ -18,32 +21,16 @@ namespace DiceGame.Dice
         private void Awake()
         {
             _partyManager = FindObjectOfType<PartyManager>();
-        }
-        // Start is called before the first frame update
-        void Start()
-        {
             characterDice = new GameObject[8];
-            //for (int i = 0; i < characterDice.Length; i++)
-            //{
-            //    characterDice[i] = this.transform.GetChild(i + 2).gameObject;
-            //}
-
-
         }
 
-        // Update is called once per frame
-        void Update()
+        public void PopulateDice(HeroSO hero)
         {
-
-        }
-
-        public void PopulateDice(List<DiceSO> dice)
-        {
-            int i = 1;
-            foreach (DiceSO die in dice)
+            int i = 0;
+            ownerHero = hero;
+            foreach (DiceSO die in hero.CharacterDice)
             {
-                i++;
-                DiceShaderHandler singleDie = Instantiate(dicePrefab, transform.GetChild(i)).GetComponent<DiceShaderHandler>();
+                DiceShaderHandler singleDie = Instantiate(dicePrefab, diceSpawnHolder.GetChild(i++)).GetComponent<DiceShaderHandler>();
                 singleDie.UpdateDiceFaceTextures(die.DieSides);
             }
 
