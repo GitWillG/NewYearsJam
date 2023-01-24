@@ -18,6 +18,7 @@ namespace DiceGame.Dice
         private DiceMovement _diceMovement;
         private DiceShaderHandler _diceShader;
         private DiceSlotHolder _currentSlotHolder;
+        private Rigidbody _rigidBody;
         private bool _isHovering;
         private bool _previousHoverState;
 
@@ -44,6 +45,7 @@ namespace DiceGame.Dice
             _diceFace = GetComponent<DiceFace>();
             _diceMovement = GetComponent<DiceMovement>();
             _diceShader = GetComponent<DiceShaderHandler>();
+            _rigidBody = GetComponent<Rigidbody>();
         }
 
         //Setup the initial state of the dice
@@ -53,7 +55,12 @@ namespace DiceGame.Dice
             _diceFace.InitDieFace(diceSo);
             _diceShader.UpdateDiceFaceTextures(diceSo.DieSides);
         }
-        
+        public void Initialize(DiceSO diceSo)
+        {
+            _diceFace.InitDieFace(diceSo);
+            _diceShader.UpdateDiceFaceTextures(diceSo.DieSides);
+        }
+
         public void LaunchDice(Vector2 diceForce, Vector2 diceTorque)
         {
             _diceMovement.LaunchDice(diceForce, diceTorque);
@@ -125,6 +132,10 @@ namespace DiceGame.Dice
         public void RemoveHighlight()
         {
             _diceShader.RemoveHighlight();
+        }
+        public void disableRB()
+        {
+            _rigidBody.isKinematic = true;
         }
     }
 }

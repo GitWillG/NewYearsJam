@@ -100,7 +100,6 @@ namespace DiceGame.Dice
             if (_rollingTimer >= rollingThreshold)
             {
                 FaceValue = GetDieFace();
-                Debug.Log("The result is: " + FaceValue, this);
                 _isResultFound = true;  
                 onDiceRollResult?.Invoke(FaceValue);
             }
