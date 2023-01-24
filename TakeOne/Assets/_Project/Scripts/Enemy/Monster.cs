@@ -54,7 +54,7 @@ namespace DiceGame.Enemy
 
             //Spawn Die slots
             _diceSlotHolder = Instantiate(MonsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlotHolder>();
-            _diceSlotHolder.transform.position = diceSlotLocation.localPosition;
+            _diceSlotHolder.transform.position = diceSlotLocation.position;
             _currentHealth = MonsterSo.MAXHealth;
             _monsterManager = monsterManager;
             
