@@ -4,15 +4,18 @@ namespace DiceGame.Utility
 {
     public class UISnapWithOffset : MonoBehaviour
     {
-        [SerializeField] private Transform targetTransform;
         [SerializeField] private Vector3 offset;
+        [SerializeField] private string cameraTag;
+
         private Camera _diceCamera;
 
         private RectTransform _rectTransform;
+        private Transform _targetTransform;
+
         
         public void SetTarget(Transform target)
         {
-            targetTransform = target;
+            _targetTransform = target;
             SnapToTarget();
         }
         
@@ -22,7 +25,7 @@ namespace DiceGame.Utility
 
             foreach (var cam in FindObjectsOfType<Camera>())
             {
-                if (!cam.CompareTag("DiceCam")) continue;
+                if (!cam.CompareTag(cameraTag)) continue;
                 _diceCamera = cam;
                 break;
             }
@@ -30,7 +33,7 @@ namespace DiceGame.Utility
 
         private void SnapToTarget()
         {
-            _rectTransform.position = _diceCamera.WorldToScreenPoint(targetTransform.position + offset);
+            _rectTransform.localPosition = _diceCamera.WorldToScreenPoint(_targetTransform.position + offset);
         }
     }
 }

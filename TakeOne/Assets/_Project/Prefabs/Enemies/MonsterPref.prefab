@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1145231225453128292}
   - component: {fileID: 4965668448000734622}
   - component: {fileID: 4706565344616256762}
-  m_Layer: 0
+  - component: {fileID: 130120122072258117}
+  m_Layer: 5
   m_Name: TextCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,9 +51,9 @@ Canvas:
   m_GameObject: {fileID: 2238292903478058709}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -102,6 +103,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &130120122072258117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2238292903478058709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7513ce7693583842889562caf8a6907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTag: DiceCam
 --- !u!1 &4157284886459738851
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,7 +792,7 @@ GameObject:
   - component: {fileID: 8974429343165962281}
   - component: {fileID: 2831783110056986962}
   - component: {fileID: 4409744399962760496}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EnemyIntentText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -860,12 +874,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 30
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -914,8 +928,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd7aa2a60d03b547b6088552a708ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 6167208836626514517}
-  offset: {x: 0, y: 0, z: 1.5}
+  offset: {x: -10.5, y: 0, z: -4.5}
+  cameraTag: DiceCam
 --- !u!1 &4494650467167039288
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,7 +1342,7 @@ GameObject:
   - component: {fileID: 1220432902130313692}
   - component: {fileID: 6378941745073369802}
   - component: {fileID: 5277874935273895178}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DamageConditionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1410,12 +1424,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 30
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1464,8 +1478,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd7aa2a60d03b547b6088552a708ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 6167208836626514517}
-  offset: {x: 0, y: 0, z: 1}
+  offset: {x: -10.5, y: 0, z: -5}
+  cameraTag: DiceCam
 --- !u!1001 &6205166971228241445
 PrefabInstance:
   m_ObjectHideFlags: 0
