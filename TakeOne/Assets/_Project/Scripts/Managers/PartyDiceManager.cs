@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,10 +21,14 @@ namespace DiceGame.Dice
         private void Awake()
         {
             _partyManager = FindObjectOfType<PartyManager>();
-            spawnHolders();
         }
 
-        public void spawnHolders()
+        private void Start()
+        {
+            SpawnHolders();
+        }
+
+        public void SpawnHolders()
         {
             int heroNo = 0;
             foreach (HeroSO hero in _partyManager.PartyMembers)
