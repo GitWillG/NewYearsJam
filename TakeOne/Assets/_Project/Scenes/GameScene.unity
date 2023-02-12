@@ -4990,6 +4990,7 @@ GameObject:
   - component: {fileID: 1158474566}
   - component: {fileID: 1158474567}
   - component: {fileID: 1158474568}
+  - component: {fileID: 1158474569}
   m_Layer: 0
   m_Name: DiceRoller
   m_TagString: Untagged
@@ -5067,6 +5068,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceCam: {fileID: 119609509}
+--- !u!114 &1158474569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158474564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b82770db114a9b96134a78c768081a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceSo: {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
+  diceSlot: {fileID: 958629393712138640}
 --- !u!1 &1167241615
 GameObject:
   m_ObjectHideFlags: 0
@@ -7525,6 +7540,17 @@ PrefabInstance:
       objectReference: {fileID: 119609509}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
+--- !u!114 &958629393712138640 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3621550287332819195, guid: c636bb787d5d4b94788193aaa9e33cfd, type: 3}
+  m_PrefabInstance: {fileID: 958629393712138639}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3235ab7de35444c3acb5a4b5aa77ae57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2196239910524362461
 MonoBehaviour:
   m_ObjectHideFlags: 0

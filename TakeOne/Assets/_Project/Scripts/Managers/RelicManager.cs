@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects.Dice;
@@ -17,7 +18,14 @@ namespace DiceGame.Managers
         //TODO: keep a collection of all the party member relics. Probably through the ScriptableObject.
         //When die result is found, or when the die snaps to the anchor for the relics. 
         //Highlight all the relics that are active for the combat.
-        
+
+        private void Awake()
+        {
+            _diceRoller = FindObjectOfType<DiceRoller>();
+            _partyManager = FindObjectOfType<PartyManager>();
+        }
+
+        [ContextMenu("Roll Relic Die")]
         public void RollCombatStartDie()
         {
             diceSlot.GetDiceResults();
@@ -29,6 +37,7 @@ namespace DiceGame.Managers
         {
             _currentTurnDice.ONDiceRollResult.RemoveListener(DieResultFound);
             //Do stuff here
+            diceSlot.AddDiceToSlot(_currentTurnDice);
         }
 
         public int GetTurnDieResult()

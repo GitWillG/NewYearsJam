@@ -83,8 +83,6 @@ namespace DiceGame.Dice
             RolledDice.Remove(SelectedDie);
             SelectedDice.Add(SelectedDie);
             
-            SelectedDie.GetComponent<Rigidbody>().isKinematic = true;
-
             AddDiceToTraySlot(SelectedDie);
             
             DestroyAllDiceAndCleanList(ref _rolledDice);
