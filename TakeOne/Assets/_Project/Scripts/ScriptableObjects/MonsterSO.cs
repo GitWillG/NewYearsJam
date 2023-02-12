@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using DiceGame.ScriptableObjects.Conditions;
 using DiceGame.ScriptableObjects.Dice;
+using DiceGame.Utility;
 using UnityEngine;
 
 namespace DiceGame.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "CreateMonster", menuName = "Assets/Create/createMonster", order = 1)]
-    public class MonsterSO : ScriptableObject
+    public class MonsterSO : ScriptableObject, IDiceOwner
     {
         [SerializeField] private string monsterName;
         [SerializeField] private string monsterSkills;

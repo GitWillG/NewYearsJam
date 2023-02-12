@@ -67,9 +67,8 @@ namespace DiceGame.Dice
         {
             foreach (var diceSo in CharacterSoStats.CharacterDice)
             {
-                _diceRoller.RollDie(CharacterSoStats, diceSo, diceSo.DicePrefab);
+                _diceRoller.RollDie(CharacterSoStats, diceSo);
             }
-
             
             onDiceRolled?.Invoke(_rolledDice);
         }

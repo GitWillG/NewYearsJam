@@ -1,5 +1,5 @@
-using DiceGame.ScriptableObjects;
 using DiceGame.ScriptableObjects.Dice;
+using DiceGame.Utility;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,13 +12,13 @@ namespace DiceGame.Dice
     public class DiceController : MonoBehaviour
     {
         public UnityEvent onAwake, onLaunch, onSetAnchor, onSnapToAnchor, onDetachFromSlot, onDestroyDice, onHover, onUnHover, onUse;
+        public UnityEvent<int> ONDiceRollResult => _diceFace.onDiceRollResult;
 
-        private HeroSO _diceOwner;
+        private IDiceOwner _diceOwner;
         private DiceFace _diceFace;
         private DiceMovement _diceMovement;
         private DiceShaderHandler _diceShader;
         private DiceSlotHolder _currentSlotHolder;
-        private Rigidbody _rigidBody;
         private bool _isHovering;
         private bool _previousHoverState;
 
@@ -45,11 +45,10 @@ namespace DiceGame.Dice
             _diceFace = GetComponent<DiceFace>();
             _diceMovement = GetComponent<DiceMovement>();
             _diceShader = GetComponent<DiceShaderHandler>();
-            _rigidBody = GetComponent<Rigidbody>();
         }
 
         //Setup the initial state of the dice
-        public void Initialize(HeroSO diceOwner, DiceSO diceSo)
+        public void Initialize(IDiceOwner diceOwner, DiceSO diceSo)
         {
             _diceOwner = diceOwner;
             _diceFace.InitDieFace(diceSo);

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,7 @@ using Random = UnityEngine.Random;
 
 namespace DiceGame.Managers
 {
-    public class PartyManager : MonoBehaviour
+    public class PartyManager : MonoBehaviour, IDiceOwner
     {
         [SerializeField] private DiceSlotHolder diceSlotHolder;
         [SerializeField] private MMF_Player damageFeedbackPlayer;
@@ -187,7 +186,7 @@ namespace DiceGame.Managers
             for (int i = 0; i < partySize; i++)
             {
                 int pickHero = Random.Range(0, _allHeroes.Length);
-                _partyMembers.Add((HeroSO)_allHeroes[pickHero]);
+                _partyMembers.Add(_allHeroes[pickHero]);
             }
             
             foreach (HeroSO hero in _partyMembers)

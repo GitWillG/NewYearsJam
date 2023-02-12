@@ -1,8 +1,10 @@
+using System;
 using DiceGame.ScriptableObjects;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace DiceGame.Dice
 {
@@ -19,16 +21,18 @@ namespace DiceGame.Dice
         [SerializeField] private float spawnRadius = 1f;
         [SerializeField] private DiceManager diceMan;
         
-        public void RollDie(HeroSO diceOwner, DiceSO diceSo ,GameObject dieType = null)
+        public DiceController RollDie(IDiceOwner diceOwner, DiceSO diceSo)
         {
-            if (dieType == null) dieType = defaultDicePrefab;
+            var diePrefab = diceSo.DicePrefab ? diceSo.DicePrefab : defaultDicePrefab;
+            
             onLaunchAllDice?.Invoke();
 
-            DiceController dice = Instantiate(dieType, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity).GetComponent<DiceController>();
+            DiceController dice = Instantiate(diePrefab, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity).GetComponent<DiceController>();
             dice.Initialize(diceOwner, diceSo);
             diceMan.RolledDice.Add(dice);
             dice.transform.RandomizeRotation();
             dice.GetComponent<DiceController>().LaunchDice(diceForce, diceTorque);
+            return dice;
         }
     }
 }
