@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DiceGame.Dice;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
+using DiceGame.ScriptableObjects.Conditions;
 using DiceGame.Utility;
 using MoreMountains.Tools;
 using TMPro;
@@ -12,7 +13,7 @@ using UnityEngine.Events;
 
 namespace DiceGame.Enemy
 {
-    public class Monster : MonoBehaviour
+    public class Monster : MonoBehaviour, IDamageDealer
     {
         public UnityEvent onAttack;
         public UnityEvent<int> onTakeDamage;
@@ -36,6 +37,9 @@ namespace DiceGame.Enemy
 
         public MonsterSO MonsterSo => _monsterSo;
         private int CurrentHealth => _currentHealth;
+        public int DamageAmount => _monsterSo.Damage;
+        public Condition DamageCondition => _monsterSo.DamageCondition;
+
 
         private void Awake()
         {
@@ -115,12 +119,9 @@ namespace DiceGame.Enemy
             onAttack?.Invoke();
             
             yield return new WaitForSeconds(attackDuration);
-
-            var damageToDeal = _monsterSo.Damage;
-
-            partyManager.TryDealDamage(damageToDeal);
-            Debug.Log(name + "Tries to deal : " + damageToDeal);
-
+            
+            DealDamage(partyManager.Damageable);
+            
             yield return new WaitForSeconds(paddingBetweenAttacks);
             
             HasAttacked = true;
@@ -136,6 +137,12 @@ namespace DiceGame.Enemy
         {
             _monsterManager.RemoveDead(this);
             Destroy(gameObject);   
+        }
+
+        public void DealDamage(IDamageable damageable)
+        {
+            damageable.TryTakeDamage(this, out int damageTaken);
+            Debug.Log(name + "Tries to deal : " + DamageAmount + " Damage Taken was : " + damageTaken);
         }
     }
 }

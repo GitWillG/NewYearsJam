@@ -21,7 +21,8 @@ namespace DiceGame.Managers
         [SerializeField] private Transform damageNumberTransform;
         [SerializeField] private Transform damageNegationNumberTransform;
         [SerializeField] private TextMeshProUGUI rollsLeftText;
-
+        [SerializeField] private DamageHandler damageHandler;
+        
         private HeroSO[] _allHeroes;
         private List<HeroSO> _partyMembers = new List<HeroSO>();
         private int _health;
@@ -40,11 +41,11 @@ namespace DiceGame.Managers
         public UnityEvent<int> onDamageNegated;
         private int _currentTurn;
 
+        public IDamageable Damageable => damageHandler;
         public HeroSO CurrentPartyMember => PartyMembers[CurrentTurn];
         public HeroSO RandomPartyMember => PartyMembers[Random.Range(0, _partyMembers.Count)];
-
         public List<HeroSO> PartyMembers => _partyMembers;
-
+        
         public int Health 
         { 
             get => _health; 
@@ -82,7 +83,6 @@ namespace DiceGame.Managers
             _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
             UpdateHealthBar();
             rollsLeftText.text = "Rolls Left : " + _partyMembers.Count + " / " + _partyMembers.Count;
-
         }
         
         public void EndPartyTurn()
@@ -104,38 +104,9 @@ namespace DiceGame.Managers
             //ProgressTurn automatically flips the turn back to player
             //Coupled with above it double flips, resulting it it never being player turn at the end of an encounter
             _monsterManager.ProgressTurn();
-            _damageNegation = CalculateDamageNegation();
-        }
-
-        public void TryDealDamage(int amount)
-        {
-            // var damageNegation = CalculateDamageNegation();
             
-            var totalDamage = amount - _damageNegation;
-            
-            if (_damageNegation > 0)
-            {
-                damageNegationFeedbackPlayer?.PlayFeedbacks(damageNegationNumberTransform.position, _damageNegation);
-            }
-            
-            if(totalDamage < 1) return; // Don't take the damage
-            
-            damageFeedbackPlayer?.PlayFeedbacks(damageNumberTransform.position, totalDamage);
-
-            onTakeDamage?.Invoke(totalDamage);
-            onDamageNegated?.Invoke(_damageNegation);
-            
-            if (_health - totalDamage <= 0)
-            {
-                _health = 0;
-                Invoke(nameof(KillSelf), 0.2f);
-                UpdateHealthBar();
-            }
-            else
-            {
-                _health -= totalDamage;
-                UpdateHealthBar();
-            }
+            // _damageNegation = CalculateDamageNegation();
+            damageHandler.UseDamageNegationDice();
         }
         
         private void UpdateHealthBar()
@@ -143,16 +114,7 @@ namespace DiceGame.Managers
             _healthBar.UpdateBar(_health, 0, _maxHealth, true);
             _textExposer.UpdateText(_health + " / " + _maxHealth);
         }
-
-        private int CalculateDamageNegation()
-        {
-            if (diceSlotHolder == null) return 0;
-            
-            var dieRolls = diceSlotHolder.GetDiceResults();
-
-            return dieRolls is { Count: > 0 } ? dieRolls.Sum(x => x) : 0;
-        }
-
+        
         public void FinishHeroActions()
         {
             if (!_turnManager.IsPlayerTurn) return;
@@ -202,8 +164,6 @@ namespace DiceGame.Managers
             Time.timeScale = 0;
             _uIManager.RestartGame.SetActive(true);
             _uIManager.RollDice.SetActive(false);
-
-            //CreateParty();
         }
 
         private void OnDestroy()

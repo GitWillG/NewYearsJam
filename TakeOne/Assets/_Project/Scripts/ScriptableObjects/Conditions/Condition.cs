@@ -12,7 +12,8 @@ namespace DiceGame.ScriptableObjects.Conditions
         GreaterThan,
         EqualTo, 
         LessThanEqualTo,
-        GreaterThanEqualTo
+        GreaterThanEqualTo,
+        NoCondition
     }
     
     /// <summary>
@@ -48,19 +49,15 @@ namespace DiceGame.ScriptableObjects.Conditions
                 ConditionType.EqualTo => IsEqualTo,
                 ConditionType.LessThanEqualTo => IsLessThanEqualTo,
                 ConditionType.GreaterThanEqualTo => IsGreaterThanEqualTo,
+                ConditionType.NoCondition => NoCondition,
                 _ => _ => true
             };
             
             foreach (var val in results)
             {
                 var result = new DieValeResult(val, _myDelegate(val));
-                // Debug.Log("For value : " + result.value + "Condition met? : "+ result.result);
-
                 _dieValeResults.Add(result);
             }
-
-            // var resultString = results.Aggregate("", (current, val) => current + ("(" + val + ")"));
-            // Debug.Log("Condition check, Needed : " + conditionDescription + " Die result : " + resultString);
         }
 
         private bool IsEqualTo(int val) => val == amount;
@@ -70,6 +67,7 @@ namespace DiceGame.ScriptableObjects.Conditions
         private bool IsLessThanEqualTo(int val) => val <= amount;
         private static bool IsOdd(int val) => val % 2 == 1;
         private static bool IsEven(int val) => val % 2 == 0;
+        private static bool NoCondition(int val) => true;
         
         public int GetDamage()
         {
@@ -78,13 +76,7 @@ namespace DiceGame.ScriptableObjects.Conditions
             
             if (allDieShouldMeetCondition)
             {
-                if (anyFalse)
-                {
-                    Debug.Log("All die needed to meet condition, failed.");
-                    return 0;
-                }
-
-                return DamageFromPassingDie();
+                return anyFalse ? 0 : DamageFromPassingDie();
             }
 
             if (anyDieShouldMeetCondition)
@@ -107,7 +99,6 @@ namespace DiceGame.ScriptableObjects.Conditions
         private int DamageFromPassingDie()
         {
             var totalDamage = _dieValeResults.Sum(x => x.Result ? x.Value : 0);
-            // Debug.Log("All die met the condition, total damage to deal :" + totalDamage);
             return totalDamage;
         }
     }

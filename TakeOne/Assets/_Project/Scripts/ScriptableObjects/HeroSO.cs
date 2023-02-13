@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DiceGame.ScriptableObjects.Conditions;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
 using UnityEngine;
