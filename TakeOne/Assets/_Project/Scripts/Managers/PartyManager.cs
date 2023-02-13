@@ -4,7 +4,6 @@ using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
 using DiceGame.Utility;
-using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
@@ -15,11 +14,6 @@ namespace DiceGame.Managers
 {
     public class PartyManager : MonoBehaviour, IDiceOwner
     {
-        [SerializeField] private DiceSlotHolder diceSlotHolder;
-        [SerializeField] private MMF_Player damageFeedbackPlayer;
-        [SerializeField] private MMF_Player damageNegationFeedbackPlayer;
-        [SerializeField] private Transform damageNumberTransform;
-        [SerializeField] private Transform damageNegationNumberTransform;
         [SerializeField] private TextMeshProUGUI rollsLeftText;
         [SerializeField] private DamageHandler damageHandler;
         
@@ -27,20 +21,14 @@ namespace DiceGame.Managers
         private List<HeroSO> _partyMembers = new List<HeroSO>();
         private int _health;
         private int _maxHealth;
-        private MMHealthBar _healthBar; 
-        private TextExposer _textExposer; 
-
         private MonsterManager _monsterManager;
         private UIManager _uIManager;
         private DiceManager _diceMan;
         private TurnManager _turnManager;
-        private int _damageNegation;
-
-        public UnityEvent onRollingFinished;
-        public UnityEvent<int> onTakeDamage;
-        public UnityEvent<int> onDamageNegated;
         private int _currentTurn;
 
+        public UnityEvent onRollingFinished;
+        
         public IDamageable Damageable => damageHandler;
         public HeroSO CurrentPartyMember => PartyMembers[CurrentTurn];
         public HeroSO RandomPartyMember => PartyMembers[Random.Range(0, _partyMembers.Count)];
@@ -64,7 +52,6 @@ namespace DiceGame.Managers
             _monsterManager = FindObjectOfType<MonsterManager>();
             _diceMan = FindObjectOfType<DiceManager>();
             _turnManager = FindObjectOfType<TurnManager>();
-            _healthBar = GetComponent<MMHealthBar>();
             _allHeroes = Resources.LoadAll("Heros", typeof(HeroSO)).Cast<HeroSO>().ToArray();
             
             _diceMan.onDiceRolled.AddListener(UpdateRollsLeft);
@@ -80,9 +67,8 @@ namespace DiceGame.Managers
             CreateParty();
             _diceMan.CharacterSoStats = _partyMembers[_currentTurn];
             _currentTurn = 0;
-            _textExposer = _healthBar.ProgressBar.GetComponent<TextExposer>();
-            UpdateHealthBar();
             rollsLeftText.text = "Rolls Left : " + _partyMembers.Count + " / " + _partyMembers.Count;
+            Damageable.Init(_health, _maxHealth);
         }
         
         public void EndPartyTurn()
@@ -92,7 +78,6 @@ namespace DiceGame.Managers
 
         private IEnumerator EndTurnEnumerator()
         {
-            _damageNegation = 0;
             _currentTurn = 0;
             _diceMan.CharacterSoStats = CurrentPartyMember;
             
@@ -105,16 +90,9 @@ namespace DiceGame.Managers
             //Coupled with above it double flips, resulting it it never being player turn at the end of an encounter
             _monsterManager.ProgressTurn();
             
-            // _damageNegation = CalculateDamageNegation();
             damageHandler.UseDamageNegationDice();
         }
-        
-        private void UpdateHealthBar()
-        {
-            _healthBar.UpdateBar(_health, 0, _maxHealth, true);
-            _textExposer.UpdateText(_health + " / " + _maxHealth);
-        }
-        
+
         public void FinishHeroActions()
         {
             if (!_turnManager.IsPlayerTurn) return;
@@ -128,7 +106,6 @@ namespace DiceGame.Managers
             {
                 onRollingFinished?.Invoke();
                 _uIManager.EnableUIElement(_uIManager.ConfirmAll);
-                _damageNegation = 0;
             }
         }
 

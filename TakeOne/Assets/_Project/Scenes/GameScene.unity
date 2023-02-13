@@ -5078,7 +5078,6 @@ MonoBehaviour:
   diceForce: {x: 5, y: 15}
   diceTorque: {x: 15, y: 30}
   spawnRadius: 2
-  diceMan: {fileID: 1158474567}
 --- !u!114 &1158474567
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace DiceGame.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "CreateMonster", menuName = "Assets/Create/createMonster", order = 1)]
-    public class MonsterSO : ScriptableObject, IDiceOwner
+    public class MonsterSO : ScriptableObject, IDiceOwner, IDamageDealer
     {
         [SerializeField] private string monsterName;
         [SerializeField] private string monsterSkills;
@@ -17,6 +17,7 @@ namespace DiceGame.ScriptableObjects
         [SerializeField] private Condition damageCondition;
         [SerializeField] private DiceSlotSO diceSlotSo;
         [SerializeField] private GameObject monsterVisualPrefab;
+        [SerializeField] private GameObject attackEffectPrefab;
 
         public string MonsterName => monsterName;
         public string MonsterSkills => monsterSkills;
@@ -34,15 +35,8 @@ namespace DiceGame.ScriptableObjects
 
         public Condition DamageCondition => damageCondition;
 
-        public int DamageFromCondition(List<int> dieResults)
-        {
-            if (damageCondition == null)
-            {
-                return dieResults.Sum(x => x);
-            }
-
-            damageCondition.EvaluateConditions(dieResults);
-            return damageCondition.GetDamage();
-        }
+        public int DamageAmount => Damage;
+        public GameObject AttackEffectPrefab => attackEffectPrefab;
+        
     }
 }

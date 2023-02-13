@@ -280,6 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 958629392675909974}
   - component: {fileID: 958629392675909973}
+  - component: {fileID: 1937433386}
   - component: {fileID: 3272044899179154417}
   m_Layer: 0
   m_Name: PartyManager
@@ -322,12 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f1236fc462439469b0a21fd5bf16b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceSlotHolder: {fileID: 3621550287332819195}
-  damageFeedbackPlayer: {fileID: 3187997658708472209}
-  damageNegationFeedbackPlayer: {fileID: 6747898951219404997}
-  damageNumberTransform: {fileID: 8649768102611372020}
-  damageNegationNumberTransform: {fileID: 7200978448091146129}
   rollsLeftText: {fileID: 49304087}
+  damageHandler: {fileID: 1937433386}
   onRollingFinished:
     m_PersistentCalls:
       m_Calls:
@@ -355,12 +352,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &1937433386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958629392675909975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01247f2640c459f92e669d8b6e9fc1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockDiceSlot: {fileID: 3621550287332819195}
+  damageDiceSlot: {fileID: 0}
+  damageFeedbackPlayer: {fileID: 3187997658708472209}
+  damageNegationFeedbackPlayer: {fileID: 6747898951219404997}
+  damageNumberTransform: {fileID: 8649768102611372020}
+  damageNegationNumberTransform: {fileID: 7200978448091146129}
+  onTryTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
   onDamageNegated:
     m_PersistentCalls:
       m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 958629392675909973}
+        m_TargetAssemblyTypeName: DiceGame.Managers.PartyManager, Assembly-CSharp
+        m_MethodName: KillSelf
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3272044899179154417
 MonoBehaviour:
   m_ObjectHideFlags: 0
