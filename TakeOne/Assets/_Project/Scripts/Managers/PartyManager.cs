@@ -89,8 +89,6 @@ namespace DiceGame.Managers
             //ProgressTurn automatically flips the turn back to player
             //Coupled with above it double flips, resulting it it never being player turn at the end of an encounter
             _monsterManager.ProgressTurn();
-            
-            damageHandler.UseDamageNegationDice();
         }
 
         public void FinishHeroActions()
