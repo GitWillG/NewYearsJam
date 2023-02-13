@@ -19,7 +19,6 @@ namespace DiceGame.Dice
         [SerializeField] private Vector2 diceForce;
         [SerializeField] private Vector2 diceTorque;
         [SerializeField] private float spawnRadius = 1f;
-        [SerializeField] private DiceManager diceMan;
         
         public DiceController RollDie(IDiceOwner diceOwner, DiceSO diceSo)
         {
@@ -29,7 +28,6 @@ namespace DiceGame.Dice
 
             DiceController dice = Instantiate(diePrefab, transform.position + Random.insideUnitSphere * spawnRadius, Quaternion.identity).GetComponent<DiceController>();
             dice.Initialize(diceOwner, diceSo);
-            diceMan.RolledDice.Add(dice);
             dice.transform.RandomizeRotation();
             dice.GetComponent<DiceController>().LaunchDice(diceForce, diceTorque);
             return dice;

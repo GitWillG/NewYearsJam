@@ -67,7 +67,7 @@ namespace DiceGame.Dice
         {
             foreach (var diceSo in CharacterSoStats.CharacterDice)
             {
-                _diceRoller.RollDie(CharacterSoStats, diceSo);
+                _rolledDice.Add(_diceRoller.RollDie(CharacterSoStats, diceSo));
             }
             
             onDiceRolled?.Invoke(_rolledDice);
@@ -80,7 +80,7 @@ namespace DiceGame.Dice
             
             SelectedDie.RemoveHighlight();
             SelectedDie.IsInTray = true;
-            RolledDice.Remove(SelectedDie);
+            _rolledDice.Remove(SelectedDie);
             SelectedDice.Add(SelectedDie);
             
             AddDiceToTraySlot(SelectedDie);
