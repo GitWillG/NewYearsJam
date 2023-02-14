@@ -64,7 +64,6 @@ namespace DiceGame.Utility
         {
             onTryTakeDamage?.Invoke(this);
             _damageNegation = CalculateDamageNegation();
-            Debug.Log("Damage negation for this turn is : "+ _damageNegation );
 
             damageTaken = 0;
 

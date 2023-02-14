@@ -4,7 +4,6 @@ using System.Linq;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects;
 using DiceGame.Utility;
-using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,7 +27,6 @@ namespace DiceGame.Managers
         private int _currentTurn;
 
         public UnityEvent onRollingFinished;
-        
         public IDamageable Damageable => damageHandler;
         public HeroSO CurrentPartyMember => PartyMembers[CurrentTurn];
         public HeroSO RandomPartyMember => PartyMembers[Random.Range(0, _partyMembers.Count)];

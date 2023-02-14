@@ -10,6 +10,5 @@ namespace DiceGame.Relics
         [TextArea]
         [SerializeField] private string relicDescription;
         
-        
     }
 }
