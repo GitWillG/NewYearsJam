@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using DiceGame.ScriptableObjects.Dice;
+using DiceGame.Utility;
 using UnityEngine;
 
 namespace DiceGame.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "CreateCharacter", menuName = "Assets/Create/CreateCharacter", order = 1)]
-    public class HeroSO : ScriptableObject
+    public class HeroSO : ScriptableObject, IDiceOwner, IDamageDealer
     {
         [SerializeField] private string characterName;
         [SerializeField] private int healthContribution;
@@ -19,5 +20,6 @@ namespace DiceGame.ScriptableObjects
         
         public Sprite Visual => visual;
         public List<DiceSO> CharacterDice => characterDice;
+        public int DamageAmount => 0;
     }
 }

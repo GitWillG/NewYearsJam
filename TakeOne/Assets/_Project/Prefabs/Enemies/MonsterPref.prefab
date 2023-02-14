@@ -1060,6 +1060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6167208836626514517}
   - component: {fileID: 6167208836626514516}
+  - component: {fileID: 2448403010515614356}
   - component: {fileID: 6900742294921666828}
   m_Layer: 0
   m_Name: MonsterPref
@@ -1123,6 +1124,61 @@ MonoBehaviour:
   visualsHolder: {fileID: 8248728305900428009}
   intentText: {fileID: 2831783110056986962}
   damageConditionText: {fileID: 6378941745073369802}
+  damageHandler: {fileID: 2448403010515614356}
+--- !u!114 &2448403010515614356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6167208836626514519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01247f2640c459f92e669d8b6e9fc1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockDiceSlot: {fileID: 0}
+  damageDiceSlot: {fileID: 0}
+  damageFeedbackPlayer: {fileID: 0}
+  damageNegationFeedbackPlayer: {fileID: 0}
+  damageNumberTransform: {fileID: 0}
+  damageNegationNumberTransform: {fileID: 0}
+  onTryTakeDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6167208836626514516}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamageNegated:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6167208836626514516}
+        m_TargetAssemblyTypeName: DiceGame.Enemy.Monster, Assembly-CSharp
+        m_MethodName: KillSelf
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6900742294921666828
 MonoBehaviour:
   m_ObjectHideFlags: 0

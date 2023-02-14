@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ff65238f565c2e4cb3e340dc156b169, type: 3}
+  m_Name: Relic D6
+  m_EditorClassIdentifier: 
+  dieSides: 010000000200000003000000040000000500000006000000
+  dicePrefab: {fileID: 5991056267282862154, guid: b27b8af92db763146a0fa20820b53136, type: 3}

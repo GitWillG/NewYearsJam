@@ -4,6 +4,7 @@ using UnityEngine;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.ScriptableObjects;
+using DiceGame.Utility;
 
 namespace DiceGame.Dice
 {
@@ -12,7 +13,7 @@ namespace DiceGame.Dice
         private GameObject[] characterDice;
         private PartyManager _partyManager;
         public GameObject dicePrefab;
-        private HeroSO ownerHero;
+        private IDiceOwner ownerHero;
         public Transform diceSpawnHolder;
 
         public GameObject[] CharacterDice { get => characterDice; set => characterDice = value; }

@@ -12,6 +12,7 @@ namespace DiceGame.Dice
     {
         [SerializeField] private List<Transform> diceSlotTransforms = new List<Transform>();
         [SerializeField] private  DiceSlotHolderCollection diceSlotHolderCollection;
+        [SerializeField] private  bool registerDiceSlot = true;
 
         public UnityEvent OnAwake, OnAttachToSlot, OnDetachFromSlot;
         
@@ -36,8 +37,11 @@ namespace DiceGame.Dice
                     _diceSlotToFaceDictionary.Add(slotTransform, null);
                 }
             }
-            
-            ((ICollectionElement<DiceSlotHolder>)this).Register();
+
+            if (registerDiceSlot)
+            {
+                ((ICollectionElement<DiceSlotHolder>)this).Register();
+            }
             OnAwake?.Invoke();
         }
         
@@ -98,7 +102,10 @@ namespace DiceGame.Dice
 
         private void OnDestroy()
         {
-            ((ICollectionElement<DiceSlotHolder>)this).UnRegister();
+            if (registerDiceSlot)
+            {
+                ((ICollectionElement<DiceSlotHolder>)this).UnRegister();
+            }
         }
     }
 }

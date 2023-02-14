@@ -8,7 +8,6 @@ namespace DiceGame.Dice
         //Look at the dice results from a given dice slot without using the dice.
         public static List<int> PeekDiceResults(ref List<DiceController> diceControllers)
         {
-            
             return GetDiceResults(ref diceControllers,false);
         }
         
@@ -22,19 +21,17 @@ namespace DiceGame.Dice
             {
                 returnList.Add(diceController.FaceValue);
             }
-            
-            for (var i = 0; i < diceControllers.Count; i++)
-            {
-                var diceFace = diceControllers[i];
-                if (useDice)
-                {
-                    diceFace.UseDice();
-                }
-            }
 
             if (!useDice) return returnList;
             
+            for (var i = 0; i < diceControllers.Count; i++)
+            {
+                var diceController = diceControllers[i];
+                diceController.UseDice();
+            }
+            
             diceControllers = new List<DiceController>();
+ 
 
             return returnList;
         }
