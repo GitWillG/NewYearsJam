@@ -20,11 +20,13 @@ namespace DiceGame.Managers
         private List<HeroSO> _partyMembers = new List<HeroSO>();
         private int _health;
         private int _maxHealth;
+        private int _currentTurn;
+
         private MonsterManager _monsterManager;
         private UIManager _uIManager;
         private DiceManager _diceMan;
         private TurnManager _turnManager;
-        private int _currentTurn;
+        private RelicManager _relicManager;
 
         public UnityEvent onRollingFinished;
         public IDamageable Damageable => damageHandler;
@@ -32,12 +34,12 @@ namespace DiceGame.Managers
         public HeroSO RandomPartyMember => PartyMembers[Random.Range(0, _partyMembers.Count)];
         public List<HeroSO> PartyMembers => _partyMembers;
         
-        public int Health 
-        { 
-            get => _health; 
-            set => _health = value; 
+        public int Health
+        {
+            get => damageHandler.Health;
+            set => damageHandler.Health = value;
         }
-        
+
         public int CurrentTurn
         {
             get => _currentTurn;
@@ -50,6 +52,7 @@ namespace DiceGame.Managers
             _monsterManager = FindObjectOfType<MonsterManager>();
             _diceMan = FindObjectOfType<DiceManager>();
             _turnManager = FindObjectOfType<TurnManager>();
+            _relicManager = FindObjectOfType<RelicManager>();
             _allHeroes = Resources.LoadAll("Heros", typeof(HeroSO)).Cast<HeroSO>().ToArray();
             
             _diceMan.onDiceRolled.AddListener(UpdateRollsLeft);
@@ -145,6 +148,11 @@ namespace DiceGame.Managers
             {
                 _diceMan.onDiceRolled.RemoveListener(UpdateRollsLeft);
             }
+        }
+
+        public void StartNewTurn()
+        {
+            damageHandler.UseDamageNegationDice();
         }
     }
 }

@@ -1,6 +1,7 @@
 using DiceGame.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
+using DiceGame.Managers;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,6 +20,8 @@ namespace DiceGame.Dice
 
         private DiceRoller _diceRoller;
         private DiceSelector _diceSelector;
+        private RelicManager _relicManager;
+        private PartyManager _partyManager;
         
         private List<DiceController> _rolledDice = new List<DiceController>();
         private List<DiceController> _selectedDice = new List<DiceController>();
@@ -49,6 +52,8 @@ namespace DiceGame.Dice
         {
             _diceRoller = FindObjectOfType<DiceRoller>();
             _diceSelector = GetComponent<DiceSelector>();
+            _relicManager = FindObjectOfType<RelicManager>();
+            _partyManager = FindObjectOfType<PartyManager>();
         }
         
         private void InitializeDictionary()
@@ -69,7 +74,7 @@ namespace DiceGame.Dice
             {
                 _rolledDice.Add(_diceRoller.RollDie(CharacterSoStats, diceSo));
             }
-            
+            _relicManager.OnDiceRolled(_partyManager, _rolledDice);
             onDiceRolled?.Invoke(_rolledDice);
         }
 

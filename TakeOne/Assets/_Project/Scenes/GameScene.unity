@@ -4268,7 +4268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceSo: {fileID: 11400000, guid: c25276f552b891642b8317134dc6fe5c, type: 2}
   diceSlot: {fileID: 2124151762}
-  relicControllerCollection: {fileID: 0}
+  relicControllerCollection: {fileID: 11400000, guid: 630c308acf116124dae1d44f9e010f53, type: 2}
 --- !u!1 &989472062
 GameObject:
   m_ObjectHideFlags: 0
@@ -4629,6 +4629,64 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1053372504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1053372505}
+  - component: {fileID: 1053372506}
+  - component: {fileID: 1053372507}
+  m_Layer: 0
+  m_Name: TestRelic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1053372505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053372504}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1053372506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053372504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c04be2a1e14c5a82efc0daeb5019b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1053372507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053372504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035081c6eb3d45309712b14e9b20b133, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relicControllerCollection: {fileID: 11400000, guid: 630c308acf116124dae1d44f9e010f53, type: 2}
 --- !u!1 &1054530987
 GameObject:
   m_ObjectHideFlags: 0

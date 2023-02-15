@@ -1,4 +1,5 @@
 using System;
+using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
@@ -19,6 +20,8 @@ namespace DiceGame.Dice
         [SerializeField] private Vector2 diceForce;
         [SerializeField] private Vector2 diceTorque;
         [SerializeField] private float spawnRadius = 1f;
+
+        private RelicManager _relicManager;
         
         public DiceController RollDie(IDiceOwner diceOwner, DiceSO diceSo)
         {

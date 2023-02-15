@@ -1,5 +1,6 @@
 using System.Linq;
 using DiceGame.Dice;
+using DiceGame.Managers;
 using DiceGame.ScriptableObjects.Conditions;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
@@ -24,6 +25,7 @@ namespace DiceGame.Utility
         private Condition _damageCondition;
         private MMHealthBar _healthBar; 
         private TextExposer _textExposer;
+        private RelicManager _relicManager;
         
         public UnityEvent<IDamageable> onTryTakeDamage;
         public UnityEvent<int> onTakeDamage;
@@ -31,9 +33,20 @@ namespace DiceGame.Utility
         public UnityEvent onDeath;
         public Condition DamageCondition => _damageCondition;
 
+        public int Health
+        {
+            get => _health;
+            set
+            {
+                _health = value;
+                UpdateHealthBar();
+            }
+        }
+
         private void Awake()
         {
             _healthBar = GetComponent<MMHealthBar>();
+            _relicManager = FindObjectOfType<RelicManager>();
         }
         
         public void Init(int health, int maxHealth, Condition damageCondition = null, DiceSlotHolder damageSlot = null)
@@ -62,6 +75,8 @@ namespace DiceGame.Utility
         
         public bool TryTakeDamage(IDamageDealer damageDealer, out int damageTaken)
         {
+            _relicManager.OnDealDamage(this, damageDealer);
+            
             onTryTakeDamage?.Invoke(this);
             _damageNegation = CalculateDamageNegation();
 
@@ -77,6 +92,7 @@ namespace DiceGame.Utility
             
             if (_damageNegation > 0)
             {
+                _relicManager.OnBlock(this, damageDealer);
                 damageNegationFeedbackPlayer?.PlayFeedbacks(damageNegationNumberTransform.position, _damageNegation);
             }
             

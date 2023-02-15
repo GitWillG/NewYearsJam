@@ -82,7 +82,7 @@ namespace DiceGame.Managers
             _partyManager.StopAllCoroutines();
             
             _currentTurn = 0;
-            _turnOrder.newEncounter();
+            _turnOrder.NewEncounter();
             
             CreateEncounter();
         }

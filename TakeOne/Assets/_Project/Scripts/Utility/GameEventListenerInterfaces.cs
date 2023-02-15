@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DiceGame.Dice;
+using DiceGame.Enemy;
 using DiceGame.Managers;
 
 namespace DiceGame.Utility
 {
+    public interface IAllGameEventListener : IEncounterEventListener, ICombatEventListener, IDiceEventListener, IPartyEventListener { }
+    
     public interface IEncounterEventListener
     {
         public void OnEncounterStart();
@@ -16,8 +20,9 @@ namespace DiceGame.Utility
         public void OnPartyTurnEnd(PartyManager partyManager);
         public void OnEnemyTurnStart(MonsterManager monsterManager);
         public void OnEnemyTurnEnd(MonsterManager monsterManager);
-        public void OnDealDamage(IDamageable target, IDamageDealer owner, out int damage);
-        public void OnBlock(IDamageable target, IDamageDealer owner, out int damageBlocked);
+
+        public void OnDealDamage(IDamageable target, IDamageDealer owner);
+        public void OnBlock(IDamageable target, IDamageDealer owner);
     }
 
     public interface IDiceEventListener

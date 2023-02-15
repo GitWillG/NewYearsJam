@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DiceGame.Dice;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
@@ -9,10 +9,8 @@ using UnityEngine;
 
 namespace DiceGame.Relics
 {
-    public class RelicController : MonoBehaviour, IEncounterEventListener, ICombatEventListener, IDiceEventListener, IPartyEventListener, ICollectionElement<RelicController>
+    public class RelicController : MonoBehaviour, ICollectionElement<RelicController>
     {
-        //Sets up all the bindings for a relic.
-        //Scripts for certain behaviours.
         [SerializeField] private RelicControllerCollection relicControllerCollection;
 
         public CollectionExposerSO<RelicController> CollectionReference
@@ -43,74 +41,101 @@ namespace DiceGame.Relics
 
         public void OnEncounterStart()
         {
-            _encounterEventListener?.OnEncounterStart();
+            if(_encounterEventListener == null) return;
+            
+            _encounterEventListener.OnEncounterStart();
         }
 
         public void OnEncounterEnd()
         {
-            _encounterEventListener?.OnEncounterEnd();
+            if(_encounterEventListener == null) return;
+
+            _encounterEventListener.OnEncounterEnd();
         }
 
         public void OnPartyTurnStart(PartyManager partyManager)
         {
-            _combatEventListener?.OnPartyTurnStart(partyManager);
+            if(_combatEventListener == null) return;
+            Debug.Log("CombatEventListener  was found on Relic", this);
+
+            _combatEventListener.OnPartyTurnStart(partyManager);
         }
 
         public void OnPartyTurnEnd(PartyManager partyManager)
         {
-            _combatEventListener?.OnPartyTurnEnd(partyManager);
+            if(_combatEventListener == null) return;
+
+            _combatEventListener.OnPartyTurnEnd(partyManager);
         }
 
         public void OnEnemyTurnStart(MonsterManager monsterManager)
         {
-            _combatEventListener?.OnEnemyTurnStart(monsterManager);
+            if(_combatEventListener == null) return;
+
+            _combatEventListener.OnEnemyTurnStart(monsterManager);
         }
         
         public void OnEnemyTurnEnd(MonsterManager monsterManager)
         {
-            _combatEventListener?.OnEnemyTurnEnd(monsterManager);
+            if(_combatEventListener == null) return;
+
+            _combatEventListener.OnEnemyTurnEnd(monsterManager);
         }
 
-        public void OnDealDamage(IDamageable target, IDamageDealer owner, out int damage)
+        public void OnDealDamage(IDamageable target, IDamageDealer owner)
         {
-            damage = 0;
-            _combatEventListener?.OnDealDamage(target, owner, out damage);
+            if(_combatEventListener == null) return;
+
+            _combatEventListener.OnDealDamage(target, owner);
         }
         
-        public void OnBlock(IDamageable target, IDamageDealer owner, out int damageBlocked)
+        public void OnBlock(IDamageable target, IDamageDealer owner)
         {
-            damageBlocked = 0;
-            _combatEventListener?.OnBlock(target, owner, out damageBlocked);
+            if(_combatEventListener == null) return;
+
+            _combatEventListener.OnBlock(target, owner);
         }
         
         public void OnDiceRolled(IDiceOwner diceOwner, List<DiceController> diceControllers)
         {
-            _diceEventListener?.OnDiceRolled(diceOwner, diceControllers);
+            if(_diceEventListener == null) return;
+
+            _diceEventListener.OnDiceRolled(diceOwner, diceControllers);
         }
 
         public void OnDiceSelected(DiceController diceController)
         {
-            _diceEventListener?.OnDiceSelected(diceController);
+            if(_diceEventListener == null) return;
+
+            _diceEventListener.OnDiceSelected(diceController);
         }
 
         public void OnDiceAttachToSlot(DiceController diceController, DiceSlotHolder diceSlotHolder)
         {
-            _diceEventListener?.OnDiceAttachToSlot(diceController, diceSlotHolder);
+            if(_diceEventListener == null) return;
+
+            _diceEventListener.OnDiceAttachToSlot(diceController, diceSlotHolder);
         }
 
         public void OnConfirmAllDie(List<DiceController> diceControllers)
         {
-            _diceEventListener?.OnConfirmAllDie(diceControllers);
+            if(_diceEventListener == null) return;
+
+            _diceEventListener.OnConfirmAllDie(diceControllers);
         }
 
         public void OnPartyCreated(PartyManager partyManager)
         {
-            _partyEventListener?.OnPartyCreated(partyManager);
+            if(_partyEventListener == null) return;
+
+            _partyEventListener.OnPartyCreated(partyManager);
         }
 
         public void OnPartyDie(PartyManager partyManager)
         {
-            _partyEventListener?.OnPartyDie(partyManager);
+            if(_partyEventListener == null) return;
+
+            _partyEventListener.OnPartyDie(partyManager);
         }
 
     }
