@@ -4266,8 +4266,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b82770db114a9b96134a78c768081a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceSo: {fileID: 11400000, guid: dca069995595db14796043c78b47a28c, type: 2}
+  diceSo: {fileID: 11400000, guid: c25276f552b891642b8317134dc6fe5c, type: 2}
   diceSlot: {fileID: 2124151762}
+  relicControllerCollection: {fileID: 0}
 --- !u!1 &989472062
 GameObject:
   m_ObjectHideFlags: 0

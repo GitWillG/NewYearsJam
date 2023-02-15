@@ -11,9 +11,12 @@ namespace DiceGame.Dice
     /// </summary>
     public class DiceController : MonoBehaviour
     {
+        [SerializeField] private bool isSelectable = true;
+        
         public UnityEvent onAwake, onLaunch, onSetAnchor, onSnapToAnchor, onDetachFromSlot, onDestroyDice, onHover, onUnHover, onUse;
         public UnityEvent<int> ONDiceRollResult => _diceFace.onDiceRollResult;
 
+        
         private IDiceOwner _diceOwner;
         private DiceFace _diceFace;
         private DiceMovement _diceMovement;
@@ -33,6 +36,8 @@ namespace DiceGame.Dice
         }
 
         public bool IsInTray { get; set; }
+
+        public bool IsSelectable => isSelectable;
 
         private void Awake()
         {
@@ -69,6 +74,7 @@ namespace DiceGame.Dice
         
         public void DetachFromSlot()
         {
+            if(!isSelectable) return;
             if(!IsInSlot) return;
             
             _currentSlotHolder.RemoveFromDiceSlot(this);

@@ -35,8 +35,13 @@ namespace DiceGame.ScriptableObjects.Conditions
         private readonly List<DieValeResult> _dieValeResults = new List<DieValeResult>();
 
         public string ConditionDescription => conditionDescription;
-        
 
+        public void EvaluateConditions(int singleDie)
+        {
+            List<int> dieList = new List<int>(singleDie);
+            EvaluateConditions(dieList);
+        }
+        
         public void EvaluateConditions(List<int> results)
         {
             _dieValeResults.Clear();
@@ -69,34 +74,34 @@ namespace DiceGame.ScriptableObjects.Conditions
         private static bool IsEven(int val) => val % 2 == 0;
         private static bool NoCondition(int val) => true;
         
-        public int GetDamage()
+        public int GetResult()
         {
             var anyTrue = _dieValeResults.Any(x => x.Result);
             var anyFalse = _dieValeResults.Any(x => !x.Result);
             
             if (allDieShouldMeetCondition)
             {
-                return anyFalse ? 0 : DamageFromPassingDie();
+                return anyFalse ? 0 : ResultFromPassingDie();
             }
 
             if (anyDieShouldMeetCondition)
             {
                 if (anyTrue)
                 {
-                    return DamageFromAllDie();
+                    return ResultFromAllDie();
                 }
             }
 
-            return DamageFromPassingDie();
+            return ResultFromPassingDie();
         }
 
-        private int DamageFromAllDie()
+        private int ResultFromAllDie()
         {
             var totalDamage = _dieValeResults.Sum(x => x.Value);
             return totalDamage;
         }
 
-        private int DamageFromPassingDie()
+        private int ResultFromPassingDie()
         {
             var totalDamage = _dieValeResults.Sum(x => x.Result ? x.Value : 0);
             return totalDamage;

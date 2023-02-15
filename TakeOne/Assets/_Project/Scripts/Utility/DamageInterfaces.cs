@@ -22,7 +22,7 @@ namespace DiceGame.Utility
             }
 
             DamageCondition.EvaluateConditions(dieResults);
-            return DamageCondition.GetDamage();
+            return DamageCondition.GetResult();
         }
     }
     

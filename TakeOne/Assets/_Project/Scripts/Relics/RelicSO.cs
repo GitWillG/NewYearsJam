@@ -1,3 +1,4 @@
+using DiceGame.ScriptableObjects.Conditions;
 using UnityEngine;
 
 namespace DiceGame.Relics
@@ -9,6 +10,6 @@ namespace DiceGame.Relics
         [SerializeField] private string relicName;
         [TextArea]
         [SerializeField] private string relicDescription;
-        
+        [SerializeField] private Condition activationCondition;
     }
 }

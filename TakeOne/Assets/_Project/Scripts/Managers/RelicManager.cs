@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using DiceGame.Dice;
+using DiceGame.Relics;
 using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
 
@@ -10,13 +12,17 @@ namespace DiceGame.Managers
     {
         [SerializeField] private DiceSO diceSo;
         [SerializeField] private DiceSlotHolder diceSlot;
+        [SerializeField] private RelicControllerCollection relicControllerCollection;
         
         private DiceController _currentTurnDice;
         private DiceRoller _diceRoller;
         private PartyManager _partyManager;
-        
-        //TODO: keep a collection of all the party member relics. Probably through the ScriptableObject.
-        //When die result is found, or when the die snaps to the anchor for the relics. 
+        private MonsterManager _monsterManager;
+        private DiceSelector _diceSelector;
+        private DiceDragger _diceDragger;
+
+        private List<RelicController> ListOfPartyRelics => relicControllerCollection.CollectionHashset.ToList();
+
         //Highlight all the relics that are active for the combat.
 
         private void Awake()
@@ -31,12 +37,12 @@ namespace DiceGame.Managers
             diceSlot.GetDiceResults();
             _currentTurnDice = _diceRoller.RollDie(_partyManager, diceSo);
             _currentTurnDice.ONDiceRollResult.AddListener(DieResultFound);
+            _currentTurnDice.IsInTray = true;
         }
 
         private void DieResultFound(int result)
         {
             _currentTurnDice.ONDiceRollResult.RemoveListener(DieResultFound);
-            //Do stuff here
             diceSlot.AddDiceToSlot(_currentTurnDice);
         }
 

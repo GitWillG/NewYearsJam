@@ -83,6 +83,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RelicDice
       objectReference: {fileID: 0}
+    - target: {fileID: 3268604185173890518, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
+      propertyPath: isSelectable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8647fd4bf93d9e4b960f0d4607d1e7f, type: 3}
 --- !u!65 &5991056267282862197 stripped
