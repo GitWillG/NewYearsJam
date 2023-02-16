@@ -1,11 +1,15 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using DiceGame.Dice;
-using DiceGame.Enemy;
 using DiceGame.Managers;
+using DiceGame.Relics;
 
 namespace DiceGame.Utility
 {
+    public interface IRelic
+    {
+        public void Initialize(RelicSO relicSo);
+    }
+    
     public interface IAllGameEventListener : IEncounterEventListener, ICombatEventListener, IDiceEventListener, IPartyEventListener { }
     
     public interface IEncounterEventListener

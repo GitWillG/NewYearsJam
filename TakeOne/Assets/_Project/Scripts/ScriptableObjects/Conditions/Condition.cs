@@ -73,6 +73,19 @@ namespace DiceGame.ScriptableObjects.Conditions
         private static bool IsOdd(int val) => val % 2 == 1;
         private static bool IsEven(int val) => val % 2 == 0;
         private static bool NoCondition(int val) => true;
+
+        public List<int> GetPassingDie()
+        {
+            var passingDie = _dieValeResults.FindAll(x => x.Result);
+            var returnList = new List<int>();
+            
+            foreach (var die in passingDie)
+            {
+                returnList.Add(die.Value);
+            }
+            
+            return returnList;
+        }
         
         public int GetResult()
         {

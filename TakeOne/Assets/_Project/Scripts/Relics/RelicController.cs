@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using DiceGame.Dice;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
@@ -9,9 +8,10 @@ using UnityEngine;
 
 namespace DiceGame.Relics
 {
-    public class RelicController : MonoBehaviour, ICollectionElement<RelicController>
+    public class RelicController : MonoBehaviour, ICollectionElement<RelicController>, IRelic
     {
         [SerializeField] private RelicControllerCollection relicControllerCollection;
+        private RelicSO _relicSo;
 
         public CollectionExposerSO<RelicController> CollectionReference
         {
@@ -33,7 +33,26 @@ namespace DiceGame.Relics
             
             ((ICollectionElement<RelicController>)this).Register();
         }
+        
+        public void Initialize(RelicSO relicSo)
+        {
+            _relicSo = relicSo;
+            
+        }
 
+        public void OnRelicDieResultRolled(List<int> dieResults)
+        {
+            _relicSo.ActivationCondition.EvaluateConditions(dieResults);
+            var passingDie = _relicSo.ActivationCondition.GetPassingDie();
+            
+            if(passingDie == null || passingDie.Count < 1) return;
+            
+            //TODO: Relic conclusion.
+            //Relic available, set a flag so it can activate when needed.
+            //Allows for calling "Trigger" functionality when applicable.
+            //Some relics will want to activate on button click, others might want to do so on certain events.
+        }
+        
         private void OnDestroy()
         {
             ((ICollectionElement<RelicController>)this).UnRegister();
@@ -137,6 +156,5 @@ namespace DiceGame.Relics
 
             _partyEventListener.OnPartyDeath(partyManager);
         }
-
     }
 }

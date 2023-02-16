@@ -11,5 +11,13 @@ namespace DiceGame.Relics
         [TextArea]
         [SerializeField] private string relicDescription;
         [SerializeField] private Condition activationCondition;
+
+        public Texture2D RelicTexture => relicTexture;
+
+        public string RelicName => relicName;
+
+        public string RelicDescription => relicDescription;
+
+        public Condition ActivationCondition => activationCondition;
     }
 }

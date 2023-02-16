@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DiceGame.Dice;
-using DiceGame.Enemy;
 using DiceGame.Relics;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
@@ -59,11 +57,16 @@ namespace DiceGame.Managers
         {
             _currentTurnDice.ONDiceRollResult.RemoveListener(DieResultFound);
             diceSlot.AddDiceToSlot(_currentTurnDice);
+            
+            OnRelicDieResult();
         }
 
-        public int GetTurnDieResult()
+        private void OnRelicDieResult()
         {
-            return diceSlot.PeekDiceResults().Sum();
+            foreach (var relic in ListOfPartyRelics)
+            {
+                relic.OnRelicDieResultRolled(diceSlot.PeekDiceResults());
+            }
         }
 
         public void OnEncounterStart()
