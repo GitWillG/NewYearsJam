@@ -60,101 +60,72 @@ namespace DiceGame.Relics
 
         public void OnEncounterStart()
         {
-            if(_encounterEventListener == null) return;
-            
-            _encounterEventListener.OnEncounterStart();
+            _encounterEventListener?.OnEncounterStart();
         }
 
         public void OnEncounterEnd()
         {
-            if(_encounterEventListener == null) return;
-
-            _encounterEventListener.OnEncounterEnd();
+            _encounterEventListener?.OnEncounterEnd();
         }
 
         public void OnPartyTurnStart(PartyManager partyManager)
         {
-            if(_combatEventListener == null) return;
-            Debug.Log("CombatEventListener  was found on Relic", this);
-
-            _combatEventListener.OnPartyTurnStart(partyManager);
+            _combatEventListener?.OnPartyTurnStart(partyManager);
         }
 
         public void OnPartyTurnEnd(PartyManager partyManager)
         {
-            if(_combatEventListener == null) return;
-
-            _combatEventListener.OnPartyTurnEnd(partyManager);
+            _combatEventListener?.OnPartyTurnEnd(partyManager);
         }
 
         public void OnEnemyTurnStart(MonsterManager monsterManager)
         {
-            if(_combatEventListener == null) return;
-
-            _combatEventListener.OnEnemyTurnStart(monsterManager);
+            _combatEventListener?.OnEnemyTurnStart(monsterManager);
         }
         
         public void OnEnemyTurnEnd(MonsterManager monsterManager)
         {
-            if(_combatEventListener == null) return;
-
-            _combatEventListener.OnEnemyTurnEnd(monsterManager);
+            _combatEventListener?.OnEnemyTurnEnd(monsterManager);
         }
 
         public void OnDealDamage(IDamageable target, IDamageDealer owner)
         {
-            if(_combatEventListener == null) return;
-
-            _combatEventListener.OnDealDamage(target, owner);
+            _combatEventListener?.OnDealDamage(target, owner);
         }
         
         public void OnBlock(IDamageable target, IDamageDealer owner)
         {
-            if(_combatEventListener == null) return;
-
-            _combatEventListener.OnBlock(target, owner);
+            _combatEventListener?.OnBlock(target, owner);
         }
         
         public void OnDiceRolled(IDiceOwner diceOwner, List<DiceController> diceControllers)
         {
-            if(_diceEventListener == null) return;
-
-            _diceEventListener.OnDiceRolled(diceOwner, diceControllers);
+            _diceEventListener?.OnDiceRolled(diceOwner, diceControllers);
         }
 
         public void OnDiceSelected(DiceController diceController)
         {
-            if(_diceEventListener == null) return;
-
-            _diceEventListener.OnDiceSelected(diceController);
+            _diceEventListener?.OnDiceSelected(diceController);
         }
 
         public void OnDiceAttachToSlot(DiceController diceController, DiceSlotHolder diceSlotHolder)
         {
-            if(_diceEventListener == null) return;
-
-            _diceEventListener.OnDiceAttachToSlot(diceController, diceSlotHolder);
+            _diceEventListener?.OnDiceAttachToSlot(diceController, diceSlotHolder);
         }
 
         public void OnConfirmAllDie(List<DiceController> diceControllers)
         {
-            if(_diceEventListener == null) return;
-
-            _diceEventListener.OnConfirmAllDie(diceControllers);
+            _diceEventListener?.OnConfirmAllDie(diceControllers);
         }
 
         public void OnPartyCreated(PartyManager partyManager)
         {
-            if(_partyEventListener == null) return;
-
-            _partyEventListener.OnPartyCreated(partyManager);
+            _partyEventListener?.OnPartyCreated(partyManager);
         }
 
         public void OnPartyDeath(PartyManager partyManager)
         {
-            if(_partyEventListener == null) return;
-
-            _partyEventListener.OnPartyDeath(partyManager);
+            _partyEventListener?.OnPartyDeath(partyManager);
         }
     }
 }
