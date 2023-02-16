@@ -60,7 +60,7 @@ namespace DiceGame.Managers
             
             OnRelicDieResult();
         }
-
+        
         private void OnRelicDieResult()
         {
             foreach (var relic in ListOfPartyRelics)
@@ -69,6 +69,8 @@ namespace DiceGame.Managers
             }
         }
 
+        #region GameEvents
+        
         public void OnEncounterStart()
         {
             foreach (var relic in ListOfPartyRelics)
@@ -208,5 +210,8 @@ namespace DiceGame.Managers
                 relic.OnPartyDeath(_partyManager);
             }
         }
+        
+        #endregion
+
     }
 }

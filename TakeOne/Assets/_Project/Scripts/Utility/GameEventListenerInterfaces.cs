@@ -20,6 +20,8 @@ namespace DiceGame.Utility
 
     public interface ICombatEventListener
     {
+        //TODO: Refactoring required here too. Everything should work fine for now, but in the future we should use interfaces instead of concrete class
+        //This will resolve over time too, this can be a good place to check for what still needs to be refactored!
         public void OnPartyTurnStart(PartyManager partyManager);
         public void OnPartyTurnEnd(PartyManager partyManager);
         public void OnEnemyTurnStart(MonsterManager monsterManager);

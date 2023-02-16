@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DiceGame.Relics
 {
-    public class RelicController : MonoBehaviour, ICollectionElement<RelicController>, IRelic
+    public class RelicController : MonoBehaviour, ICollectionElement<RelicController>, IRelic, IAllGameEventListener
     {
         [SerializeField] private RelicControllerCollection relicControllerCollection;
         private RelicSO _relicSo;
@@ -37,7 +37,6 @@ namespace DiceGame.Relics
         public void Initialize(RelicSO relicSo)
         {
             _relicSo = relicSo;
-            
         }
 
         public void OnRelicDieResultRolled(List<int> dieResults)
@@ -58,6 +57,10 @@ namespace DiceGame.Relics
             ((ICollectionElement<RelicController>)this).UnRegister();
         }
 
+        //TODO: Refactoring required. I feel this is too many things for this single class. Maybe we extract all the functionality below in to its own class?
+        //We can somehow reuse it for the Relic Manager too somehow? Gotta think more about the specifics before making the decision.
+        #region GameEvents
+        
         public void OnEncounterStart()
         {
             _encounterEventListener?.OnEncounterStart();
@@ -127,5 +130,7 @@ namespace DiceGame.Relics
         {
             _partyEventListener?.OnPartyDeath(partyManager);
         }
+        #endregion
+
     }
 }
