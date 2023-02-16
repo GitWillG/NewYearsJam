@@ -131,11 +131,11 @@ namespace DiceGame.Relics
             _partyEventListener.OnPartyCreated(partyManager);
         }
 
-        public void OnPartyDie(PartyManager partyManager)
+        public void OnPartyDeath(PartyManager partyManager)
         {
             if(_partyEventListener == null) return;
 
-            _partyEventListener.OnPartyDie(partyManager);
+            _partyEventListener.OnPartyDeath(partyManager);
         }
 
     }

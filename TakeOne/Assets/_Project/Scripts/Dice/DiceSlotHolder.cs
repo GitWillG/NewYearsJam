@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
@@ -19,6 +20,7 @@ namespace DiceGame.Dice
         private List<DiceController> _diceControllers = new List<DiceController>();
 
         private Dictionary<Transform, DiceController> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceController>();
+        private RelicManager _relicManager;
 
         public CollectionExposerSO<DiceSlotHolder> CollectionReference
         {
@@ -30,6 +32,7 @@ namespace DiceGame.Dice
 
         private void Awake()
         {
+            _relicManager = FindObjectOfType<RelicManager>();
             foreach (var slotTransform in diceSlotTransforms)
             {
                 if (!_diceSlotToFaceDictionary.ContainsKey(slotTransform))
@@ -65,6 +68,8 @@ namespace DiceGame.Dice
             diceController.CurrentSlotHolder = this;
             diceController.SetAnchor(emptyDiceSlot, false, true);
             OnAttachToSlot?.Invoke();
+            
+            _relicManager.OnDiceAttachToSlot(diceController, this);
         }
         
         public void RemoveFromDiceSlot(DiceController diceController)

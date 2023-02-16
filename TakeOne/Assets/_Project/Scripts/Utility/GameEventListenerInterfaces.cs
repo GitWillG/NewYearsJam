@@ -36,6 +36,6 @@ namespace DiceGame.Utility
     public interface IPartyEventListener
     {
         public void OnPartyCreated(PartyManager partyManager);
-        public void OnPartyDie(PartyManager partyManager);
+        public void OnPartyDeath(PartyManager partyManager);
     }
 }

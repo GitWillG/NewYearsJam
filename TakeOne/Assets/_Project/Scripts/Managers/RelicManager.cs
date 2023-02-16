@@ -196,13 +196,13 @@ namespace DiceGame.Managers
             }
         }
 
-        public void OnPartyDie(PartyManager partyManager)
+        public void OnPartyDeath(PartyManager partyManager)
         {
             foreach (var relic in ListOfPartyRelics)
             {
                 if (_interrupt) break;
 
-                relic.OnPartyDie(_partyManager);
+                relic.OnPartyDeath(_partyManager);
             }
         }
     }

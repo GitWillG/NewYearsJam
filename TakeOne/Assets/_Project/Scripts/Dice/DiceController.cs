@@ -25,7 +25,7 @@ namespace DiceGame.Dice
         private bool _isHovering;
         private bool _previousHoverState;
 
-        public bool IsInSlot => _currentSlotHolder != null;
+        public bool IsInSlot => _currentSlotHolder != null && isSelectable;
         public bool IsResultFound => _diceFace.IsResultFound;
         public int FaceValue => _diceFace.FaceValue;
         public ObjectDirections ObjectDirectionsEnum => _diceFace.ObjectDirectionsEnum;

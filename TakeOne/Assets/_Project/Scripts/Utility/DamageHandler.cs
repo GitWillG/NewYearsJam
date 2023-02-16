@@ -43,6 +43,16 @@ namespace DiceGame.Utility
             }
         }
 
+        public int MAXHealth
+        {
+            get => _maxHealth;
+            set
+            {
+                _maxHealth = value;
+                UpdateHealthBar();
+            }
+        }
+
         private void Awake()
         {
             _healthBar = GetComponent<MMHealthBar>();
@@ -105,15 +115,14 @@ namespace DiceGame.Utility
             
             if (_health - totalDamage <= 0)
             {
-                _health = 0;
+                Health = 0;
                 onDeath?.Invoke();
             }
             else
             {
-                _health -= totalDamage;
+                Health -= totalDamage;
             }
 
-            UpdateHealthBar();
             damageTaken = totalDamage;
             return true;
         }
