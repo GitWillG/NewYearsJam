@@ -4638,8 +4638,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1053372505}
-  - component: {fileID: 1053372506}
   - component: {fileID: 1053372507}
+  - component: {fileID: 1053372506}
   m_Layer: 0
   m_Name: TestRelic
   m_TagString: Untagged

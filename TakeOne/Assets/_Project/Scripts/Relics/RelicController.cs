@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DiceGame.Relics
 {
-    public class RelicController : MonoBehaviour, ICollectionElement<RelicController>, IRelic, IAllGameEventListener
+    public class RelicController : MonoBehaviour, ICollectionElement<RelicController>
     {
         [SerializeField] private RelicControllerCollection relicControllerCollection;
         private RelicSO _relicSo;
@@ -103,7 +103,9 @@ namespace DiceGame.Relics
         
         public void OnDiceRolled(IDiceOwner diceOwner, List<DiceController> diceControllers)
         {
-            _diceEventListener?.OnDiceRolled(diceOwner, diceControllers);
+            if(_diceEventListener == null) return;
+            
+            _diceEventListener.OnDiceRolled(diceOwner, diceControllers);
         }
 
         public void OnDiceSelected(DiceController diceController)
