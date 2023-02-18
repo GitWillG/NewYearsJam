@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DiceGame.Dice;
 using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
+using DiceGame.ScriptableObjects.Conditions;
 using DiceGame.Utility;
 using TMPro;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace DiceGame.Enemy
         private int CurrentHealth => _currentHealth;
         public int DamageAmount => _monsterSo.Damage;
         public IDamageable Damageable => damageHandler;
-        
+
 
         public void InitializeMonster(MonsterSO so, Transform spawnLocation, Transform diceSlotLocation, MonsterManager monsterManager)
         {
@@ -42,23 +43,43 @@ namespace DiceGame.Enemy
             transform.parent = spawnLocation;
             //Spawn Visuals
             
-            Instantiate(MonsterSo.MonsterVisualPrefab, visualsHolder);
+            Instantiate(_monsterSo.MonsterVisualPrefab, visualsHolder);
 
             transform.localPosition = Vector3.zero;
 
             //Spawn Die slots
-            _diceSlotHolder = Instantiate(MonsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlotHolder>();
+            _diceSlotHolder = Instantiate(_monsterSo.DiceSlotSo.SlotPrefab, transform).GetComponent<DiceSlotHolder>();
             _diceSlotHolder.transform.position = diceSlotLocation.position;
-            _currentHealth = MonsterSo.MAXHealth;
+            _currentHealth = _monsterSo.MAXHealth;
             _monsterManager = monsterManager;
-            
+
+
             intentText.GetComponent<UISnapWithOffset>().SetTarget(_diceSlotHolder.transform);
             damageConditionText.GetComponent<UISnapWithOffset>().SetTarget(_diceSlotHolder.transform);
             
             UpdateIntentText("Does Damage up to ( " + _monsterSo.DamageMinMax.y + " )");
-            UpdateDamageConditionText(_monsterSo.DamageCondition.ConditionDescription);
-            
+
+            GenerateFromTemplate(_monsterSo.DamageCondition);
+            UpdateConditionalUI(_monsterSo.DamageCondition);
+
             Damageable.Init(_currentHealth, _monsterSo.MAXHealth, _monsterSo.DamageCondition, _diceSlotHolder);
+        }
+        private void GenerateFromTemplate(Condition ConToCheck)
+        {
+            if (ConToCheck.ConditionType == ConditionType.Odd || ConToCheck.ConditionType == ConditionType.Even)
+            {
+                return;
+            }
+
+            //TODO: Move to ConditionSO
+            if (ConToCheck.Amount < 0)
+            {
+                var _newCondition = Instantiate(ConToCheck);
+                int newVal = Random.Range(2, 4);
+                _newCondition.Amount = newVal;
+                _newCondition.ConditionDescription += newVal.ToString();
+                _monsterSo.DamageCondition = _newCondition;
+            }
         }
 
         private void UpdateIntentText(string newIntentText)
@@ -66,9 +87,13 @@ namespace DiceGame.Enemy
             intentText.text = newIntentText;
         }
 
-        private void UpdateDamageConditionText(string newConditionText)
+        private void UpdateConditionalUI(Condition newCondition)
         {
-            damageConditionText.text = newConditionText;
+            damageConditionText.text = newCondition.ConditionDescription;
+            //TODO: change dice slots, not background
+            //Move to dice slots
+            _diceSlotHolder.UIBackground.Color = newCondition.ConditionColor;
+
         }
 
         public void SpawnDamageParticles(IDamageDealer damageDealer)

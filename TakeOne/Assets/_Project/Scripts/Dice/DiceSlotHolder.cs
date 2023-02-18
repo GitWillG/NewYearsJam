@@ -3,6 +3,7 @@ using System.Linq;
 using DiceGame.ScriptableObjects;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
+using Shapes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +14,7 @@ namespace DiceGame.Dice
         [SerializeField] private List<Transform> diceSlotTransforms = new List<Transform>();
         [SerializeField] private  DiceSlotHolderCollection diceSlotHolderCollection;
         [SerializeField] private  bool registerDiceSlot = true;
+        [SerializeField] private Rectangle uIBackground;
 
         public UnityEvent OnAwake, OnAttachToSlot, OnDetachFromSlot;
         
@@ -27,6 +29,8 @@ namespace DiceGame.Dice
         }
 
         public bool HasSlotAvailable => _diceSlotToFaceDictionary.Any(x => x.Value == null);
+
+        public Rectangle UIBackground => uIBackground;
 
         private void Awake()
         {

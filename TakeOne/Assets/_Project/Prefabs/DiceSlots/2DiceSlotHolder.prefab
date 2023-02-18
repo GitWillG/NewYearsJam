@@ -189,6 +189,8 @@ MonoBehaviour:
   - {fileID: 6027275185337231852}
   - {fileID: 3884962878611685646}
   diceSlotHolderCollection: {fileID: 11400000, guid: 834361bb65488d34f89916fa60f885e4, type: 2}
+  registerDiceSlot: 1
+  uIBackground: {fileID: 8526311471697194415}
   OnAwake:
     m_PersistentCalls:
       m_Calls: []

@@ -49,6 +49,8 @@ MonoBehaviour:
   diceSlotTransforms:
   - {fileID: 1681805374015215528}
   diceSlotHolderCollection: {fileID: 11400000, guid: 834361bb65488d34f89916fa60f885e4, type: 2}
+  registerDiceSlot: 1
+  uIBackground: {fileID: 5165064838568394520}
   OnAwake:
     m_PersistentCalls:
       m_Calls: []

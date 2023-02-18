@@ -27,6 +27,7 @@ namespace DiceGame.ScriptableObjects.Conditions
         [SerializeField] private bool anyDieShouldMeetCondition;
         [SerializeField] private int amount;
         [SerializeField] private ConditionType conditionType;
+        [SerializeField] private Color conditionColor;
 
         private delegate bool ConditionDelegate(int val);
 
@@ -34,8 +35,12 @@ namespace DiceGame.ScriptableObjects.Conditions
 
         private readonly List<DieValeResult> _dieValeResults = new List<DieValeResult>();
 
-        public string ConditionDescription => conditionDescription;
-        
+        public ConditionType ConditionType => conditionType;
+
+        public Color ConditionColor => conditionColor;
+
+        public int Amount { get => amount; set => amount = value; }
+        public string ConditionDescription { get => conditionDescription; set => conditionDescription = value; }
 
         public void EvaluateConditions(List<int> results)
         {

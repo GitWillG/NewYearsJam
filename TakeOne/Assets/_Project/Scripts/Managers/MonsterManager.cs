@@ -34,6 +34,12 @@ namespace DiceGame.Managers
         private void Awake()
         {
             _allMonsters = Resources.LoadAll("Monsters", typeof(MonsterSO)).Cast<MonsterSO>().ToArray();
+            List<MonsterSO> tempList = new List<MonsterSO>();
+            foreach(var so in _allMonsters)
+            {
+                tempList.Add(Instantiate(so));
+            }
+            _allMonsters = tempList.ToArray();
         }
 
         private void Start()
@@ -139,7 +145,8 @@ namespace DiceGame.Managers
             for (int i = 0; i< partySize; i++)
             {
                 int pickMonster = Random.Range(0, _allMonsters.Length);
-                _encounterMembers.Add((MonsterSO)_allMonsters[pickMonster]);
+                _encounterMembers.Add(Instantiate((MonsterSO)_allMonsters[pickMonster]));
+
             }
             
             InitializeMonsters();

@@ -17,3 +17,4 @@ MonoBehaviour:
   anyDieShouldMeetCondition: 0
   amount: 3
   conditionType: 0
+  conditionColor: {r: 0.30037382, g: 0.33183196, b: 0.509434, a: 0}

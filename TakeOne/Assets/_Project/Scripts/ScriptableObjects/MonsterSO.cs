@@ -33,10 +33,9 @@ namespace DiceGame.ScriptableObjects
 
         public Vector2Int DamageMinMax => damageMinMax;
 
-        public Condition DamageCondition => damageCondition;
-
         public int DamageAmount => Damage;
         public GameObject AttackEffectPrefab => attackEffectPrefab;
-        
+
+        public Condition DamageCondition { get => damageCondition; set => damageCondition = value; }
     }
 }
