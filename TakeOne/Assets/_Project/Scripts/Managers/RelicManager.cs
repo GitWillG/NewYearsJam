@@ -1,3 +1,4 @@
+using System;
 using DiceGame.Dice;
 using DiceGame.ScriptableObjects.Dice;
 using UnityEngine;
@@ -13,7 +14,15 @@ namespace DiceGame.Managers
         private DiceRoller _diceRoller;
         private PartyManager _partyManager;
         private GameEventPropagator _gameEventPropagator;
-        
+
+
+        private void Awake()
+        {
+            _diceRoller = FindObjectOfType<DiceRoller>();
+            _partyManager = FindObjectOfType<PartyManager>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
+        }
+
         [ContextMenu("Roll Relic Die")]
         public void RollCombatStartDie()
         {

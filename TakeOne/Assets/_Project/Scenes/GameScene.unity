@@ -3240,6 +3240,53 @@ Transform:
   m_Father: {fileID: 1973706985}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &821740512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 821740513}
+  - component: {fileID: 821740514}
+  m_Layer: 0
+  m_Name: RelicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &821740513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821740512}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2124151761}
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &821740514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821740512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e011b020044a05bc9c65143ffc991c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceSo: {fileID: 11400000, guid: c25276f552b891642b8317134dc6fe5c, type: 2}
+  diceSlot: {fileID: 2124151762}
 --- !u!1 &882990225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4232,7 +4279,7 @@ GameObject:
   - component: {fileID: 973099222}
   - component: {fileID: 973099223}
   m_Layer: 0
-  m_Name: RelicManager
+  m_Name: GameEventPropagator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4249,8 +4296,7 @@ Transform:
   m_LocalPosition: {x: 50, y: 6.45, z: -0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2124151761}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4266,8 +4312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b82770db114a9b96134a78c768081a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceSo: {fileID: 11400000, guid: c25276f552b891642b8317134dc6fe5c, type: 2}
-  diceSlot: {fileID: 2124151762}
   relicControllerCollection: {fileID: 11400000, guid: 630c308acf116124dae1d44f9e010f53, type: 2}
 --- !u!1 &989472062
 GameObject:
@@ -7566,7 +7610,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 973099222}
+    m_TransformParent: {fileID: 821740513}
     m_Modifications:
     - target: {fileID: 4544106282737598371, guid: 2655ce8a881ed1e4b9d89c3b5ce477d4, type: 3}
       propertyPath: registerDiceSlot
@@ -7582,15 +7626,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4544106282737598375, guid: 2655ce8a881ed1e4b9d89c3b5ce477d4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.64
+      value: 40.36
       objectReference: {fileID: 0}
     - target: {fileID: 4544106282737598375, guid: 2655ce8a881ed1e4b9d89c3b5ce477d4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.75
+      value: 7.2
       objectReference: {fileID: 0}
     - target: {fileID: 4544106282737598375, guid: 2655ce8a881ed1e4b9d89c3b5ce477d4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.23
+      value: 4.98
       objectReference: {fileID: 0}
     - target: {fileID: 4544106282737598375, guid: 2655ce8a881ed1e4b9d89c3b5ce477d4, type: 3}
       propertyPath: m_LocalRotation.w

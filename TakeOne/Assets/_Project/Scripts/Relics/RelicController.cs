@@ -12,6 +12,7 @@ namespace DiceGame.Relics
     public class RelicController : MonoBehaviour, ICollectionElement<RelicController>
     {
         [SerializeField] private RelicControllerCollection relicControllerCollection;
+        [SerializeField] private RelicSO tempRelicData;
         private RelicSO _relicSo;
 
         public CollectionExposerSO<RelicController> CollectionReference
@@ -37,6 +38,11 @@ namespace DiceGame.Relics
             _relic = GetComponent<IRelic>();
             
             ((ICollectionElement<RelicController>)this).Register();
+            
+            if (tempRelicData != null && _relicSo == null)
+            {
+                Initialize(tempRelicData);
+            }
         }
         
         public void Initialize(RelicSO relicSo)
