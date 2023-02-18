@@ -5,9 +5,10 @@ using DiceGame.Managers;
 namespace DiceGame.Utility
 {
     public interface IRelic
-    { 
+    {
+        public bool CanTrigger { get; set; }
+
         public void TriggerPrimaryEffect();
-        public void SetActive();
     }
     
     /// <summary>
@@ -76,4 +77,5 @@ namespace DiceGame.Utility
         public void OnPartyCreated(PartyManager partyManager){}
         public void OnPartyDeath(PartyManager partyManager){}
     }
+    
 }

@@ -6,7 +6,7 @@ namespace DiceGame.Managers
     {
         private UIManager _uIManager;
         private PartyManager _partyManager;
-        private RelicManager _relicManager;
+        private GameEventPropagator _gameEventPropagator;
         
         public bool IsPlayerTurn { get; set; }
 
@@ -14,7 +14,7 @@ namespace DiceGame.Managers
         private void Awake()
         {
             _partyManager = FindObjectOfType<PartyManager>();
-            _relicManager = FindObjectOfType<RelicManager>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
         }
 
         private void Start()
@@ -30,12 +30,12 @@ namespace DiceGame.Managers
             if (IsPlayerTurn)
             {
                 _uIManager.EnableUIElement(_uIManager.RollDice);
-                _relicManager.OnPartyTurnStart(_partyManager);
+                _gameEventPropagator.OnPartyTurnStart(_partyManager);
                 _partyManager.StartNewTurn();
             }
             else
             {
-                _relicManager.OnPartyTurnEnd(_partyManager);
+                _gameEventPropagator.OnPartyTurnEnd(_partyManager);
             }
         }
         public void NewEncounter()

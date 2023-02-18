@@ -26,7 +26,7 @@ namespace DiceGame.Managers
         private UIManager _uIManager;
         private DiceManager _diceMan;
         private TurnManager _turnManager;
-        private RelicManager _relicManager;
+        private GameEventPropagator _gameEventPropagator;
 
         public UnityEvent onRollingFinished;
         public IDamageable Damageable => damageHandler;
@@ -52,7 +52,7 @@ namespace DiceGame.Managers
             _monsterManager = FindObjectOfType<MonsterManager>();
             _diceMan = FindObjectOfType<DiceManager>();
             _turnManager = FindObjectOfType<TurnManager>();
-            _relicManager = FindObjectOfType<RelicManager>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
             _allHeroes = Resources.LoadAll("Heros", typeof(HeroSO)).Cast<HeroSO>().ToArray();
             
             _diceMan.onDiceRolled.AddListener(UpdateRollsLeft);

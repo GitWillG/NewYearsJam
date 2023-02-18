@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace DiceGame.Relics
 {
+    //TODO: Need to find a way to spawn relics. RelicManager 
     public class RelicController : MonoBehaviour, ICollectionElement<RelicController>
     {
         [SerializeField] private RelicControllerCollection relicControllerCollection;
@@ -23,6 +24,8 @@ namespace DiceGame.Relics
         private ICombatEventListener _combatEventListener;
         private IDiceEventListener _diceEventListener;
         private IPartyEventListener _partyEventListener;
+        
+        private IRelic _relic;
 
         private void Awake()
         {
@@ -30,6 +33,8 @@ namespace DiceGame.Relics
             _combatEventListener = GetComponent<ICombatEventListener>();
             _diceEventListener = GetComponent<IDiceEventListener>();
             _partyEventListener = GetComponent<IPartyEventListener>();
+            
+            _relic = GetComponent<IRelic>();
             
             ((ICollectionElement<RelicController>)this).Register();
         }
@@ -45,11 +50,8 @@ namespace DiceGame.Relics
             var passingDie = _relicSo.ActivationCondition.GetPassingDie();
             
             if(passingDie == null || passingDie.Count < 1) return;
-            
-            //TODO: Relic conclusion.
-            //Relic available, set a flag so it can activate when needed.
-            //Allows for calling "Trigger" functionality when applicable.
-            //Some relics will want to activate on button click, others might want to do so on certain events.
+
+            _relic.CanTrigger = true;
         }
         
         private void OnDestroy()

@@ -20,7 +20,7 @@ namespace DiceGame.Dice
         private List<DiceController> _diceControllers = new List<DiceController>();
 
         private Dictionary<Transform, DiceController> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceController>();
-        private RelicManager _relicManager;
+        private GameEventPropagator _gameEventPropagator;
 
         public CollectionExposerSO<DiceSlotHolder> CollectionReference
         {
@@ -32,7 +32,7 @@ namespace DiceGame.Dice
 
         private void Awake()
         {
-            _relicManager = FindObjectOfType<RelicManager>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
             foreach (var slotTransform in diceSlotTransforms)
             {
                 if (!_diceSlotToFaceDictionary.ContainsKey(slotTransform))
@@ -69,7 +69,7 @@ namespace DiceGame.Dice
             diceController.SetAnchor(emptyDiceSlot, false, true);
             OnAttachToSlot?.Invoke();
             
-            _relicManager.OnDiceAttachToSlot(diceController, this);
+            _gameEventPropagator.OnDiceAttachToSlot(diceController, this);
         }
         
         public void RemoveFromDiceSlot(DiceController diceController)

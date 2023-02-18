@@ -25,7 +25,7 @@ namespace DiceGame.Utility
         private Condition _damageCondition;
         private MMHealthBar _healthBar; 
         private TextExposer _textExposer;
-        private RelicManager _relicManager;
+        private GameEventPropagator _gameEventPropagator;
         
         public UnityEvent<IDamageable> onTryTakeDamage;
         public UnityEvent<int> onTakeDamage;
@@ -56,7 +56,7 @@ namespace DiceGame.Utility
         private void Awake()
         {
             _healthBar = GetComponent<MMHealthBar>();
-            _relicManager = FindObjectOfType<RelicManager>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
         }
         
         public void Init(int health, int maxHealth, Condition damageCondition = null, DiceSlotHolder damageSlot = null)
@@ -85,7 +85,7 @@ namespace DiceGame.Utility
         
         public bool TryTakeDamage(IDamageDealer damageDealer, out int damageTaken)
         {
-            _relicManager.OnDealDamage(this, damageDealer);
+            _gameEventPropagator.OnDealDamage(this, damageDealer);
             
             onTryTakeDamage?.Invoke(this);
             _damageNegation = CalculateDamageNegation();
@@ -102,7 +102,7 @@ namespace DiceGame.Utility
             
             if (_damageNegation > 0)
             {
-                _relicManager.OnBlock(this, damageDealer);
+                _gameEventPropagator.OnBlock(this, damageDealer);
                 damageNegationFeedbackPlayer?.PlayFeedbacks(damageNegationNumberTransform.position, _damageNegation);
             }
             

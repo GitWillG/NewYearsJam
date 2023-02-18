@@ -20,7 +20,7 @@ namespace DiceGame.Dice
 
         private DiceRoller _diceRoller;
         private DiceSelector _diceSelector;
-        private RelicManager _relicManager;
+        private GameEventPropagator _gameEventPropagator;
         private PartyManager _partyManager;
         
         private List<DiceController> _rolledDice = new List<DiceController>();
@@ -53,7 +53,7 @@ namespace DiceGame.Dice
         {
             _diceRoller = FindObjectOfType<DiceRoller>();
             _diceSelector = GetComponent<DiceSelector>();
-            _relicManager = FindObjectOfType<RelicManager>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
             _partyManager = FindObjectOfType<PartyManager>();
         }
         
@@ -75,7 +75,7 @@ namespace DiceGame.Dice
             {
                 _rolledDice.Add(_diceRoller.RollDie(CharacterSoStats, diceSo));
             }
-            _relicManager.OnDiceRolled(_partyManager, _rolledDice);
+            _gameEventPropagator.OnDiceRolled(_partyManager, _rolledDice);
             onDiceRolled?.Invoke(_rolledDice);
         }
 
@@ -90,7 +90,7 @@ namespace DiceGame.Dice
             SelectedDice.Add(SelectedDie);
             
             AddDiceToTraySlot(SelectedDie);
-            _relicManager.OnDiceSelected(SelectedDie);
+            _gameEventPropagator.OnDiceSelected(SelectedDie);
             
             DestroyAllDiceAndCleanList(ref _rolledDice);
         }
@@ -108,7 +108,7 @@ namespace DiceGame.Dice
         {
             _allDiceInSlots = _selectedDice.FindAll(x => x.IsInSlot);
             
-            _relicManager.OnConfirmAllDie(_allDiceInSlots);
+            _gameEventPropagator.OnConfirmAllDie(_allDiceInSlots);
             
             StopAllCoroutines();
             DestroyAllDiceAndCleanList(ref _selectedDice, true); // Added this extra bool cause selected dice are currently being destroyed by the dice slot 

@@ -21,7 +21,7 @@ namespace DiceGame.Dice
         [SerializeField] private Vector2 diceTorque;
         [SerializeField] private float spawnRadius = 1f;
 
-        private RelicManager _relicManager;
+        private GameEventPropagator _gameEventPropagator;
         
         public DiceController RollDie(IDiceOwner diceOwner, DiceSO diceSo)
         {

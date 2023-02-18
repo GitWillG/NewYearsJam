@@ -6,21 +6,21 @@ using UnityEngine;
 
 namespace DiceGame.Relics
 {
-    public class TestRelic : MonoBehaviour, ICombatEventListener, IDiceEventListener
+    public class TestRelic : MonoBehaviour, ICombatEventListener, IDiceEventListener, IRelic
     {
         private List<DiceController> _diceControllers = new();
         
         private int _dieValueModdedBy = 2;
-        private bool _shouldTrigger;
+        private bool _allDieMeetCondition = true;
+        
+        private PartyManager _partyManager;
+        
+        public bool CanTrigger { get; set; }
 
-        public async void OnPartyTurnStart(PartyManager partyManager)
+        public void OnPartyTurnStart(PartyManager partyManager)
         {
-            if (_shouldTrigger)
-            {
-                // await Task.Delay(500);
-                partyManager.Health += 5;
-                Debug.Log("Test Relic Granted 5 health!");
-            }
+            _partyManager = partyManager;
+            TriggerPrimaryEffect();
         }
         public void OnDiceSelected(DiceController diceController)
         {
@@ -31,9 +31,17 @@ namespace DiceGame.Relics
             foreach (var diceController in _diceControllers)
             {
                 if (diceController.FaceValue % _dieValueModdedBy != 0) continue;
-                _shouldTrigger = false;
+                _allDieMeetCondition = false;
                 break;
             }
+        }
+        public async void TriggerPrimaryEffect()
+        {
+            if(!CanTrigger || !_allDieMeetCondition) return;
+            
+            // await Task.Delay(500);
+            _partyManager.Health += 5;
+            Debug.Log("Test Relic Granted 5 health!");
         }
     }
 }
