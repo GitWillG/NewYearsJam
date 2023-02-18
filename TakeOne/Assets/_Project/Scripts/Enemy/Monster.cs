@@ -64,22 +64,19 @@ namespace DiceGame.Enemy
 
             Damageable.Init(_currentHealth, _monsterSo.MAXHealth, _monsterSo.DamageCondition, _diceSlotHolder);
         }
+
+
+        //TODO: Move to ConditionSO
         private void GenerateFromTemplate(Condition ConToCheck)
         {
-            if (ConToCheck.ConditionType == ConditionType.Odd || ConToCheck.ConditionType == ConditionType.Even)
-            {
-                return;
-            }
+            if (ConToCheck.ConditionType == ConditionType.Odd || ConToCheck.ConditionType == ConditionType.Even) return;
+            if (ConToCheck.Amount > 0) return;
 
-            //TODO: Move to ConditionSO
-            if (ConToCheck.Amount < 0)
-            {
-                var _newCondition = Instantiate(ConToCheck);
-                int newVal = Random.Range(2, 4);
-                _newCondition.Amount = newVal;
-                _newCondition.ConditionDescription += newVal.ToString();
-                _monsterSo.DamageCondition = _newCondition;
-            }
+            var _newCondition = Instantiate(ConToCheck);
+            int newVal = Random.Range(2, 4);
+            _newCondition.Amount = newVal;
+            _newCondition.ConditionDescription += newVal.ToString();
+            _monsterSo.DamageCondition = _newCondition;
         }
 
         private void UpdateIntentText(string newIntentText)
