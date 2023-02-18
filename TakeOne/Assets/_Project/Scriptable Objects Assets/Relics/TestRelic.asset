@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestRelic
   m_EditorClassIdentifier: 
   relicTexture: {fileID: 0}
-  relicName: 
-  relicDescription: 
-  activationCondition: {fileID: 0}
+  relicName: TestRelic
+  relicDescription: "\t"
+  activationCondition: {fileID: 11400000, guid: 2dc559529f86377459f22e904ca7e67e, type: 2}

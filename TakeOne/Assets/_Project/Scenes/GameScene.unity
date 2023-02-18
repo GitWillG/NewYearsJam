@@ -4731,6 +4731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   relicControllerCollection: {fileID: 11400000, guid: 630c308acf116124dae1d44f9e010f53, type: 2}
+  tempRelicData: {fileID: 11400000, guid: 44efe4e33f0e97447925589d247b0798, type: 2}
 --- !u!1 &1054530987
 GameObject:
   m_ObjectHideFlags: 0

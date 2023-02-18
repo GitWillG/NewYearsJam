@@ -12,7 +12,7 @@ namespace DiceGame.Relics
     public class RelicController : MonoBehaviour, ICollectionElement<RelicController>
     {
         [SerializeField] private RelicControllerCollection relicControllerCollection;
-        [SerializeField] private RelicSO tempRelicData;
+        [SerializeField] private RelicSO tempRelicData; //TODO: Remove this once we spawn relics normally
         private RelicSO _relicSo;
 
         public CollectionExposerSO<RelicController> CollectionReference
