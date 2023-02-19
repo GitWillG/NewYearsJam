@@ -13,7 +13,7 @@ namespace DiceGame.Relics
     {
         [SerializeField] private AllGameEventListenerCollection allGameEventListenerCollection;
         [SerializeField] private RelicSO tempRelicData; //TODO: Remove this once we spawn relics normally
-        [SerializeField] private GameObject relicScriptHolder;
+        [SerializeField] private GameObject relicScriptHolder; //TODO: Must be a cleaner way to do this. Probably looking into Dependency injection now.
         private RelicSO _relicSo;
 
         public CollectionExposerSO<IAllGameEventListener> CollectionReference => allGameEventListenerCollection;
@@ -46,7 +46,7 @@ namespace DiceGame.Relics
             _relicSo = relicSo;
         }
 
-        public void OnRelicDieResultRolled(int dieResults)
+        public void OnRelicDieResultFound(int dieResults)
         {
             _relicSo.ActivationCondition.EvaluateConditions(dieResults);
             var passingDie = _relicSo.ActivationCondition.GetPassingDie();

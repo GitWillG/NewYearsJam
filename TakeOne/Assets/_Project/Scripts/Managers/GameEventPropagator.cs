@@ -34,7 +34,7 @@ namespace DiceGame.Managers
             {
                 foreach (var value in val)
                 {
-                    relic.OnRelicDieResultRolled(value);
+                    relic.OnRelicDieResultFound(value);
                 }
             }
         }

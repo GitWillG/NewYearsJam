@@ -15,9 +15,7 @@ namespace DiceGame.Utility
     /// <summary>
     /// Implements all game related event Listeners.
     /// </summary>
-    public interface IAllGameEventListener : IEncounterEventListener, ICombatEventListener, IDiceEventListener, IPartyEventListener
-    {
-    }
+    public interface IAllGameEventListener : IEncounterEventListener, ICombatEventListener, IDiceEventListener, IPartyEventListener { }
     
     /// <summary>
     /// Implement this when you want to be notified of the following:
@@ -59,7 +57,8 @@ namespace DiceGame.Utility
     /// <para> <see cref="OnDiceRolled"/>
     /// <see cref="OnDiceSelected"/>
     /// <see cref="OnDiceAttachToSlot"/>
-    /// <see cref="OnConfirmAllDie"/></para>
+    /// <see cref="OnConfirmAllDie"/>
+    /// <see cref="OnRelicDieResultFound"/></para>
     /// </summary>
     public interface IDiceEventListener
     {
@@ -67,8 +66,7 @@ namespace DiceGame.Utility
         public void OnDiceSelected(DiceController diceController){}
         public void OnDiceAttachToSlot(DiceController diceController, DiceSlotHolder diceSlotHolder){}
         public void OnConfirmAllDie(List<DiceController> diceControllers){}
-        void OnRelicDieResultRolled(int value){}
-
+        void OnRelicDieResultFound(int value){}
     }
 
     /// <summary>
