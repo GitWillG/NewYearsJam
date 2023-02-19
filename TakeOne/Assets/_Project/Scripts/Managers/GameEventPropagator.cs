@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DiceGame.Dice;
-using DiceGame.Relics;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
 using UnityEngine;
@@ -10,7 +9,7 @@ namespace DiceGame.Managers
 {
     public class GameEventPropagator : MonoBehaviour
     {
-        [SerializeField] private RelicControllerCollection relicControllerCollection;
+        [SerializeField] private AllGameEventListenerCollection allGameEventListenerCollection;
 
         private DiceController _currentTurnDice;
         
@@ -25,20 +24,24 @@ namespace DiceGame.Managers
         //TODO: Need to figure out a way to replace this RelicController reference with an Interface instead.
         //Can't use the IAllGameEventListener one, because when you get component to find the delegate interface implementation on the same object, it finds itself
         //Causing a stack overflow.
-        private List<RelicController> ListOfPartyRelics => relicControllerCollection.CollectionHashset.ToList();
+        private List<IAllGameEventListener> ListOfPartyRelics => allGameEventListenerCollection.CollectionHashset.ToList();
 
         #region GameEvents
         
-        public void OnRelicDieResult(DiceSlotHolder diceSlot)
+        public void OnRelicDieResult(List<int> val)
         {
             foreach (var relic in ListOfPartyRelics)
             {
-                relic.OnRelicDieResultRolled(diceSlot.PeekDiceResults());
+                foreach (var value in val)
+                {
+                    relic.OnRelicDieResultRolled(value);
+                }
             }
         }
         
         #region EncounterEvents
 
+        [ContextMenu("Fake Encounter Start")]
         public void OnEncounterStart()
         {
             foreach (var relic in ListOfPartyRelics)

@@ -28,12 +28,13 @@ namespace DiceGame.Relics
         }
         public void OnConfirmAllDie(List<DiceController> diceControllers)
         {
-            foreach (var diceController in _diceControllers)
-            {
-                if (diceController.FaceValue % _dieValueModdedBy != 0) continue;
-                _allDieMeetCondition = false;
-                break;
-            }
+            // foreach (var diceController in _diceControllers)
+            // {
+            //     if (diceController.FaceValue % _dieValueModdedBy != 1) continue;
+            //     _allDieMeetCondition = false;
+            //     break;
+            // }
+            FlashWhenAvailable();
         }
         public async void TriggerPrimaryEffect()
         {
@@ -42,6 +43,12 @@ namespace DiceGame.Relics
             // await Task.Delay(500);
             _partyManager.Health += 5;
             Debug.Log("Test Relic Granted 5 health!");
+        }
+
+        public void FlashWhenAvailable()
+        {
+            if(!CanTrigger || !_allDieMeetCondition) return;
+
         }
     }
 }

@@ -38,7 +38,8 @@ namespace DiceGame.ScriptableObjects.Conditions
 
         public void EvaluateConditions(int singleDie)
         {
-            List<int> dieList = new List<int>(singleDie);
+            List<int> dieList = new List<int>();
+            dieList.Add(singleDie);
             EvaluateConditions(dieList);
         }
         

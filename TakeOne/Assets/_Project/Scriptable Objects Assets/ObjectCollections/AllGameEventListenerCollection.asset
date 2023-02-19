@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f01357caab194a439ad27ed7296be2e3, type: 3}
-  m_Name: RelicCollection
+  m_Name: AllGameEventListenerCollection
   m_EditorClassIdentifier: 

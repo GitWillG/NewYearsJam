@@ -9,17 +9,14 @@ using UnityEngine;
 namespace DiceGame.Relics
 {
     //TODO: Need to find a way to spawn relics. RelicManager 
-    public class RelicController : MonoBehaviour, ICollectionElement<RelicController>
+    public class RelicController : MonoBehaviour, ICollectionElement<IAllGameEventListener>, IAllGameEventListener
     {
-        [SerializeField] private RelicControllerCollection relicControllerCollection;
+        [SerializeField] private AllGameEventListenerCollection allGameEventListenerCollection;
         [SerializeField] private RelicSO tempRelicData; //TODO: Remove this once we spawn relics normally
+        [SerializeField] private GameObject relicScriptHolder;
         private RelicSO _relicSo;
 
-        public CollectionExposerSO<RelicController> CollectionReference
-        {
-            get => relicControllerCollection;
-            set => relicControllerCollection = (RelicControllerCollection)value;
-        }
+        public CollectionExposerSO<IAllGameEventListener> CollectionReference => allGameEventListenerCollection;
 
         private IEncounterEventListener _encounterEventListener;
         private ICombatEventListener _combatEventListener;
@@ -30,14 +27,13 @@ namespace DiceGame.Relics
 
         private void Awake()
         {
-            _encounterEventListener = GetComponent<IEncounterEventListener>();
-            _combatEventListener = GetComponent<ICombatEventListener>();
-            _diceEventListener = GetComponent<IDiceEventListener>();
-            _partyEventListener = GetComponent<IPartyEventListener>();
+            _encounterEventListener = relicScriptHolder.GetComponent<IEncounterEventListener>();
+            _combatEventListener = relicScriptHolder.GetComponent<ICombatEventListener>();
+            _diceEventListener = relicScriptHolder.GetComponent<IDiceEventListener>();
+            _partyEventListener = relicScriptHolder.GetComponent<IPartyEventListener>();
+            _relic = relicScriptHolder.GetComponent<IRelic>();
             
-            _relic = GetComponent<IRelic>();
-            
-            ((ICollectionElement<RelicController>)this).Register();
+            ((ICollectionElement<IAllGameEventListener>)this).Register();
             
             if (tempRelicData != null && _relicSo == null)
             {
@@ -50,19 +46,19 @@ namespace DiceGame.Relics
             _relicSo = relicSo;
         }
 
-        public void OnRelicDieResultRolled(List<int> dieResults)
+        public void OnRelicDieResultRolled(int dieResults)
         {
             _relicSo.ActivationCondition.EvaluateConditions(dieResults);
             var passingDie = _relicSo.ActivationCondition.GetPassingDie();
             
             if(passingDie == null || passingDie.Count < 1) return;
-
+        
             _relic.CanTrigger = true;
         }
         
         private void OnDestroy()
         {
-            ((ICollectionElement<RelicController>)this).UnRegister();
+            ((ICollectionElement<IAllGameEventListener>)this).UnRegister();
         }
 
         //TODO: Refactoring required. I feel this is too many things for this single class. Maybe we extract all the functionality below in to its own class?
@@ -111,9 +107,7 @@ namespace DiceGame.Relics
         
         public void OnDiceRolled(IDiceOwner diceOwner, List<DiceController> diceControllers)
         {
-            if(_diceEventListener == null) return;
-            
-            _diceEventListener.OnDiceRolled(diceOwner, diceControllers);
+            _diceEventListener?.OnDiceRolled(diceOwner, diceControllers);
         }
 
         public void OnDiceSelected(DiceController diceController)

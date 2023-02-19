@@ -22,11 +22,7 @@ namespace DiceGame.Dice
         private Dictionary<Transform, DiceController> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceController>();
         private GameEventPropagator _gameEventPropagator;
 
-        public CollectionExposerSO<DiceSlotHolder> CollectionReference
-        {
-            get => diceSlotHolderCollection;
-            set => diceSlotHolderCollection = (DiceSlotHolderCollection)value;
-        }
+        public CollectionExposerSO<DiceSlotHolder> CollectionReference => diceSlotHolderCollection;
 
         public bool HasSlotAvailable => _diceSlotToFaceDictionary.Any(x => x.Value == null);
 

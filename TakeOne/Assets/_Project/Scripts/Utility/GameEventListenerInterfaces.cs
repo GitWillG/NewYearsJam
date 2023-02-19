@@ -9,12 +9,15 @@ namespace DiceGame.Utility
         public bool CanTrigger { get; set; }
 
         public void TriggerPrimaryEffect();
+        public void FlashWhenAvailable();
     }
     
     /// <summary>
     /// Implements all game related event Listeners.
     /// </summary>
-    public interface IAllGameEventListener : IEncounterEventListener, ICombatEventListener, IDiceEventListener, IPartyEventListener { }
+    public interface IAllGameEventListener : IEncounterEventListener, ICombatEventListener, IDiceEventListener, IPartyEventListener
+    {
+    }
     
     /// <summary>
     /// Implement this when you want to be notified of the following:
@@ -64,6 +67,8 @@ namespace DiceGame.Utility
         public void OnDiceSelected(DiceController diceController){}
         public void OnDiceAttachToSlot(DiceController diceController, DiceSlotHolder diceSlotHolder){}
         public void OnConfirmAllDie(List<DiceController> diceControllers){}
+        void OnRelicDieResultRolled(int value){}
+
     }
 
     /// <summary>
