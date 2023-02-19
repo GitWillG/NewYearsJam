@@ -25,7 +25,8 @@ namespace DiceGame.Managers
             new List<DataToMonoBehaviour<MonsterSO, Monster>>();
 
         private int _currentTurn = 0;
-        
+        private GameEventPropagator _gameEventPropagator;
+
         public List<MonsterSO> EncounterMembers => _encounterMembers;
         public string EncounterName => encounterName;
         
@@ -41,6 +42,7 @@ namespace DiceGame.Managers
             //monster = GameObject.FindObjectOfType<Monster>();
             _partyManager = FindObjectOfType<PartyManager>();
             _turnOrder = FindObjectOfType<TurnManager>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
             
             spawnLocations = new List<Transform>();
             
@@ -78,17 +80,25 @@ namespace DiceGame.Managers
         //maybe belongs in encounter manager?
         private void EndEncounter()
         {
+            // _relicManager.OnEncounterEnd();
             StopAllCoroutines();
             _partyManager.StopAllCoroutines();
             
             _currentTurn = 0;
-            _turnOrder.newEncounter();
+            _turnOrder.NewEncounter();
             
             CreateEncounter();
         }
 
         public void ProgressTurn()
         {
+            bool allMonstersLeft = _dataToMonoBehaviours.All(x => !x.monoBehaviour.HasAttacked);
+
+            if (allMonstersLeft)
+            {
+                _gameEventPropagator.OnEnemyTurnStart(this);
+            }
+            
             bool isAnyMonsterLeft = _dataToMonoBehaviours.Any(x => !x.monoBehaviour.HasAttacked);
 
             if (isAnyMonsterLeft)
@@ -107,6 +117,7 @@ namespace DiceGame.Managers
             
             _currentTurn = 0;
             _turnOrder.EndTurn();
+            _gameEventPropagator.OnEnemyTurnEnd(this);
         }
 
         private IEnumerator PlayAnimations(Monster currentMonster)

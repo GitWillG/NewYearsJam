@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DiceGame.Managers;
 using DiceGame.ScriptableObjects;
 using DiceGame.ScriptableObjects.Dice;
 using DiceGame.Utility;
@@ -19,17 +20,15 @@ namespace DiceGame.Dice
         private List<DiceController> _diceControllers = new List<DiceController>();
 
         private Dictionary<Transform, DiceController> _diceSlotToFaceDictionary = new Dictionary<Transform, DiceController>();
+        private GameEventPropagator _gameEventPropagator;
 
-        public CollectionExposerSO<DiceSlotHolder> CollectionReference
-        {
-            get => diceSlotHolderCollection;
-            set => diceSlotHolderCollection = (DiceSlotHolderCollection)value;
-        }
+        public CollectionExposerSO<DiceSlotHolder> CollectionReference => diceSlotHolderCollection;
 
         public bool HasSlotAvailable => _diceSlotToFaceDictionary.Any(x => x.Value == null);
 
         private void Awake()
         {
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
             foreach (var slotTransform in diceSlotTransforms)
             {
                 if (!_diceSlotToFaceDictionary.ContainsKey(slotTransform))
@@ -65,6 +64,8 @@ namespace DiceGame.Dice
             diceController.CurrentSlotHolder = this;
             diceController.SetAnchor(emptyDiceSlot, false, true);
             OnAttachToSlot?.Invoke();
+            
+            _gameEventPropagator.OnDiceAttachToSlot(diceController, this);
         }
         
         public void RemoveFromDiceSlot(DiceController diceController)

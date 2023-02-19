@@ -1,5 +1,6 @@
 using System.Linq;
 using DiceGame.Dice;
+using DiceGame.Managers;
 using DiceGame.ScriptableObjects.Conditions;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
@@ -24,6 +25,7 @@ namespace DiceGame.Utility
         private Condition _damageCondition;
         private MMHealthBar _healthBar; 
         private TextExposer _textExposer;
+        private GameEventPropagator _gameEventPropagator;
         
         public UnityEvent<IDamageable> onTryTakeDamage;
         public UnityEvent<int> onTakeDamage;
@@ -31,9 +33,30 @@ namespace DiceGame.Utility
         public UnityEvent onDeath;
         public Condition DamageCondition => _damageCondition;
 
+        public int Health
+        {
+            get => _health;
+            set
+            {
+                _health = value;
+                UpdateHealthBar();
+            }
+        }
+
+        public int MAXHealth
+        {
+            get => _maxHealth;
+            set
+            {
+                _maxHealth = value;
+                UpdateHealthBar();
+            }
+        }
+
         private void Awake()
         {
             _healthBar = GetComponent<MMHealthBar>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
         }
         
         public void Init(int health, int maxHealth, Condition damageCondition = null, DiceSlotHolder damageSlot = null)
@@ -62,9 +85,10 @@ namespace DiceGame.Utility
         
         public bool TryTakeDamage(IDamageDealer damageDealer, out int damageTaken)
         {
+            _gameEventPropagator.OnDealDamage(this, damageDealer);
+            
             onTryTakeDamage?.Invoke(this);
             _damageNegation = CalculateDamageNegation();
-            Debug.Log("Damage negation for this turn is : "+ _damageNegation );
 
             damageTaken = 0;
 
@@ -78,6 +102,7 @@ namespace DiceGame.Utility
             
             if (_damageNegation > 0)
             {
+                _gameEventPropagator.OnBlock(this, damageDealer);
                 damageNegationFeedbackPlayer?.PlayFeedbacks(damageNegationNumberTransform.position, _damageNegation);
             }
             
@@ -90,15 +115,14 @@ namespace DiceGame.Utility
             
             if (_health - totalDamage <= 0)
             {
-                _health = 0;
+                Health = 0;
                 onDeath?.Invoke();
             }
             else
             {
-                _health -= totalDamage;
+                Health -= totalDamage;
             }
 
-            UpdateHealthBar();
             damageTaken = totalDamage;
             return true;
         }

@@ -10,7 +10,7 @@ namespace DiceGame.Utility
     /// <typeparam name="T"></typeparam>
     public interface ICollectionElement<T>
     {
-        public CollectionExposerSO<T> CollectionReference { get; set; }
+        public CollectionExposerSO<T> CollectionReference { get;}
 
         public void Register()
         {

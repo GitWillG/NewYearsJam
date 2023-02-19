@@ -17,7 +17,6 @@ namespace DiceGame.ScriptableObjects
         public int HealthContribution => healthContribution;
         public string CharacterName => characterName;
         public GameObject AttackEffectPrefab => attackEffectPrefab;
-        
         public Sprite Visual => visual;
         public List<DiceSO> CharacterDice => characterDice;
         public int DamageAmount => 0;

@@ -67,6 +67,7 @@ namespace DiceGame.Dice
                 SelectedDie = hit.collider.gameObject.GetComponent<DiceController>();
                 SelectedDie.HighlightDice();
                 _uiManager.ConfirmDice.SetActive(true);
+                
             }
             else
             {

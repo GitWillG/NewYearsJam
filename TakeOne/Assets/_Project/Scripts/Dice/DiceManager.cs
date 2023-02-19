@@ -1,6 +1,7 @@
 using DiceGame.ScriptableObjects;
 using System.Collections.Generic;
 using System.Linq;
+using DiceGame.Managers;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,9 +20,12 @@ namespace DiceGame.Dice
 
         private DiceRoller _diceRoller;
         private DiceSelector _diceSelector;
+        private GameEventPropagator _gameEventPropagator;
+        private PartyManager _partyManager;
         
         private List<DiceController> _rolledDice = new List<DiceController>();
         private List<DiceController> _selectedDice = new List<DiceController>();
+        private List<DiceController> _allDiceInSlots = new List<DiceController>();
         
         private Dictionary<Transform, DiceController> _TrayToDiceController = new Dictionary<Transform, DiceController>();
         
@@ -49,6 +53,8 @@ namespace DiceGame.Dice
         {
             _diceRoller = FindObjectOfType<DiceRoller>();
             _diceSelector = GetComponent<DiceSelector>();
+            _gameEventPropagator = FindObjectOfType<GameEventPropagator>();
+            _partyManager = FindObjectOfType<PartyManager>();
         }
         
         private void InitializeDictionary()
@@ -69,7 +75,7 @@ namespace DiceGame.Dice
             {
                 _rolledDice.Add(_diceRoller.RollDie(CharacterSoStats, diceSo));
             }
-            
+            _gameEventPropagator.OnDiceRolled(_partyManager, _rolledDice);
             onDiceRolled?.Invoke(_rolledDice);
         }
 
@@ -84,6 +90,7 @@ namespace DiceGame.Dice
             SelectedDice.Add(SelectedDie);
             
             AddDiceToTraySlot(SelectedDie);
+            _gameEventPropagator.OnDiceSelected(SelectedDie);
             
             DestroyAllDiceAndCleanList(ref _rolledDice);
         }
@@ -99,12 +106,17 @@ namespace DiceGame.Dice
         //Cleans up any extra dice that are not used at the end of player turn
         public void ConfirmAllDice()
         {
+            _allDiceInSlots = _selectedDice.FindAll(x => x.IsInSlot);
+            
+            _gameEventPropagator.OnConfirmAllDie(_allDiceInSlots);
+            
             StopAllCoroutines();
             DestroyAllDiceAndCleanList(ref _selectedDice, true); // Added this extra bool cause selected dice are currently being destroyed by the dice slot 
             foreach (var key in _TrayToDiceController.Keys.ToList())
             {
                 _TrayToDiceController[key] = null;
             }
+            // _relicManager.OnConfirmAllDie()
         }
 
         public void RemoveFromDiceTray(DiceController diceFace)
@@ -120,15 +132,13 @@ namespace DiceGame.Dice
             _TrayToDiceController[diceSlot] = null;
         }
 
-        public Transform AddDiceToTraySlot(DiceController diceFace)
+        public void AddDiceToTraySlot(DiceController diceFace)
         {
-            if (!HasAvailableTrySlot) return null;
-            
+            if (!HasAvailableTrySlot) return;
+
             var emptyDiceTransform = FirstAvailableDiceTrayTransform;
             _TrayToDiceController[emptyDiceTransform] = diceFace;
             diceFace.SetAnchor(emptyDiceTransform);
-
-            return emptyDiceTransform;
         }
 
         //Cleanup logic

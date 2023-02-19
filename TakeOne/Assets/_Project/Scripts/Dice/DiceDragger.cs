@@ -107,8 +107,13 @@ namespace DiceGame.Dice
             var ray = diceCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
-                if (!hit.collider.gameObject.CompareTag("Dice")) return;
-                _currentDice = hit.collider.gameObject.GetComponent<DiceController>();
+                if (!hit.collider.CompareTag("Dice")) return;
+                _currentDice = hit.collider.GetComponent<DiceController>();
+                if (!_currentDice.IsSelectable)
+                {
+                    _currentDice = null;
+                    return;
+                }
                 OnPickUp();
             }
             else
